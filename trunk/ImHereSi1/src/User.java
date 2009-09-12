@@ -12,7 +12,7 @@ public class User{
 	private int id;
 	
 	//Usar sets para setar qualquer tipo de atributo devido aos tratamentos de erros!
-	public User(String userName, String password2, int i){
+	public User(String userName, String password2, int id){
 		
 	}
 
