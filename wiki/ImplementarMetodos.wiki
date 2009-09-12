@@ -1,0 +1,102 @@
+#summary Métodos que devem ser implementados no Facade
+
+||Tópicos||
+||[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#Métodos_Gerais Métodos Gerais]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_1 User Story 1]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_2 User Story 2]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_3 User Story 3]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_4 User Story 4]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_5 User Story 5]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_6 User Story 6]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_7 User Story 7]||
+||[[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#Erros Erros]||
+
+= Métodos Gerais = 
+
+|| *Método* || *Obs* ||
+|| zerarSistema || zera o sistema e todos os cadastrados ||
+|| encerrarSistema || grava o cadastro em arquivo e encerra o programa ||
+
+= User Story 1 =
+
+|| *Método* || *Obs* ||
+|| criarUsuario || 5 atributos, (1) ||
+|| getUsuarioPorNome || 2 atributos, retorna o id do usuario, (2) || 
+|| atualizarUsuario || 3 atributos, (3) ||
+|| removerUsuario || 1 atributo, (4) ||
+
+= User Story 2 =
+
+|| *Método* || *Obs* ||
+|| login || 3 atributos, (5) ||
+|| logout || 1 atributo, (6) ||
+
+= User Story 3 =
+
+|| *Método* || *Obs* ||
+|| cadastrarUsuario || 6 atributos, retorna o id de autenticacao do usuario ||
+|| getLocalizadores || retorna uma string com os possiveis localizadores ||
+|| obterLocalizacao || 1 parametro, (7) ||
+|| setLocalizacao || 3 atributos, (8) ||
+|| getLocalizacao || 1 atributo, retorna String com a posição ||
+
+= User Story 4 =
+
+|| *Método* || *Obs* ||
+|| initMensageiro || 1 atributo ||
+|| setDiretorioGabaritos || 1 atributo ||
+|| enviarConvite || 2 atributos ||
+|| confirmarCompartilhamento || 3 atributos ||
+|| recusarCompartilhamento || 2 atributos ||
+|| getAmigos || 1 atributo, retorna String com usernames de amigos, (9) ||
+
+= User Story 5 =
+
+|| *Método* || *Obs* ||
+|| possoVerLocalizacao || 2 atributos, (10) ||
+|| setCompartilhamento || 3 atributos ||
+|| removerAmigo || 2 atributos,(11) ||
+
+= User Story 6 =
+
+|| *Método* || *Obs* ||
+|| getLocalizacaoAmigo || 2 atributos, (12) ||
+
+
+= User Story 7 =
+
+|| *Método* || *Obs* ||
+|| enviarEmail || 4 atributos ||
+|| enviarSMS || 3 atributos ||
+|| setPortChat || 1 atributo ||
+|| initChat || 2 atributos ||
+|| enviarMensagem || 2 atributos ||
+|| receberMensagem || 1 atributo ||
+
+= Erros =
+
+(1) falta de campos obrigatorios, userName existente, senha com menos de 6 caracteres. 
+<br>
+(2) usuario não existe
+<br>
+(3) alterar username nao pode, usuario nao existe, falta de campos obrigatorios, senha com menos de 6 caracteres.
+<br>
+(4) usuario não existe
+<br>
+(5) login/senha/ip invalidos
+<br>
+(6) sessão inexistente
+<br>
+(7) GeoIp não conseguir achar a localização.
+<br>
+(8) Lat/Long invalidos, usuario nao existe
+<br>
+(9) apenas usuarios autenticados podem ver seus amigos
+<br>
+(10) usuario desconhecido
+<br>
+(11) usuario desconhecido, permissão negada(?)
+<br>
+(12) usuario desconhecido, permissão negada(?)
+
+
