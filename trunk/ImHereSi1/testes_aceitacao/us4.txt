@@ -42,28 +42,26 @@ senha="645ju2" telefone="558333333333" ip="127.0.0.1"
 id4=cadastrarUsuario userName="jurema" nome="Jurema Santos" email="jurema@email.com" \
 senha="8797n75" telefone="558355555555" ip="127.0.0.1"
 
-criarUsuario userName="clementino" nome="Clementino Pereira" email="clementino@email.com" \
-senha="97887huy" telefone="558366666666"
+id5=cadastrarUsuario userName="clementino" nome="Clementino Pereira" email="clementino@email.com" \
+senha="97887huy" telefone="558366666666" ip="127.0.0.1"
 
 #####################################################################################
 # confirmacao de compartilhamento
 #####################################################################################
 
-confirmarCompartilhamento de="fulano" com="beltrana" modo=2
-confirmarCompartilhamento de="fulano" com="sicrano" modo=1 
-confirmarCompartilhamento de="beltrana" com="sicrano" modo=1
-confirmarCompartilhamento de="beltrana" com="jurema" modo=2
+confirmarCompartilhamento de=${id2} com="fulano" modo=2
+confirmarCompartilhamento de=${id3} com="fulano" modo=1 
+confirmarCompartilhamento de=${id3} com="beltrana" modo=1
+confirmarCompartilhamento de=${id4} com="beltrana" modo=2
 
-recusarCompartilhamento de="beltrana" com="clementino"
+recusarCompartilhamento de=${id5} com="beltrana"
 
 expect "[Beltrana da Silva, Sicrano Souza]" getAmigos usuario=${id1}
 
 expect "[Fulano de Tal, Jurema Santos, Sicrano Souza]" getAmigos usuario=${id2}
 
 # apenas usuarios autenticados podem ver seus amigos
-id5=getUsuarioPorNome nome=Clementino indice=1
-
-expectError "Permissao negada." getAmigos usuario=${id5}
+expectError "Permissao negada." getAmigos usuario=id878
 
 logout id=${id1}
 

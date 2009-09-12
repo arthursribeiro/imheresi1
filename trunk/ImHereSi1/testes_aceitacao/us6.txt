@@ -22,11 +22,11 @@ expect "Localizacao desconhecida." getLocalizacaoAmigo usuario=${id1} amigo="sic
 
 expect "Localizacao desconhecida." getLocalizacaoAmigo usuario=${id3} amigo="fulano"
 
-expect "Localizacao desconhecida." getLocalizacaoAmigo usuario=${id3} amigo="beltrana"
-
 # localizacoes compartilhadas
 
 expect "Lat: -7.124546, Long: -34.867554" getLocalizacaoAmigo usuario=${id1} amigo="beltrana"
+
+expect "Lat: -7.124546, Long: -34.867554" getLocalizacaoAmigo usuario=${id3} amigo="beltrana"
 
 expect "Lat: -8.0496103955, Long: -34.9237844032" getLocalizacaoAmigo usuario=${id2} amigo="sicrano"
 
