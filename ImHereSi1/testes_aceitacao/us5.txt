@@ -29,7 +29,7 @@ expectError "Usuario desconhecido." possoVerLocalizacao usuario=${id1} amigo="am
 #####################################################################################
 # editar modo de compartilhamento
 #####################################################################################
-Permissao negada.
+
 setCompartilhamento usuario=${id1} amigo="sicrano" modo=1
 
 expect false possoVerLocalizacao usuario=${id3} amigo="fulano"
@@ -40,7 +40,7 @@ expect false possoVerLocalizacao usuario=${id2} amigo="fulano"
 
 setCompartilhamento usuario=${id3} amigo="beltrana" modo=2
 
-expect false possoVerLocalizacao usuario=${id2} amigo="sicrano"
+expect true possoVerLocalizacao usuario=${id2} amigo="sicrano"
 
 #####################################################################################
 # excluir amigo
