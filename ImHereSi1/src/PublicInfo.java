@@ -5,12 +5,11 @@ public class PublicInfo {
 	private String login;
 	private Position position;
 	private boolean visible;
+	private String telephoneNumber;
+	private String email;
 	
-	public PublicInfo(String name, String login, Position position, boolean visible){
-		this.name = name;
-		this.login = login;
-		this.position = position;
-		this.visible = visible;
+	public PublicInfo(User user,  boolean visible){
+		
 	}
 	
 	public boolean isVisible(){
@@ -27,5 +26,13 @@ public class PublicInfo {
 	
 	public void setName(String newName){
 		this.name = newName;
+	}
+	
+	public void setTelephoneNumber(String newTelephoneNumber){
+		this.telephoneNumber = newTelephoneNumber;
+	}
+
+	public void setEmail(String newEmail){
+		this.email = newEmail;
 	}
 }
