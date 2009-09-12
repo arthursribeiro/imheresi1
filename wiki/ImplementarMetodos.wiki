@@ -11,12 +11,14 @@
 ||[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#User_Story_7 User Story 7]||
 ||[http://code.google.com/p/imheresi1/wiki/ImplementarMetodos#Erros Erros]||
 
+<br>
 = Métodos Gerais = 
 
 || *Método* || *Obs* ||
 || zerarSistema || zera o sistema e todos os cadastrados ||
 || encerrarSistema || grava o cadastro em arquivo e encerra o programa ||
 
+<br>
 = User Story 1 =
 
 || *Método* || *Obs* ||
@@ -25,12 +27,14 @@
 || atualizarUsuario || 3 atributos, (3) ||
 || removerUsuario || 1 atributo, (4) ||
 
+<br>
 = User Story 2 =
 
 || *Método* || *Obs* ||
 || login || 3 atributos, (5) ||
 || logout || 1 atributo, (6) ||
 
+<br>
 = User Story 3 =
 
 || *Método* || *Obs* ||
@@ -40,6 +44,7 @@
 || setLocalizacao || 3 atributos, (8) ||
 || getLocalizacao || 1 atributo, retorna String com a posição ||
 
+<br>
 = User Story 4 =
 
 || *Método* || *Obs* ||
@@ -50,6 +55,7 @@
 || recusarCompartilhamento || 2 atributos ||
 || getAmigos || 1 atributo, retorna String com usernames de amigos, (9) ||
 
+<br>
 = User Story 5 =
 
 || *Método* || *Obs* ||
@@ -57,12 +63,13 @@
 || setCompartilhamento || 3 atributos ||
 || removerAmigo || 2 atributos,(11) ||
 
+<br>
 = User Story 6 =
 
 || *Método* || *Obs* ||
 || getLocalizacaoAmigo || 2 atributos, (12) ||
 
-
+<br>
 = User Story 7 =
 
 || *Método* || *Obs* ||
@@ -73,6 +80,7 @@
 || enviarMensagem || 2 atributos ||
 || receberMensagem || 1 atributo ||
 
+<br>
 = Erros =
 
 (1) falta de campos obrigatorios, userName existente, senha com menos de 6 caracteres. 
