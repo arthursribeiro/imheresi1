@@ -26,6 +26,7 @@
 || getUsuarioPorNome || 2 atributos, retorna o id do usuario, (2) || 
 || atualizarUsuario || 3 atributos, (3) ||
 || removerUsuario || 1 atributo, (4) ||
+|| getAtributoUsuario || 2 atributos ||
 
 <br>
 = User Story 2 =
