@@ -1,3 +1,4 @@
+import posicionamento.Position;
 
 public class PublicInfo {
 
