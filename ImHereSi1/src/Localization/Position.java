@@ -1,4 +1,4 @@
-package posicionamento;
+package Localization;
 import java.io.IOException;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;

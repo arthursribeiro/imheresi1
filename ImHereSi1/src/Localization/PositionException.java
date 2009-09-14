@@ -1,4 +1,4 @@
-package posicionamento;
+package Localization;
 
 /**
  * Classe de erros para um objeto Position
