@@ -105,13 +105,13 @@ public class Position {
 	/**
 	public static void main(String[] args) {
 		try {
-			Position pos = new Position("127.0.0.1");
+			Position pos = new Position("189.71.67.129");
 			System.out.println(pos.getLatitude());
 			System.out.println(pos.getLongitude());
 		} catch (PositionException e) {
 			e.printStackTrace();
 		}
 
-	}*/
+	}**/
 
 }
