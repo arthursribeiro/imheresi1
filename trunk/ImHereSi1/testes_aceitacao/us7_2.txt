@@ -20,7 +20,7 @@ expect "SMS enviado com sucesso." \
 	enviarSMS de=${id2} para="sicrano" \
 	msg="Tou chegando. Me espera. Ja vi que vc chegou ;)"
 
-equalFiles arq1=sms.log arq2=testesAceitacao/saidas/us7_2.txt
+equalFiles arq1=files/outputs/sms.log arq2=testes_aceitacao/saidas/us7_2.txt
 
 logout id=${id1}
 
