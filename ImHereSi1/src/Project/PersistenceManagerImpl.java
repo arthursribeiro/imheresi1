@@ -15,19 +15,13 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	@Override
-	public SystemLog getSystemLog() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public User getUserByName(String name, int occurrence) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserByUserName(String userName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -45,7 +39,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	@Override
-	public void remvoeUser(User userById) {
+	public void removeUser(User userById) {
 		// TODO Auto-generated method stub
 		
 	}

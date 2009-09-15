@@ -1,20 +1,16 @@
 package Project;
 import java.util.HashMap;
 
-public class System {
+public class MainSystem {
 	
-	private HashMap<Integer, User> loggedUsers;
+	private HashMap<String, User> loggedUsers;
 	private PersistenceManager persistenceManager;
-	private SystemLog sysLog;
-	private int lastId;
 	
-	public System(){
+	public MainSystem(){
 		persistenceManager = new PersistenceManagerImpl();
-		sysLog = persistenceManager.getSystemLog();
-		this.lastId = sysLog.getLastId();
 	}
 	
-	public int logIn(String userName, String password, String ip) throws Exception{
+	public String logIn(String userName, String password, String ip) throws Exception{
 		if(!persistenceManager.hasUser(userName))
 			throw new Exception("Login/senha invalidos.");
 		
@@ -24,21 +20,18 @@ public class System {
 			throw new Exception("Login/senha invalidos.");
 		
 		userToLogIn.setIp(ip);
-		loggedUsers.put(userToLogIn.getId(), userToLogIn);
+		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
 		
-		return userToLogIn.getId();
+		return userToLogIn.getUserName();
 	}
 	
 	public User creatUser(String userName, String password, String email, String name, String phone) throws Exception{
 		if(persistenceManager.hasUser(userName)) throw new Exception("O username jah existe.");
 		
-		this.lastId = this.lastId + 1;
-		
-		User newUser = new User(userName, password, this.lastId);
+		User newUser = new User(userName, password);
 		newUser.setMail(email);
 		newUser.setName(name);
 		newUser.setPhone(phone);
-		newUser.setId(this.lastId);
 		
 		return newUser;
 	}
@@ -51,8 +44,8 @@ public class System {
 		return foundUser;
 	}
 
-	public User getUserById(int id) throws Exception{
-		User foundUser = persistenceManager.getUserById(id);
+	public User getUserByUserName(String userName) throws Exception{
+		User foundUser = persistenceManager.getUserByUserName(userName);
 		if(foundUser == null) throw new Exception("O usuario nao existe.");
 		
 		return foundUser;
@@ -66,23 +59,23 @@ public class System {
 		persistenceManager.saveUser(user);
 	}
 
-	public void updateName(int id, String valor) throws Exception{
-		User user = this.getUserById(id);
+	public void updateName(String userName, String valor) throws Exception{
+		User user = this.getUserByUserName(userName);
 		user.setName(valor);
 	}
 
-	public void updateMail(int id, String valor) throws Exception{
-		User user = this.getUserById(id);
+	public void updateMail(String userName, String valor) throws Exception{
+		User user = this.getUserByUserName(userName);
 		user.setMail(valor);
 	}
 
-	public void updatePhone(int id, String valor) throws Exception{
-		User user = this.getUserById(id);
+	public void updatePhone(String userName , String valor) throws Exception{
+		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
 	}
 
 	public void removeUser(User userById) {
-		persistenceManager.remvoeUser(userById);
+		persistenceManager.removeUser(userById);
 	}
 	
 	

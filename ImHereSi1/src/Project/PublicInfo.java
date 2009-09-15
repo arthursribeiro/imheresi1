@@ -1,4 +1,5 @@
 package Project;
+
 import Localization.Position;
 
 public class PublicInfo {

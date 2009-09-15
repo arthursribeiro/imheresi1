@@ -6,16 +6,14 @@ public interface PersistenceManager {
 
 	User getUser(String user);
 
-	SystemLog getSystemLog();
-
 	User getUserByName(String name, int occurrence);
 
-	User getUserById(int id);
+	User getUserByUserName(String userName);
 
 	void resetBD();
 
 	void saveUser(User user);
 
-	void remvoeUser(User userById);
+	void removeUser(User userById);
 
 }
