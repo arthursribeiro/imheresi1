@@ -3,6 +3,9 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Localization.Position;
+import Localization.PositionException;
+
 
 public class User{
 
@@ -67,6 +70,18 @@ public class User{
 		this.myPublicInfo.setTelephoneNumber(phone);
 	}
 	
+	public void setPosition() throws PositionException {
+		this.myPublicInfo.setPosition(this.ip);
+	}
+	
+	public void setPositionManual(double latitude, double longitude) throws PositionException {
+		this.myPublicInfo.setPositionManual(latitude, longitude);
+	}
+	
+	public Position getPosition() throws PositionException {
+		return this.myPublicInfo.getPosition();
+	}
+	
 		
 	public String getPassword(){
 		return this.password;
@@ -79,6 +94,7 @@ public class User{
 	public String getMail() {
 		return this.myPublicInfo.getEMail();
 	}
+	
 
 	public String getPhone() {
 		return this.myPublicInfo.getTelephoneNumber();

@@ -1,6 +1,7 @@
 package Project;
 
 import Localization.Position;
+import Localization.PositionException;
 
 public class PublicInfo {
 
@@ -10,48 +11,66 @@ public class PublicInfo {
 	private boolean visible;
 	private String telephoneNumber;
 	private String email;
-	
-	public PublicInfo(boolean visible){
+
+	public PublicInfo(boolean visible) {
 		this.visible = visible;
 	}
-	
-	public boolean isVisible(){
+
+	public boolean isVisible() {
 		return this.visible;
 	}
-	
-	public Position getPosition(){
+
+	public Position getPosition() throws PositionException {
+		if (this.position == null) {
+			throw new PositionException("Nao foi possivel obter a localizacao.");
+		}
 		return this.position;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return this.name;
 	}
-	
-	public String getLogin(){
+
+	public String getLogin() {
 		return this.login;
 	}
-	
-	public void setLogin(String log){
+
+	public void setLogin(String log) {
 		this.login = log;
 	}
-	
-	public String getTelephoneNumber(){
+
+	public String getTelephoneNumber() {
 		return this.telephoneNumber;
 	}
-	
-	public String getEMail(){
+
+	public String getEMail() {
 		return this.email;
 	}
-		
-	public void setName(String newName){
+
+	public void setName(String newName) {
 		this.name = newName;
 	}
-	
-	public void setTelephoneNumber(String newTelephoneNumber){
+
+	public void setPosition(String ip) throws PositionException {
+		this.position = new Position(ip);
+	}
+
+	public void setPositionManual(double latitude, double longitude)
+			throws PositionException {
+		if (this.position == null) {
+			this.position = new Position(latitude, longitude);
+		} else { // Se eu ja tenho uma localizacao valida
+			// q foi criada a partir de um ip, eu posso
+			// setar manualmente uma nova lat e longi? :B
+			this.position.setPosition(latitude, longitude);
+		}
+	}
+
+	public void setTelephoneNumber(String newTelephoneNumber) {
 		this.telephoneNumber = newTelephoneNumber;
 	}
 
-	public void setEmail(String newEmail){
+	public void setEmail(String newEmail) {
 		this.email = newEmail;
 	}
 }
