@@ -37,9 +37,8 @@ public class Us3_Facade {
 			PositionException {
 		User user = getUsuarioPorUserName(userName);
 		Position local = user.getPosition();
-		if (local == null) {
+		if (local == null)
 			throw new PositionException("Nao foi possivel obter a localizacao.");
-		}
 		return local.toString();
 	}
 
@@ -49,8 +48,12 @@ public class Us3_Facade {
 		user.setPositionManual(latitude, longitude);
 	}
 
-	public String getLocalizacao(String userName) throws Exception, PositionException {
+	public String getLocalizacao(String userName) throws Exception,
+			PositionException {
 		User user = getUsuarioPorUserName(userName);
+		Position local = user.getPosition();
+		if (local == null)
+			throw new PositionException("Nao foi possivel obter a localizacao.");
 		return user.getPosition().toString();
 	}
 
