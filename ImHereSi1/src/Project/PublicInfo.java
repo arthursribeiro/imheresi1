@@ -11,8 +11,8 @@ public class PublicInfo {
 	private String telephoneNumber;
 	private String email;
 	
-	public PublicInfo(User user,  boolean visible){
-		
+	public PublicInfo(boolean visible){
+		this.visible = visible;
 	}
 	
 	public boolean isVisible(){
@@ -27,6 +27,22 @@ public class PublicInfo {
 		return this.name;
 	}
 	
+	public String getLogin(){
+		return this.login;
+	}
+	
+	public void setLogin(String log){
+		this.login = log;
+	}
+	
+	public String getTelephoneNumber(){
+		return this.telephoneNumber;
+	}
+	
+	public String getEMail(){
+		return this.email;
+	}
+		
 	public void setName(String newName){
 		this.name = newName;
 	}
