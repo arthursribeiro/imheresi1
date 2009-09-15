@@ -1,12 +1,13 @@
-package Project;
+package com.googlecode.imheresi1.project;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Localization.Position;
-import Localization.PositionException;
+import com.googlecode.imheresi1.localization.Position;
+import com.googlecode.imheresi1.localization.PositionException;
+
 
 
 public class User{

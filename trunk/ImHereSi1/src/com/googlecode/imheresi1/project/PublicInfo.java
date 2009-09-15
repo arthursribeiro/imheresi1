@@ -1,7 +1,7 @@
-package Project;
+package com.googlecode.imheresi1.project;
 
-import Localization.Position;
-import Localization.PositionException;
+import com.googlecode.imheresi1.localization.Position;
+import com.googlecode.imheresi1.localization.PositionException;
 
 public class PublicInfo {
 

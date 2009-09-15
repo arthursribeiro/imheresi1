@@ -1,4 +1,4 @@
-package Message;
+package com.googlecode.imheresi1.message;
 
 public class Invitation implements Message{
 

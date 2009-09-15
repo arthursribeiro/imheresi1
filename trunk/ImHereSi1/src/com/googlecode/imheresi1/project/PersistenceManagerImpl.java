@@ -1,4 +1,4 @@
-package Project;
+package com.googlecode.imheresi1.project;
 
 public class PersistenceManagerImpl implements PersistenceManager {
 

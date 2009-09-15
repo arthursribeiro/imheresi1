@@ -1,4 +1,4 @@
-package Localization;
+package com.googlecode.imheresi1.localization;
 import java.io.IOException;
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
