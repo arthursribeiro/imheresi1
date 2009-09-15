@@ -1,22 +1,66 @@
 package Project;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import Message.Chat;
 import Message.Email;
+import Message.Invitation;
 import Message.Message;
 import Message.MessageController;
 import Message.SMS;
 
 public class MainSystem {
 	
+	public static final int OCULTAR = 1;
+	public static final int EXIBIR = 2;
+	
 	private HashMap<String, User> loggedUsers;
 	private PersistenceManager persistenceManager;
 	private MessageController messageController;
 	private Chat chat;
 	
-	public MainSystem(){
+	//Map<userName, List<mails>>
+	private Map<String,List<String>> invitations;
+	
+	public MainSystem() {
 		persistenceManager = new PersistenceManagerImpl();
 		messageController = new MessageController();
+		invitations = new HashMap<String,List<String>>();
+		loggedUsers = new HashMap<String,User>();		
+	}
+	
+	public void confirmSharing(String from, String with, int mode) throws Exception{
+		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
+		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+		
+		User f = this.loggedUsers.get(from);
+		User w = getUserByUserName(with);
+		
+		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
+
+		f.addFriend(w.getPublicInfo(),mode);
+		w.addFriend(f.getPublicInfo(),mode);
+		
+		this.invitations.get(with).remove(f.getMail());
+	}
+	
+	public void refuseSharing(String from, String with, int mode) throws Exception{
+		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
+		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+		
+		User f = this.loggedUsers.get(from);
+				
+		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
+
+		this.invitations.get(with).remove(f.getMail());
+	}
+	
+	public String getFriends(String userName) throws Exception{
+		if(!this.loggedUsers.containsKey(userName)) throw new Exception("Permissao negada.");
+		User u = getUserByUserName(userName);
+		return u.getFriendsUserNames();
 	}
 	
 	public String logIn(String userName, String password, String ip) throws Exception{
@@ -44,6 +88,19 @@ public class MainSystem {
 		newUser.setPhone(phone);
 	
 		return newUser;
+	}
+	
+	public void sendInvitation(String from, String to) throws Exception {
+		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+		if(this.invitations.containsKey(from)) this.invitations.get(from).add(to);
+		else {
+			List<String> mails = new ArrayList<String>();
+			mails.add(to);
+			this.invitations.put(from, mails);
+		}
+		User u = this.loggedUsers.get(from);
+		Message m = new Invitation(u.getName(),u.getMail(),to);
+		this.messageController.sendMessage(m);
 	}
 	
 	public void logOut(String userName) throws Exception {
@@ -120,17 +177,4 @@ public class MainSystem {
 		persistenceManager.removeUser(userById);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
-
-

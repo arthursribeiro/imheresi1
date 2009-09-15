@@ -1,5 +1,7 @@
 package Project;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +12,7 @@ import Localization.PositionException;
 public class User{
 
 	private Collection<PublicInfo> friends;
+	private List<String> visibleFriends;
 	private String password;
 	private String ip;
 	private PublicInfo myPublicInfo;
@@ -17,18 +20,36 @@ public class User{
 	//Usar sets para setar qualquer tipo de atributo devido aos tratamentos de erros!
 	public User(String userName, String password) throws Exception {
 		setPassword(password);
-		this.myPublicInfo = new PublicInfo(true);
+		this.myPublicInfo = new PublicInfo();
 		setUserName(userName);
 	}
 
-	public void addFriend(PublicInfo friend){
+	public PublicInfo getPublicInfo(){
+		return this.myPublicInfo;
+	}
+		
+	public void addFriend(PublicInfo friend,int mode){
 		this.friends.add(friend);
+		if(mode == 2) this.visibleFriends.add(friend.getLogin());
 	}
 	
 	public void setIp(String ip){
 		this.ip = ip;
 	}
 
+	public String getFriendsUserNames(){
+		StringBuffer sB = new StringBuffer();
+		sB.append('[');
+		Iterator<PublicInfo> it = this.friends.iterator();
+		while(it.hasNext()){
+			PublicInfo pInfo = it.next();
+			sB.append(pInfo.getLogin());
+			if(it.hasNext()) sB.append(", ");
+		}
+		sB.append(']');
+		return sB.toString();
+	}
+	
 	
 	//Coloquei os tratamentos de erros nos sets aqui pra poder dar uma refatorada! Lembrar de sempre usar os sets pra colocafr alguma coisa
 	//inclusive no construtor!

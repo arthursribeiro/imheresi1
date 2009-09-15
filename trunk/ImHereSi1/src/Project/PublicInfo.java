@@ -8,16 +8,11 @@ public class PublicInfo {
 	private String name;
 	private String login;
 	private Position position;
-	private boolean visible;
 	private String telephoneNumber;
 	private String email;
 
-	public PublicInfo(boolean visible) {
-		this.visible = visible;
-	}
+	public PublicInfo() {
 
-	public boolean isVisible() {
-		return this.visible;
 	}
 
 	public Position getPosition() throws PositionException {
