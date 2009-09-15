@@ -29,7 +29,7 @@ expect "Documento convite.txt enviado com sucesso." \
 expect "Documento convite.txt enviado com sucesso." \
 	enviarConvite de=${id2} para="clementino@email.com"
 
-equalFiles arq1=convites.log arq2=testesAceitacao/saidas/us4_1.txt
+equalFiles arq1=files/outputs/convites.log arq2=testes_aceitacao/saidas/us4_1.txt
 
 # cadastra e autentica os usuarios convidados caso ainda nao possuam conta no sistema
 # os modos de compartilhamento sao:
