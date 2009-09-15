@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.googlecode.imheresi1.project.MainSystem;
 import com.googlecode.imheresi1.project.User;
 
-import Project.*;
-
 public class Us1_Facade {
 
 	private MainSystem mySystem;
