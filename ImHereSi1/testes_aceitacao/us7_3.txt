@@ -35,7 +35,7 @@ msg=receberMensagem de=${id1}
 
 encerrarChat usuario1=${id1} usuario2=${id2}
 
-equalFiles arq1=beltrana-fulano.log arq2=testesAceitacao/saidas/us7_3.txt
+equalFiles arq1=files/chats/beltrana-fulano.log arq2=testes_aceitacao/saidas/us7_3.txt
 
 logout id=${id1}
 
