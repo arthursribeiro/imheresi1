@@ -1,15 +1,16 @@
-package Project;
+package com.googlecode.imheresi1.project;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Message.Chat;
-import Message.Email;
-import Message.Invitation;
-import Message.Message;
-import Message.MessageController;
-import Message.SMS;
+import com.googlecode.imheresi1.message.Chat;
+import com.googlecode.imheresi1.message.Email;
+import com.googlecode.imheresi1.message.Invitation;
+import com.googlecode.imheresi1.message.Message;
+import com.googlecode.imheresi1.message.MessageController;
+import com.googlecode.imheresi1.message.SMS;
+
 
 public class MainSystem {
 	

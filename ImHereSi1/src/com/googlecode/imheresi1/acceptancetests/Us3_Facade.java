@@ -1,11 +1,12 @@
-package AcceptanceTests;
+package com.googlecode.imheresi1.acceptancetests;
 
 import java.util.ArrayList;
 
-import Localization.Position;
-import Localization.PositionException;
-import Project.MainSystem;
-import Project.User;
+import com.googlecode.imheresi1.localization.Position;
+import com.googlecode.imheresi1.localization.PositionException;
+import com.googlecode.imheresi1.project.MainSystem;
+import com.googlecode.imheresi1.project.User;
+
 
 public class Us3_Facade {
 

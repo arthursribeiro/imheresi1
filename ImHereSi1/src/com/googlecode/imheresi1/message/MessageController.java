@@ -1,4 +1,4 @@
-package Message;
+package com.googlecode.imheresi1.message;
 
 import java.io.File;
 import java.io.FileInputStream;

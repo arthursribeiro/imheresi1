@@ -1,8 +1,8 @@
-package AcceptanceTests;
+package com.googlecode.imheresi1.acceptancetests;
 
-import Project.MainSystem;
+import com.googlecode.imheresi1.project.MainSystem;
 
-public class Us7_2_Facade {
+public class Us7_1_Facade {
 	
 	private MainSystem mySystem;
 	
@@ -14,9 +14,9 @@ public class Us7_2_Facade {
 		//Nao sei o que isso faz...
 	}
 		
-	public String enviarSMS(String de, String para, String msg) throws Exception{	
-		mySystem.sendSMS(de, para, msg);
-		return "SMS enviado com sucesso.";
+	public String enviarEmail(String de, String para, String assunto, String msg) throws Exception{	
+		mySystem.sendMail(de, para, assunto, msg);
+		return "Email enviado com sucesso.";
 	}
 	
 	public void logout(String id) throws Exception{

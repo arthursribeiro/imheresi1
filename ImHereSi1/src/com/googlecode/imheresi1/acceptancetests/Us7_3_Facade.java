@@ -1,9 +1,10 @@
-package AcceptanceTests;
+package com.googlecode.imheresi1.acceptancetests;
 
 import java.util.ArrayList;
 
-import Project.MainSystem;
-import Project.User;
+import com.googlecode.imheresi1.project.MainSystem;
+import com.googlecode.imheresi1.project.User;
+
 
 public class Us7_3_Facade {
 	

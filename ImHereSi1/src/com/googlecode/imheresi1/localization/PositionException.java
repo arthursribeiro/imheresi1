@@ -1,4 +1,4 @@
-package Localization;
+package com.googlecode.imheresi1.localization;
 
 /**
  * Classe de erros para um objeto Position
