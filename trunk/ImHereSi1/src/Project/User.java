@@ -10,11 +10,10 @@ public class User{
 	private String password;
 	private String ip;
 	private PublicInfo myPublicInfo;
-	private int id;
 	
 	//Usar sets para setar qualquer tipo de atributo devido aos tratamentos de erros!
-	public User(String userName, String password2, int id){
-		
+	public User(String userName, String password){
+		this.password = password;
 	}
 
 	public void addFriend(PublicInfo friend){
@@ -23,10 +22,6 @@ public class User{
 	
 	public void setIp(String ip){
 		this.ip = ip;
-	}
-
-	public void setId(int i) {
-		// TODO Auto-generated method stub
 	}
 
 	
@@ -71,10 +66,6 @@ public class User{
 		return this.password;
 	}
 	
-	public int getId() {
-		return this.id;
-	}
-
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
