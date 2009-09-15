@@ -12,8 +12,10 @@ public class User{
 	private PublicInfo myPublicInfo;
 	
 	//Usar sets para setar qualquer tipo de atributo devido aos tratamentos de erros!
-	public User(String userName, String password){
-		this.password = password;
+	public User(String userName, String password) throws Exception {
+		setPassword(password);
+		this.myPublicInfo = new PublicInfo(true);
+		setUserName(userName);
 	}
 
 	public void addFriend(PublicInfo friend){
@@ -30,6 +32,7 @@ public class User{
 	public void setMail(String email) throws Exception{
 		if((email == null) || (email.trim().equals(""))) throw new Exception("E-mail eh um dado obrigatorio.");
 		if(!this.validMail(email)) throw new Exception("E-mail invalido.");
+		this.myPublicInfo.setEmail(email);
 	}
 
 	private boolean validMail(String email) {
@@ -44,21 +47,24 @@ public class User{
 	public void setPassword(String password) throws Exception{
 		if((password == null) || (password.trim().equals(""))) throw new Exception("Senha eh um dado obrigatorio.");
 		if(password.length() < 6) throw new Exception("Senha deve ter no minimo 6 caracteres.");
-		
 		this.password = password;
 	}
 	
 	public void setName(String name) throws Exception{
 		if((name == null) || (name.trim().equals(""))) throw new Exception("Nome eh um dado obrigatorio.");
-		
+		this.myPublicInfo.setName(name);
 	}
 	
-	public void setUserName(String userName) throws Exception{
+	/*
+	 * Nao Pode resetar o Username!! 
+	 */
+	private void setUserName(String userName) throws Exception{
 		if((userName == null) || (userName.trim().equals(""))) throw new Exception("Username eh um dado obrigatorio.");
+		this.myPublicInfo.setLogin(userName);
 	}
 
 	public void setPhone(String phone) {
-		// TODO Auto-generated method stub
+		this.myPublicInfo.setTelephoneNumber(phone);
 	}
 	
 		
@@ -67,23 +73,19 @@ public class User{
 	}
 	
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.myPublicInfo.getName();
 	}
 
 	public String getMail() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.myPublicInfo.getEMail();
 	}
 
 	public String getPhone() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.myPublicInfo.getTelephoneNumber();
 	}
 
 	public String getUserName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.myPublicInfo.getLogin();
 	}
 	
 }

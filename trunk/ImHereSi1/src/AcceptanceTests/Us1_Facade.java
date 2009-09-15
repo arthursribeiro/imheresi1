@@ -20,7 +20,8 @@ public class Us1_Facade {
 	}
 	
 	public void criarUsuario(String userName, String nome, String email, String senha, String telefone) throws Exception{
-		User user = mySystem.creatUser(userName, senha, email, nome, telefone);
+		User user = mySystem.createUser(userName, senha, email, nome, telefone);
+
 		this.createdUsers.add(user);
 	}
 	
@@ -57,21 +58,25 @@ public class Us1_Facade {
 	}
 	
 	public void atualizarUsuario(String userName, String atributo, String valor) throws Exception{
+		if(atributo.equalsIgnoreCase("userName")) throw new Exception("Nao eh permitido alterar o username.");
 		User user = this.getUsuarioPorUserName(userName);
 		
 		//Os updates utilizam os sets que ja lancam as excecoes.. refatoramento das exececoes!
 		if(atributo.equalsIgnoreCase("nome")) user.setName(valor);
 		if(atributo.equalsIgnoreCase("email")) user.setMail(valor);
 		if(atributo.equalsIgnoreCase("telefone")) user.setPhone(valor);
-		if(atributo.equalsIgnoreCase("userName")) throw new Exception("Nao eh permitido alterar o username.");
+		if(atributo.equalsIgnoreCase("senha")) user.setPassword(valor);
+		
 	}
 	
 	public void removerUsuario(String userName) throws Exception{
 		for(User usuario : this.createdUsers){
 			if(usuario.getUserName().equals(userName)){
 				this.createdUsers.remove(usuario);
+				return;
 			}
 		}
+		throw new Exception("O usuario nao existe.");
 	}
 	
 }

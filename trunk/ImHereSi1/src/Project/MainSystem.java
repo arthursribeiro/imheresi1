@@ -25,14 +25,15 @@ public class MainSystem {
 		return userToLogIn.getUserName();
 	}
 	
-	public User creatUser(String userName, String password, String email, String name, String phone) throws Exception{
+	public User createUser(String userName, String password, String email, String name, String phone) throws Exception{
+
 		if(persistenceManager.hasUser(userName)) throw new Exception("O username jah existe.");
-		
+	
 		User newUser = new User(userName, password);
 		newUser.setMail(email);
 		newUser.setName(name);
 		newUser.setPhone(phone);
-		
+	
 		return newUser;
 	}
 	
