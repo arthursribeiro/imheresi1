@@ -14,8 +14,6 @@ public class Position {
 
 	private double latitude;
 	private double longitude;
-	// Isso (abaixo) da conflito com a classe System da gente!
-	// Por isso criei um package separado... :P
 	private final String DIR = System.getProperty("user.dir");
 	private final String SEPARATOR = System.getProperty("file.separator");
 	private final String DATABASE = DIR + SEPARATOR + "GeoLiteCity.dat";
@@ -29,7 +27,7 @@ public class Position {
 	public Position(String ip) throws PositionException {
 		try {
 			LookupService lookUp = new LookupService(DATABASE,
-					LookupService.GEOIP_STANDARD);
+					LookupService.GEOIP_MEMORY_CACHE);
 			Location localizacao = lookUp.getLocation(ip);
 			if (localizacao == null) {
 				throw new PositionException(
