@@ -34,10 +34,6 @@ public class User{
 		if(mode == 2) this.visibleFriends.add(friend.getLogin());
 	}
 	
-	public void setIp(String ip){
-		this.ip = ip;
-	}
-
 	public String getFriendsUserNames(){
 		StringBuffer sB = new StringBuffer();
 		sB.append('[');
@@ -54,6 +50,20 @@ public class User{
 	
 	//Coloquei os tratamentos de erros nos sets aqui pra poder dar uma refatorada! Lembrar de sempre usar os sets pra colocafr alguma coisa
 	//inclusive no construtor!
+	public void setIp(String ip) throws Exception{
+		if(!this.validIp(ip)) throw new Exception("IP invalido.");
+		this.ip = ip;
+	}
+	
+	private boolean validIp(String Ip){
+		String expression = "^((0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})\\.){3}(0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})$";
+	       
+        Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(ip);
+        
+        return matcher.matches();
+	}
+	
 	public void setMail(String email) throws Exception{
 		if((email == null) || (email.trim().equals(""))) throw new Exception("E-mail eh um dado obrigatorio.");
 		if(!this.validMail(email)) throw new Exception("E-mail invalido.");

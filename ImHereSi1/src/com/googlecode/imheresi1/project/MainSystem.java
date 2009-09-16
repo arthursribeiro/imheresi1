@@ -13,84 +13,143 @@ import com.googlecode.imheresi1.message.SMS;
 
 
 public class MainSystem {
-	
+
 	public static final int OCULTAR = 1;
 	public static final int EXIBIR = 2;
-	
+
 	private HashMap<String, User> loggedUsers;
+	private ArrayList<User> createdUsers;
 	private PersistenceManager persistenceManager;
 	private MessageController messageController;
 	private Chat chat;
-	
+
 	//Map<userName, List<mails>>
 	private Map<String,List<String>> invitations;
-	
+
 	public MainSystem() {
-		persistenceManager = new PersistenceManagerImpl();
-		messageController = new MessageController();
-		invitations = new HashMap<String,List<String>>();
-		loggedUsers = new HashMap<String,User>();		
+		this.persistenceManager = new PersistenceManagerImpl();
+		this.messageController = new MessageController();
+		this.invitations = new HashMap<String,List<String>>();
+		this.loggedUsers = new HashMap<String,User>();		
+		this.createdUsers = new ArrayList<User>();
 	}
-	
+
 	public void confirmSharing(String from, String with, int mode) throws Exception{
 		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
 		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
-		
+
 		User f = this.loggedUsers.get(from);
 		User w = getUserByUserName(with);
-		
+
 		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
 
 		f.addFriend(w.getPublicInfo(),mode);
 		w.addFriend(f.getPublicInfo(),mode);
-		
+
 		this.invitations.get(with).remove(f.getMail());
 	}
-	
+
 	public void refuseSharing(String from, String with, int mode) throws Exception{
 		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
 		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
-		
+
 		User f = this.loggedUsers.get(from);
-				
+
 		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
 
 		this.invitations.get(with).remove(f.getMail());
 	}
-	
+
 	public String getFriends(String userName) throws Exception{
 		if(!this.loggedUsers.containsKey(userName)) throw new Exception("Permissao negada.");
 		User u = getUserByUserName(userName);
 		return u.getFriendsUserNames();
 	}
-	
+
 	public String logIn(String userName, String password, String ip) throws Exception{
-		if(!persistenceManager.hasUser(userName))
-			throw new Exception("Login/senha invalidos.");
-		
-		User userToLogIn = persistenceManager.getUser(userName);
-		
+		User userToLogIn = this.getCreatedUserByUserName(userName);
+
+		if(userToLogIn == null){
+			if(!persistenceManager.hasUser(userName))
+				throw new Exception("Login/senha invalidos.");
+
+			userToLogIn = persistenceManager.getUser(userName);
+		}
+
 		if(!userToLogIn.getPassword().equals(password))
 			throw new Exception("Login/senha invalidos.");
-		
+
 		userToLogIn.setIp(ip);
+		if(this.createdUsers.contains(userToLogIn)) 
+			
+			this.createdUsers.remove(userToLogIn);
 		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
-		
+
 		return userToLogIn.getUserName();
 	}
 	
+	public boolean isConected(String userName) {
+		return this.loggedUsers.containsKey(userName);
+	}
+
 	public User createUser(String userName, String password, String email, String name, String phone) throws Exception{
 
-		if(persistenceManager.hasUser(userName)) throw new Exception("O username jah existe.");
-	
+		if((persistenceManager.hasUser(userName)) || (this.getCreatedUserByUserName(userName) != null)) 
+			throw new Exception("O username jah existe.");
+
 		User newUser = new User(userName, password);
 		newUser.setMail(email);
 		newUser.setName(name);
 		newUser.setPhone(phone);
-	
+
+		this.createdUsers.add(newUser);
+
 		return newUser;
 	}
-	
+
+	public User getUserbyName(String name, int occurrence) throws Exception{
+		User foundUser = this.getCreatedUserByName(name, occurrence);
+
+		if( foundUser != null)return foundUser; 
+
+		foundUser = persistenceManager.getUserByName(name, occurrence);
+		if(foundUser == null) throw new Exception("O usuario nao existe.");
+
+		return foundUser;
+	}
+
+	public User getUserByUserName(String userName) throws Exception{
+		User foundUser = this.getCreatedUserByUserName(userName);
+
+		if(foundUser != null) return foundUser;
+
+		foundUser = persistenceManager.getUserByUserName(userName);
+		if(foundUser == null) throw new Exception("O usuario nao existe.");
+
+		return foundUser;
+	}
+	//Accessory Methods for created users - One might be created and don`t logIn.
+	//It`s important to save them when the system might be closed.
+
+	private User getCreatedUserByName(String name, int occurance){
+		int found = 0;
+
+		for(int i = 0; i <= this.createdUsers.size(); i++){
+			if(this.createdUsers.get(i).getName().contains(name)) found++;
+			if(found == occurance) return this.createdUsers.get(i);
+		}
+		return null;
+	}
+
+	private User getCreatedUserByUserName(String userName){
+		for(User usuario: this.createdUsers){
+			if(usuario.getUserName().equals(userName))
+				return usuario;
+		}
+
+		return null;
+	}
+
 	public void sendInvitation(String from, String to) throws Exception {
 		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
 		if(this.invitations.containsKey(from)) this.invitations.get(from).add(to);
@@ -103,52 +162,38 @@ public class MainSystem {
 		Message m = new Invitation(u.getName(),u.getMail(),to);
 		this.messageController.sendMessage(m);
 	}
-	
+
 	public void logOut(String userName) throws Exception {
 		if(!loggedUsers.containsKey(userName)) throw new Exception("Sessao inexistente.");
 		this.loggedUsers.remove(userName);
 	}
-	
+
 	public void sendMail(String from, String to, String subject, String msg) throws Exception{
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject, msg);
 		messageController.sendMessage(mail);
 	}
-	
+
 	public void sendSMS(String from, String to, String msg) throws Exception{
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
 		messageController.sendMessage(sms);
 	}
-	
-	public User getUserbyName(String name, int occurrence) throws Exception{
-		User foundUser = persistenceManager.getUserByName(name, occurrence);
-		if(foundUser == null) throw new Exception("O usuario nao existe.");
-		
-		return foundUser;
-	}
 
 	public void initChat(String u1, String u2){
 		chat = new Chat(u1,u2);
 	}
-	
+
 	public void endChat() throws Exception{
 		messageController.sendMessage(chat);
 		chat = null;
 	}
-	
+
 	public void sendChat(String receiver, String msg) throws Exception{
 		if(chat == null) throw new Exception("Chat nao foi iniciado.");
 		chat.addMsg(receiver, msg);
-	}
-	
-	public User getUserByUserName(String userName) throws Exception{
-		User foundUser = persistenceManager.getUserByUserName(userName);
-		if(foundUser == null) throw new Exception("O usuario nao existe.");
-		
-		return foundUser;
 	}
 
 	public void resetBD() {
@@ -174,8 +219,13 @@ public class MainSystem {
 		user.setPhone(valor);
 	}
 
-	public void removeUser(User userById) {
-		persistenceManager.removeUser(userById);
+	public void removeUser(String userName) throws Exception{
+		User userToRemove = this.getUserByUserName(userName);
+
+		if(this.createdUsers.contains(userToRemove)) 
+			this.createdUsers.remove(userToRemove);
+
+		persistenceManager.removeUser(userToRemove);
 	}
-	
+
 }
