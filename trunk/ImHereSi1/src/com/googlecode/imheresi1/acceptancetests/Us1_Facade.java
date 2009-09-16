@@ -8,11 +8,9 @@ import com.googlecode.imheresi1.project.User;
 public class Us1_Facade {
 
 	private MainSystem mySystem;
-	private ArrayList<User> createdUsers;
 	
 	public void zerarSistema(){
 		this.mySystem = new MainSystem();
-		this.createdUsers = new ArrayList<User>();
 	}
 	
 	//Encerra o sistema, gravando log e informacoes dos usuarios
@@ -21,30 +19,16 @@ public class Us1_Facade {
 	}
 	
 	public void criarUsuario(String userName, String nome, String email, String senha, String telefone) throws Exception{
-		User user = mySystem.createUser(userName, senha, email, nome, telefone);
+		this.mySystem.createUser(userName, senha, email, nome, telefone);
 
-		this.createdUsers.add(user);
 	}
 	
 	public String getUsuarioPorNome(String nome, int indice) throws Exception{
-		int ocorrencia = 0;
-		
-		for(int i = 0; i <= this.createdUsers.size(); i++){
-			if(this.createdUsers.get(i).getName().contains(nome)) ocorrencia++;
-			
-			if(ocorrencia == indice) return this.createdUsers.get(i).getUserName();
-		}
-		
-		throw new Exception("O usuario nao existe.");
+		return this.mySystem.getUserbyName(nome, indice).getUserName();
 	}
 	
 	private User getUsuarioPorUserName(String userName) throws Exception{
-		for(User usuario: this.createdUsers){
-			if(usuario.getUserName().equals(userName))
-				return usuario;
-		}
-		
-		throw new Exception("O usuario nao existe.");
+		return this.mySystem.getUserByUserName(userName);
 	}
 	
 	public String getAtributoUsuario(String userName, String atributo) throws Exception{
@@ -71,13 +55,7 @@ public class Us1_Facade {
 	}
 	
 	public void removerUsuario(String userName) throws Exception{
-		for(User usuario : this.createdUsers){
-			if(usuario.getUserName().equals(userName)){
-				this.createdUsers.remove(usuario);
-				return;
-			}
-		}
-		throw new Exception("O usuario nao existe.");
+		this.mySystem.removeUser(userName);
 	}
 	
 }
