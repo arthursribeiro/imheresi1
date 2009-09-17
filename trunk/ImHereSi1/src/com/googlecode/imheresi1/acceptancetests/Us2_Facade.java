@@ -1,9 +1,7 @@
 package com.googlecode.imheresi1.acceptancetests;
 
-import java.util.ArrayList;
 
 import com.googlecode.imheresi1.project.MainSystem;
-import com.googlecode.imheresi1.project.User;
 
 
 public class Us2_Facade {
@@ -32,5 +30,12 @@ public class Us2_Facade {
 	
 	public void logout(String userName) throws Exception{
 		this.mySystem.logOut(userName);
+	}
+	
+	public String cadastrarUsuario(String userName, String nome, String email, String senha, 
+			String telefone, String ip) throws Exception{
+		this.mySystem.createUser(userName, senha, email, nome, telefone);
+		this.mySystem.logIn(userName, senha, ip);
+		return userName;
 	}
 }

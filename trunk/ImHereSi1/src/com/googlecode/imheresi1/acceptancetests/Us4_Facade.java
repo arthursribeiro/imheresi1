@@ -23,8 +23,8 @@ public class Us4_Facade {
 		this.mySystem.confirmSharing(de, com, modo);
 	}
 	
-	public void recusarCompartilhamento(String de, String com, int modo) throws Exception{
-		this.mySystem.refuseSharing(de, com, modo);
+	public void recusarCompartilhamento(String de, String com) throws Exception{
+		this.mySystem.refuseSharing(de, com);
 	}
 	
 	public String enviarConvite(String de, String para) throws Exception{

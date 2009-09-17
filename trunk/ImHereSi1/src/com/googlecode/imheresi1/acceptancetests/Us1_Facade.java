@@ -1,6 +1,5 @@
 package com.googlecode.imheresi1.acceptancetests;
 
-import java.util.ArrayList;
 
 import com.googlecode.imheresi1.project.MainSystem;
 import com.googlecode.imheresi1.project.User;
