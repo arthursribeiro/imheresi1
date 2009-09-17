@@ -23,6 +23,7 @@ public class Invitation implements Message{
 		sB.append(System.getProperty("line.separator"));
 		sB.append(this.fromName+" ("+this.fromMail+") ");
 		sB.append("gostaria de compartilhar sua localização com você usando o I'mHere. Você também pode fazer o mesmo com os seus amigos, para mais informações acesse http://iamhere.com.");
+		sB.append(System.getProperty("line.separator"));
 		sB.append("Para aceitar ou recusar, clique no link abaixo.");
 		sB.append(System.getProperty("line.separator"));
 		sB.append(System.getProperty("line.separator"));
