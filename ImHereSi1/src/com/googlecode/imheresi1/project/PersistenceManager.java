@@ -4,16 +4,16 @@ public interface PersistenceManager {
 
 	boolean hasUser(String user);
 
-	User getUser(String user);
+	Object getUser(String user);
 
-	User getUserByName(String name, int occurrence);
+	Object getUserByName(String name, int occurrence);
 
-	User getUserByUserName(String userName);
+	Object getUserByUserName(String userName);
 
 	void resetBD();
 
-	void saveUser(User user);
+	void saveUser(Object user);
 
-	void removeUser(User userById);
+	void removeUser(String userName);
 
 }
