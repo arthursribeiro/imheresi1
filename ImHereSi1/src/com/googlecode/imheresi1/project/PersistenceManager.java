@@ -1,19 +1,19 @@
 package com.googlecode.imheresi1.project;
 
+import java.io.IOException;
+
 public interface PersistenceManager {
 
 	boolean hasUser(String user);
 
-	Object getUser(String user);
+	User getUserByName(String name, int occurrence) throws Exception;
 
-	Object getUserByName(String name, int occurrence);
-
-	Object getUserByUserName(String userName);
+	User getUserByUserName(String userName) throws IOException;
 
 	void resetBD();
 
-	void saveUser(Object user);
+	void saveUser(User user, String userName) throws IOException;
 
-	void removeUser(String userName);
+	void removeUser(String userName) throws Exception;
 
 }

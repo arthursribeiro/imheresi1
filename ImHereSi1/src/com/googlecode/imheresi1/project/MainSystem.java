@@ -1,4 +1,5 @@
 package com.googlecode.imheresi1.project;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MainSystem {
 			if(!persistenceManager.hasUser(userName))
 				throw new Exception("Login/senha invalidos.");
 
-			userToLogIn = persistenceManager.getUser(userName);
+			userToLogIn = persistenceManager.getUserByUserName(userName);
 		}
 		
 		userToLogIn.setIp(ip);
@@ -175,7 +176,7 @@ public class MainSystem {
 
 	public void logOut(String userName) throws Exception {
 		if(!loggedUsers.containsKey(userName)) throw new Exception("Sessao inexistente.");
-		this.persistenceManager.saveUser(this.getUserByUserName(userName));
+		this.persistenceManager.saveUser(this.getUserByUserName(userName), userName);
 		this.loggedUsers.remove(userName);
 	}
 
@@ -211,8 +212,8 @@ public class MainSystem {
 		persistenceManager.resetBD();		
 	}
 
-	public void saveUser(User user) {
-		persistenceManager.saveUser(user);
+	public void saveUser(User user) throws IOException {
+		persistenceManager.saveUser(user, user.getUserName());
 	}
 
 	public void updateName(String userName, String valor) throws Exception{
@@ -235,7 +236,7 @@ public class MainSystem {
 		for(PublicInfo pInfo: user.getFriendsPublicInfo()){
 			auxUser = this.getUserByUserName(pInfo.getLogin());
 			auxUser.removeFriend(user.getUserName());
-			this.persistenceManager.saveUser(auxUser);
+			this.persistenceManager.saveUser(auxUser, auxUser.getUserName());
 		}
 	}
 
@@ -246,7 +247,7 @@ public class MainSystem {
 		if(this.createdUsers.contains(userToRemove)) 
 			this.createdUsers.remove(userToRemove);
 
-		this.persistenceManager.removeUser(userToRemove);
+		this.persistenceManager.removeUser(userToRemove.getUserName());
 	}
 
 }
