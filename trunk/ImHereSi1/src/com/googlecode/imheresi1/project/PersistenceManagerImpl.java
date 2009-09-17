@@ -1,12 +1,17 @@
 package com.googlecode.imheresi1.project;
 
+import java.io.Closeable;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import com.thoughtworks.xstream.*;
+import com.thoughtworks.xstream.XStream;
 
 public class PersistenceManagerImpl implements PersistenceManager {
 
@@ -19,46 +24,91 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 */
 	public boolean hasUser(String user) {
 		try {
-			FileInputStream a = new FileInputStream(user + ".xml");
+			FileInputStream a = new FileInputStream("files/users/" + user + ".xml");
 			return true;
 		} catch (FileNotFoundException e) {
 			return false;
 		}
 	}
 
-	public Object getUserByName(String name, int occurrence) {
-		ArrayList<Object> users = new ArrayList<Object>();
-		return null;
+	/**
+	 * @param name - Name to be searched
+	 * @param occurrence - Name occurrence in the users
+	 * @exception Exception
+	 */
+	public User getUserByName(String name, int occurrence) throws Exception {
+		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<String> names = new ArrayList<String>();
+		
+		File file = new File("files/users");
+		
+		for(int i = 0; i < file.list().length; i++){
+			try {
+				FileReader reader = new FileReader("files/users/"+file.list()[i]);
+				User a = (User)xstream.fromXML(reader);
+				users.add(a);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found");;
+			}
+		}
+		for(User i : users){
+			names.add(i.getName());
+		}
+		Object[] sorted = names.toArray();
+		Arrays.sort(sorted);
+		int occ = 0;
+		for(Object i : sorted){
+			for(User u : users){
+				if(u.getName().equals(i)){
+					occ++;
+				}
+				if(occ == occurrence){
+					return u;
+				}
+			}
+		}
+		throw new Exception("No user with this occurrence");
 	}
 
 	/**
 	 * 
 	 * @param userName - That will represent the xml file name
-	 * @return Object that represents the user
+	 * @return User that represents the user
 	 */
-	public Object getUserByUserName(String userName) throws IOException {
-		FileReader reader = new FileReader(userName+".xml");
-		Object returnObject = xstream.fromXML(reader);
+	public User getUserByUserName(String userName) throws IOException {
+		FileReader reader = new FileReader("files/users/" + userName+".xml");
+		User returnUser = (User)xstream.fromXML(reader);
 		reader.close();
-		return returnObject;
+		return returnUser;
 	}
 
 	public void resetBD() {
+		File file = new File("files/users");
 		
+		for(String i : file.list()){
+			System.out.println(i);
+			File del = new File("files/users/"+i);
+			System.out.println(del.delete());
+		}
 	}
 
 	/**
 	 * 
-	 * @param user - Object that contains User information
+	 * @param user - User that contains User information
 	 * @param userName - String that will represent the file name
 	 */
-	public void saveUser(Object user, String userName) throws IOException {
-		DataOutputStream dos = new DataOutputStream(new FileOutputStream(userName+".xml"));
+	public void saveUser(User user, String userName) throws IOException {
+		DataOutputStream dos = new DataOutputStream(new FileOutputStream("files/users/" + userName + ".xml"));
 		xstream.toXML(user, dos);
 		dos.close();
 	}
 
-	public void removeUser(String userName) {
-		
+	public void removeUser(String userName) throws Exception {
+		if(hasUser(userName)){
+		    File file = new File("files/users/"+ userName + ".xml");
+		    file.delete();
+		    return;
+		}
+		throw new Exception("File doesn't exist");
 	}
 }
