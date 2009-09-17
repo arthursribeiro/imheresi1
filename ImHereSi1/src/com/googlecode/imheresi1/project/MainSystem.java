@@ -39,17 +39,22 @@ public class MainSystem {
 		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
 
 		User f = this.loggedUsers.get(from);
-		User w = getUserByUserName(with);
+		User w = this.getUserByUserName(with);
 
 		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
-
-		f.addFriend(w.getPublicInfo(),mode);
+	
+		f.addFriend(w.getPublicInfo(),2);
 		w.addFriend(f.getPublicInfo(),mode);
-
+/*		
+		System.out.println("------------");
+		System.out.println(f);
+		System.out.println(w);
+		System.out.println("------------");
+*/		
 		this.invitations.get(with).remove(f.getMail());
 	}
 
-	public void refuseSharing(String from, String with, int mode) throws Exception{
+	public void refuseSharing(String from, String with) throws Exception{
 		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
 		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
 
@@ -63,7 +68,7 @@ public class MainSystem {
 	public String getFriends(String userName) throws Exception{
 		if(!this.loggedUsers.containsKey(userName)) throw new Exception("Permissao negada.");
 		User u = getUserByUserName(userName);
-		return u.getFriendsUserNames();
+		return u.getFriendsNames();
 	}
 
 	public String logIn(String userName, String password, String ip) throws Exception{
@@ -75,16 +80,21 @@ public class MainSystem {
 
 			userToLogIn = persistenceManager.getUser(userName);
 		}
-
+		
+		userToLogIn.setIp(ip);
+		
 		if(!userToLogIn.getPassword().equals(password))
 			throw new Exception("Login/senha invalidos.");
 
-		userToLogIn.setIp(ip);
-		if(this.createdUsers.contains(userToLogIn)) 
-			
-			this.createdUsers.remove(userToLogIn);
+
+//		Quando for encerrar o sistema, deve-se salvar os usuarios do mapa e do array!		
+//		if(this.createdUsers.contains(userToLogIn)) 
+//			this.createdUsers.remove(userToLogIn);
+
 		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
 
+
+		
 		return userToLogIn.getUserName();
 	}
 	
@@ -134,7 +144,7 @@ public class MainSystem {
 	private User getCreatedUserByName(String name, int occurance){
 		int found = 0;
 
-		for(int i = 0; i <= this.createdUsers.size(); i++){
+		for(int i = 0; i < this.createdUsers.size(); i++){
 			if(this.createdUsers.get(i).getName().contains(name)) found++;
 			if(found == occurance) return this.createdUsers.get(i);
 		}
@@ -165,6 +175,7 @@ public class MainSystem {
 
 	public void logOut(String userName) throws Exception {
 		if(!loggedUsers.containsKey(userName)) throw new Exception("Sessao inexistente.");
+		this.persistenceManager.saveUser(this.getUserByUserName(userName));
 		this.loggedUsers.remove(userName);
 	}
 
@@ -218,14 +229,24 @@ public class MainSystem {
 		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
 	}
+	
+	public void removeAllFriends(User user) throws Exception{
+		User auxUser;
+		for(PublicInfo pInfo: user.getFriendsPublicInfo()){
+			auxUser = this.getUserByUserName(pInfo.getLogin());
+			auxUser.removeFriend(user.getUserName());
+			this.persistenceManager.saveUser(auxUser);
+		}
+	}
 
 	public void removeUser(String userName) throws Exception{
 		User userToRemove = this.getUserByUserName(userName);
+		this.removeAllFriends(userToRemove);
 
 		if(this.createdUsers.contains(userToRemove)) 
 			this.createdUsers.remove(userToRemove);
 
-		persistenceManager.removeUser(userToRemove);
+		this.persistenceManager.removeUser(userToRemove);
 	}
 
 }

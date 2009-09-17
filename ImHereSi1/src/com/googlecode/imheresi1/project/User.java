@@ -1,6 +1,6 @@
 package com.googlecode.imheresi1.project;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +12,7 @@ import com.googlecode.imheresi1.localization.PositionException;
 
 public class User{
 
-	private Collection<PublicInfo> friends;
+	private List<PublicInfo> friends;
 	private List<String> visibleFriends;
 	private String password;
 	private String ip;
@@ -23,28 +23,41 @@ public class User{
 		setPassword(password);
 		this.myPublicInfo = new PublicInfo();
 		setUserName(userName);
+		this.friends = new ArrayList<PublicInfo>();
+		this.visibleFriends = new ArrayList<String>();
 	}
 
 	public PublicInfo getPublicInfo(){
 		return this.myPublicInfo;
 	}
 		
-	public void addFriend(PublicInfo friend,int mode){
+	public void addFriend(PublicInfo friend,int mode) throws Exception{
+		if(this.friends.contains(friend)) throw new Exception("Usuario ja eh amigo.");
 		this.friends.add(friend);
 		if(mode == 2) this.visibleFriends.add(friend.getLogin());
 	}
 	
-	public String getFriendsUserNames(){
-		StringBuffer sB = new StringBuffer();
-		sB.append('[');
-		Iterator<PublicInfo> it = this.friends.iterator();
-		while(it.hasNext()){
-			PublicInfo pInfo = it.next();
-			sB.append(pInfo.getLogin());
-			if(it.hasNext()) sB.append(", ");
+	public boolean isVisible(String friendUserName) throws Exception{
+		for(int i = 0; i < this.friends.size(); i++){
+			PublicInfo pInfo = this.friends.get(i);
+			if(pInfo.getLogin().equals(friendUserName)) return this.visibleFriends.contains(friendUserName);
 		}
-		sB.append(']');
-		return sB.toString();
+		throw new Exception("Usuario desconhecido.");
+	}
+	
+	public String getFriendsNames(){
+		String[] names = new String[this.friends.size()];
+		
+		for(int i = 0; i < names.length; i++){
+			names[i] = this.friends.get(i).getName();
+		}
+		
+		Arrays.sort(names);
+		return Arrays.toString(names);
+	}
+	
+	public List<PublicInfo> getFriendsPublicInfo(){
+		return this.friends;
 	}
 	
 	
@@ -59,7 +72,7 @@ public class User{
 		String expression = "^((0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})\\.){3}(0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})$";
 	       
         Pattern pattern = Pattern.compile(expression,Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(ip);
+        Matcher matcher = pattern.matcher(Ip);
         
         return matcher.matches();
 	}
@@ -134,6 +147,43 @@ public class User{
 
 	public String getUserName() {
 		return this.myPublicInfo.getLogin();
+	}
+
+	private boolean isMyFriend(String username){
+		for(PublicInfo pInfo : this.friends){
+			if(pInfo.getLogin().equals(username)) return true;
+		}
+		return false;
+	}
+	
+	public void setSharingOption(String friend, int mode) throws Exception {
+		if(!isMyFriend(friend)) throw new Exception("Usuario desconhecido.");
+		if(mode == 2){
+			if(!this.visibleFriends.contains(friend)) this.visibleFriends.add(friend);
+		} else {
+			if(this.visibleFriends.contains(friend)) this.visibleFriends.remove(friend);
+		}
+	}
+
+	public void removeFriend(String friend) throws Exception  {
+		for(PublicInfo pInfo : this.friends){
+			if(pInfo.getLogin().equals(friend)) {
+				this.friends.remove(pInfo);
+				if(this.visibleFriends.contains(pInfo.getLogin())) this.visibleFriends.remove(pInfo.getLogin());
+				return;
+			}
+		}
+		throw new Exception("Usuario desconhecido.");
+	}
+
+	public Position getFriendLocation(String friend) throws Exception {
+		if(!isMyFriend(friend)) throw new Exception("Usuario desconhecido.");
+		for(PublicInfo pInfo : this.friends){
+			if(pInfo.getLogin().equals(friend) && this.visibleFriends.contains(pInfo.getLogin())) {
+				return pInfo.getPosition();
+			}
+		}
+		return null;
 	}
 	
 }
