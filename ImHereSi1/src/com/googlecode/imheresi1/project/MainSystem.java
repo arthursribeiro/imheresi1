@@ -53,7 +53,45 @@ public class MainSystem {
 		this.directory = value;
 	}
 
+	public String toStringMyInvitations(String username) {
+		User user;
+		List<String> map = null;
+		try {
+			user = this.getUserByUserName(username);
+			map = getInvitationList(user.getMail());
+		} catch (MainSystemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		String separator = System.getProperty("line.separator"); 
+		String saida = "===================================================================" + separator
+					   + "Username                      Usuario                            " + separator
+					   + "================================================================="  + separator;
+		
+		for(int i = 0; i < map.size(); i++){
+			String userName = map.get(i);
+			User u;
+			try {
+				u = this.getUserByUserName(username);
+				saida += username + "      " + u.getName(); 
+			} catch (MainSystemException e) {
+//				e.printStackTrace();
+			}
+		}
+		return saida;
+	}
 	
+	private List<String> getInvitationList(String mail) {
+		List<String> map = new ArrayList<String>();
+		
+		for(String username : this.invitations.keySet()){
+			if(this.invitations.get(username).contains(mail)) map.add(username);
+		}
+		
+		return map;
+	}
+
 	/**
 	 * 
 	 * @param from
@@ -64,7 +102,7 @@ public class MainSystem {
 	 * @throws UserException
 	 */
 	public void confirmSharing(String from, String with, int mode)
-	throws MainSystemException, IOException, UserException {
+	throws MainSystemException, UserException {
 		if (!this.invitations.containsKey(with))
 			throw new MainSystemException("Convite nao foi enviado.");
 		if (!this.loggedUsers.containsKey(from))
@@ -323,6 +361,8 @@ public class MainSystem {
 		return null;
 	}
 
+	
+	
 	/**
 	 * 
 	 * @param from
