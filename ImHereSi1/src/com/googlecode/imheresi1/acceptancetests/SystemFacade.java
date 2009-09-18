@@ -10,8 +10,8 @@ public class SystemFacade {
 	private MainSystem mySystem;
 	
 	public void zerarSistema(){
-		this.mySystem.resetBD();
 		this.mySystem = new MainSystem();
+		this.mySystem.resetBD();
 	}
 	
 	//Encerra o sistema, gravando log e informacoes dos usuarios
