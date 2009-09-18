@@ -58,7 +58,7 @@ public class MainSystem {
 	 * @throws UserException
 	 */
 	public void confirmSharing(String from, String with, int mode)
-			throws MainSystemException, IOException, UserException {
+	throws MainSystemException, IOException, UserException {
 		if (!this.invitations.containsKey(with))
 			throw new MainSystemException("Convite nao foi enviado.");
 		if (!this.loggedUsers.containsKey(from))
@@ -72,7 +72,38 @@ public class MainSystem {
 
 		f.addFriend(w.getPublicInfo(), 2);
 		w.addFriend(f.getPublicInfo(), mode);
+
 		this.invitations.get(with).remove(f.getMail());
+		this.persistenceManager.saveUser(w, w.getUserName());
+		this.persistenceManager.saveUser(f, f.getUserName());
+	}
+
+	public void setLocal(String userName, double latitude, double longitude) throws PositionException, MainSystemException, IOException{
+		User user = this.getUserByUserName(userName);
+		user.setPositionManual(latitude, longitude);
+		this.loggedUsers.put(user.getUserName(), user);
+		this.refreshMyLocalization(user, latitude, longitude);
+		this.persistenceManager.saveUser(user, user.getUserName());
+	}
+
+
+
+	public void removeFriend(String userName, String friend) throws Exception{
+		User user;
+		try{
+			user = this.getUserByUserName(userName);
+
+		} catch (Exception ex){
+			throw new Exception("Permissao negada.");
+		}
+		user.removeFriend(friend);
+		this.persistenceManager.saveUser(user, user.getUserName());
+	}
+
+	public void setSharing(String userName, String friend, int mode) throws Exception{
+		User user = this.getUserByUserName(friend);
+		user.setSharingOption(userName, mode);
+		this.persistenceManager.saveUser(user, user.getUserName());
 	}
 
 	/**
@@ -83,7 +114,7 @@ public class MainSystem {
 	 * @throws MainSystemException
 	 */
 	public void refuseSharing(String from, String with)
-			throws MainSystemException {
+	throws MainSystemException {
 		if (!this.invitations.containsKey(with))
 			throw new MainSystemException("Convite nao foi enviado.");
 		if (!this.loggedUsers.containsKey(from))
@@ -105,7 +136,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public String getFriends(String userName) throws MainSystemException,
-			IOException {
+	IOException {
 		if (!this.loggedUsers.containsKey(userName))
 			throw new MainSystemException("Permissao negada.");
 		User u = getUserByUserName(userName);
@@ -122,7 +153,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public String logIn(String userName, String password, String ip)
-			throws UserException, IOException, PositionException {
+	throws UserException, IOException, PositionException {
 		User userToLogIn = this.getCreatedUserByUserName(userName);
 
 		if (userToLogIn == null) {
@@ -136,7 +167,7 @@ public class MainSystem {
 			userToLogIn.setIp(ip);
 			this.refreshMyLocalization(userToLogIn, ip);
 		}
-		
+
 		if (!userToLogIn.getPassword().equals(password))
 			throw new UserException("Login/senha invalidos.");
 
@@ -144,12 +175,23 @@ public class MainSystem {
 
 		return userToLogIn.getUserName();
 	}
-	
-	private void refreshMyLocalization(User user, String ip) 
-									throws PositionException, IOException{
+
+	private void refreshMyLocalization(User user, double latitude, double longitude)
+	throws PositionException, IOException{
 		for(PublicInfo friendInfo : user.getFriendsPublicInfo()){
 			User friend = this.persistenceManager.
-							getUserByUserName(friendInfo.getLogin());
+			getUserByUserName(friendInfo.getLogin());
+			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
+			pInfo.setPositionManual(latitude, longitude);
+			this.saveUser(friend);
+		}
+	}
+	
+	private void refreshMyLocalization(User user, String ip)
+	throws PositionException, IOException{
+		for(PublicInfo friendInfo : user.getFriendsPublicInfo()){
+			User friend = this.persistenceManager.
+			getUserByUserName(friendInfo.getLogin());
 			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
 			pInfo.setPosition(ip);
 			this.saveUser(friend);
@@ -222,12 +264,12 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public User getUserByUserName(String userName) throws MainSystemException,
-			IOException {
+	IOException {
 		User foundUser = this.getCreatedUserByUserName(userName);
 
 		if (foundUser != null)
 			return foundUser;
-
+		//		System.out.println("RAQUEL");
 		foundUser = persistenceManager.getUserByUserName(userName);
 		if (foundUser == null)
 			throw new MainSystemException("O usuario nao existe.");
@@ -275,7 +317,7 @@ public class MainSystem {
 	 * @throws MessageControllerException
 	 */
 	public void sendInvitation(String from, String to)
-			throws MainSystemException, MessageControllerException {
+	throws MainSystemException, MessageControllerException {
 		if (!this.loggedUsers.containsKey(from))
 			throw new MainSystemException("Permissao negada.");
 		if (this.invitations.containsKey(from))
@@ -315,7 +357,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void sendMail(String from, String to, String subject, String msg)
-			throws MainSystemException, MessageControllerException, IOException {
+	throws MainSystemException, MessageControllerException, IOException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject,
@@ -333,7 +375,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void sendSMS(String from, String to, String msg)
-			throws MainSystemException, MessageControllerException, IOException {
+	throws MainSystemException, MessageControllerException, IOException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
@@ -405,7 +447,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void updateMail(String userName, String valor)
-			throws MainSystemException, UserException, IOException {
+	throws MainSystemException, UserException, IOException {
 		User user = this.getUserByUserName(userName);
 		user.setMail(valor);
 	}
@@ -417,7 +459,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void updatePhone(String userName, String valor)
-			throws MainSystemException, IOException {
+	throws MainSystemException, IOException {
 		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
 	}
@@ -430,13 +472,25 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void removeAllFriends(User user) throws UserException,
-			MainSystemException, IOException {
+	MainSystemException, IOException {
 		User auxUser;
 		for (PublicInfo pInfo : user.getFriendsPublicInfo()) {
 			auxUser = this.getUserByUserName(pInfo.getLogin());
 			auxUser.removeFriend(user.getUserName());
 			this.persistenceManager.saveUser(auxUser, auxUser.getUserName());
 		}
+	}
+
+	public void exitSystem(){
+		for(User user : this.createdUsers){
+			this.persistenceManager.saveUser(user, user.getUserName());
+		}
+		for(String userName : this.loggedUsers.keySet()){
+			this.persistenceManager.saveUser(this.loggedUsers.get(userName), userName);
+		}
+
+		this.createdUsers.clear();
+		this.loggedUsers.clear();
 	}
 
 	/**
@@ -448,7 +502,7 @@ public class MainSystem {
 	 * @throws PersistenceManagerException
 	 */
 	public void removeUser(String userName) throws MainSystemException,
-			UserException, IOException {
+	UserException, IOException {
 		User userToRemove = this.getUserByUserName(userName);
 		this.removeAllFriends(userToRemove);
 
@@ -459,7 +513,6 @@ public class MainSystem {
 			if(this.persistenceManager.hasUser(userName))
 				this.persistenceManager.removeUser(userToRemove.getUserName());
 		} catch (PersistenceManagerException e) {
-			System.out.println("IEFIHDFIDHDI");
 			throw new MainSystemException("O usuario nao existe.");
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
