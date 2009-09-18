@@ -10,6 +10,7 @@ public class SystemFacade {
 	private MainSystem mySystem;
 	
 	public void zerarSistema(){
+		this.mySystem.resetBD();
 		this.mySystem = new MainSystem();
 	}
 	
