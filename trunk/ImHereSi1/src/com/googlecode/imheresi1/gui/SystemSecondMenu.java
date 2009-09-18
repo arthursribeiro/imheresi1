@@ -20,7 +20,7 @@ public class SystemSecondMenu {
 	private static final String PROMPT_1 = "<< Bem Vindo " + userName + " >>" + SEPARATOR + 
 	"1. Atualizar informacoes" + SEPARATOR + "2. Deletar Conta" + SEPARATOR + "3. Editar compartilhamento" + 
 	SEPARATOR + "4. Adicionar amigos" + SEPARATOR + "5. Recuperar localizacao dos amigos" + 
-	SEPARATOR + "6. Enviar mensagem" + SEPARATOR + "7. Logout";
+	SEPARATOR + "6. Enviar mensagem" + SEPARATOR + "7. Aceitar/Recusar Convites" + SEPARATOR + "8. Logout";
 
 	private static final int ATUALIZAR = 1;
 	private static final int DELETAR = 2;
@@ -28,7 +28,8 @@ public class SystemSecondMenu {
 	private static final int ADICIONAR_AMIGOS = 4;
 	private static final int RECUPERAR_LOCALIZACAO = 5;
 	private static final int ENVIAR = 6;
-	private static final int LOGOUT = 7;
+	private static final int ACC_REC_COMPARTILHAMENTO = 7;
+	private static final int LOGOUT = 8;
 	private static final String PROMPT_2 = "Opcao: ";
 
 	public SystemSecondMenu(Scanner input, String userName){
@@ -138,6 +139,9 @@ public class SystemSecondMenu {
 			case ENVIAR:
 				enviar();
 				break;
+			case ACC_REC_COMPARTILHAMENTO:
+				accRecCompartilhamento();
+				break;
 			default:
 				System.out.println(SEPARATOR + "Opcao invalida!");
 				break;
@@ -147,6 +151,56 @@ public class SystemSecondMenu {
 			option = getOption(input.nextLine());
 		}
 	}
+
+	private void accRecCompartilhamento() {
+		System.out.println(system.toStringMyInvitations(this.userName));
+		String uName = "";
+		while(true){
+			System.out.print("Digite o username: ");
+			uName = input.nextLine().trim();
+			if(!uName.equals("")) break;
+		}
+		System.out.println("Deseja:" + SEPARATOR + "1. Recusar" + SEPARATOR + "2. Aceitar");
+		while(true){
+			System.out.print("Opcao: ");
+			String opt = input.nextLine();
+			int option = getOption(opt);
+			if(option == 1){
+				try {
+					system.refuseSharing(userName, uName);
+				} catch (MainSystemException e) {
+					System.out.println(e.getMessage());
+				}
+				return;
+			} else if(option == 2){
+				while(true){
+					System.out.println("Modo de Compartilhamento:");
+					System.out.println("1. Oculto");
+					System.out.println("2. Visivel");
+					System.out.print("Opcao: ");
+					String opt2 = input.nextLine();
+					int option2 = getOption(opt2);
+					if(option2 == 2 || option2 == 1){
+						try {
+							system.confirmSharing(userName, uName,option2);
+						} catch (MainSystemException e) {
+							System.out.println(e.getMessage());
+						} catch (UserException e) {
+							System.out.println(e.getMessage());
+						}
+						return;
+					} else {
+						System.out.println("Opcao Invalida!");
+					}
+				}
+			} else {
+				System.out.println("Opcao Invalida!");
+			}
+
+		}
+	}
+
+
 
 	private void enviar() {
 		while(true){
