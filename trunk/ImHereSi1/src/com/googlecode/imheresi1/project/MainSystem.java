@@ -78,7 +78,7 @@ public class MainSystem {
 		this.persistenceManager.saveUser(f, f.getUserName());
 	}
 
-	public void setLocal(String userName, double latitude, double longitude) throws PositionException, MainSystemException, IOException{
+	public void setLocal(String userName, double latitude, double longitude) throws PositionException, MainSystemException{
 		User user = this.getUserByUserName(userName);
 		user.setPositionManual(latitude, longitude);
 		this.loggedUsers.put(user.getUserName(), user);
@@ -86,7 +86,13 @@ public class MainSystem {
 		this.persistenceManager.saveUser(user, user.getUserName());
 	}
 
-
+	public void setLocal(String userName, String ip) throws PositionException, MainSystemException{
+		User user = this.getUserByUserName(userName);
+		user.setPosition();
+		this.loggedUsers.put(user.getUserName(), user);
+		this.refreshMyLocalization(user, ip);
+		this.persistenceManager.saveUser(user, user.getUserName());
+	}
 
 	public void removeFriend(String userName, String friend) throws Exception{
 		User user;
@@ -153,7 +159,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public String logIn(String userName, String password, String ip)
-	throws UserException, IOException, PositionException {
+	throws UserException, PositionException {
 		User userToLogIn = this.getCreatedUserByUserName(userName);
 
 		if (userToLogIn == null) {
@@ -177,7 +183,7 @@ public class MainSystem {
 	}
 
 	private void refreshMyLocalization(User user, double latitude, double longitude)
-	throws PositionException, IOException{
+	throws PositionException{
 		for(PublicInfo friendInfo : user.getFriendsPublicInfo()){
 			User friend = this.persistenceManager.
 			getUserByUserName(friendInfo.getLogin());
@@ -188,7 +194,7 @@ public class MainSystem {
 	}
 	
 	private void refreshMyLocalization(User user, String ip)
-	throws PositionException, IOException{
+	throws PositionException{
 		for(PublicInfo friendInfo : user.getFriendsPublicInfo()){
 			User friend = this.persistenceManager.
 			getUserByUserName(friendInfo.getLogin());
@@ -263,8 +269,7 @@ public class MainSystem {
 	 * @throws MainSystemException
 	 * @throws IOException
 	 */
-	public User getUserByUserName(String userName) throws MainSystemException,
-	IOException {
+	public User getUserByUserName(String userName) throws MainSystemException {
 		User foundUser = this.getCreatedUserByUserName(userName);
 
 		if (foundUser != null)
@@ -425,7 +430,7 @@ public class MainSystem {
 	 * 
 	 * @param user
 	 */
-	public void saveUser(User user) throws IOException {
+	public void saveUser(User user) {
 		persistenceManager.saveUser(user, user.getUserName());
 	}
 
@@ -520,5 +525,6 @@ public class MainSystem {
 			//e.printStackTrace();
 		}
 	}
+
 
 }
