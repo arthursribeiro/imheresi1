@@ -130,7 +130,7 @@ public class SystemFacade {
 
 	public String enviarConvite(String de, String para) throws Exception {
 		if(diretorio.equals("")) throw new Exception("Diretorio desconhecido");
-		mySystem.sendInvitation(de, para,diretorio);
+		mySystem.sendInvitation(de, para);
 		return "Documento convite.txt enviado com sucesso.";
 	}
 
@@ -139,7 +139,7 @@ public class SystemFacade {
 	}
 
 	public void setDiretorioGabaritos(String valor) {
-		this.diretorio = valor;
+		this.mySystem.setDirectory(valor);
 	}
 
 	public String getAmigos(String id) throws Exception {
