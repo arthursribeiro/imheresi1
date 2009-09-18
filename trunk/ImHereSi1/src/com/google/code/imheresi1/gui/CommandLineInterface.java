@@ -47,7 +47,7 @@ public class CommandLineInterface {
 		email = entrada.nextLine();
 		System.out.println(SEPARATOR  );
 		
-		mySystem.createUser(userName, password, email, name, phone);
+		//mySystem.createUser(userName, password, email, name, phone);
 
 	}
 

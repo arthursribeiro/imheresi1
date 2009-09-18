@@ -417,6 +417,8 @@ public class MainSystem {
 	 */
 	public void resetBD() {
 		persistenceManager.resetBD();
+		this.loggedUsers.clear();
+		this.createdUsers.clear();
 	}
 
 	/**
