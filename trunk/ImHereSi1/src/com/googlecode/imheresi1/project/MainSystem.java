@@ -34,6 +34,7 @@ public class MainSystem {
 	private PersistenceManager persistenceManager;
 	private MessageController messageController;
 	private Chat chat;
+	private String directory = "";
 
 	private Map<String, List<String>> invitations;
 
@@ -48,6 +49,11 @@ public class MainSystem {
 		this.createdUsers = new ArrayList<User>();
 	}
 
+	public void setDirectory(String value) {
+		this.directory = value;
+	}
+
+	
 	/**
 	 * 
 	 * @param from
@@ -324,7 +330,7 @@ public class MainSystem {
 	 * @throws MainSystemException
 	 * @throws MessageControllerException
 	 */
-	public void sendInvitation(String from, String to, String diretorio)
+	public void sendInvitation(String from, String to)
 	throws MainSystemException, MessageControllerException {
 		if (!this.loggedUsers.containsKey(from))
 			throw new MainSystemException("Permissao negada.");
@@ -336,7 +342,9 @@ public class MainSystem {
 			this.invitations.put(from, mails);
 		}
 		User u = this.loggedUsers.get(from);
-		Message m = new Invitation(u.getName(), u.getMail(), to, diretorio);
+
+		Message m = new Invitation(u.getName(), u.getMail(), to, this.directory);
+		
 		this.messageController.sendMessage(m);
 	}
 

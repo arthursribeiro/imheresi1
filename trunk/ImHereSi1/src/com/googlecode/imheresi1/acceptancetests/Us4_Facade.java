@@ -28,7 +28,7 @@ public class Us4_Facade {
 	}
 	
 	public String enviarConvite(String de, String para) throws Exception{
-		mySystem.sendInvitation(de, para,"");		
+		mySystem.sendInvitation(de, para);		
 		return "Documento convite.txt enviado com sucesso.";
 	}
 	
