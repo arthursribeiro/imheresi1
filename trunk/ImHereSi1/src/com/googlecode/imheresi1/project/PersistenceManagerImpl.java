@@ -103,12 +103,12 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		dos.close();
 	}
 
-	public void removeUser(String userName) throws Exception {
+	public void removeUser(String userName) throws PersistenceManagerException {
 		if(hasUser(userName)){
 		    File file = new File("files/users/"+ userName + ".xml");
 		    file.delete();
 		    return;
 		}
-		throw new Exception("File doesn't exist");
+		throw new PersistenceManagerException("File doesn't exist");
 	}
 }

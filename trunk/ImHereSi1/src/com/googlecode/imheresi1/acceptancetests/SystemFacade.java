@@ -50,7 +50,7 @@ public class SystemFacade {
 		if(atributo.equalsIgnoreCase("nome")) user.setName(valor);
 		if(atributo.equalsIgnoreCase("email")) user.setMail(valor);
 		if(atributo.equalsIgnoreCase("telefone")) user.setPhone(valor);
-		if(atributo.equalsIgnoreCase("senha")) user.setPassword(valor);
+		if(atributo.equalsIgnoreCase("senha")) user.updatePassword(valor);
 		
 	}
 	

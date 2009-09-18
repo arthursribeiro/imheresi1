@@ -4,11 +4,10 @@ import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
 /**
- * Classe que lida com o posicionamento seja a partir de um ip ou de coordenadas
- * ja dadas
+ * Constructor receiving ip (GeoIP)
  * 
- * @author Grupo E
- * 
+ * @param ip
+ * @throws PositionException
  */
 public class Position {
 
@@ -42,7 +41,7 @@ public class Position {
 	}
 
 	/**
-	 * Construtor a partir de coordenadas (Manual)
+	 * Constructor receiving coordinates (Manual)
 	 * 
 	 * @param latitude
 	 * @param longitude
@@ -53,7 +52,7 @@ public class Position {
 	}
 
 	/**
-	 * Seta a posicao a partir das coordenadas passadas
+	 * Sets position
 	 * 
 	 * @param lat
 	 * @param lon
@@ -67,14 +66,11 @@ public class Position {
 	}
 
 	/**
-	 * So pra ver se a latitude ta entre -90 e 90 e se a longitude ta entre -180
-	 * e 180 (pq coordenadas sempre sao desse jeito)
-	 * 
 	 * @param lat
 	 *            - latitude
 	 * @param lon
 	 *            - longitude
-	 * @return se a latitude e longitude sao validas
+	 * @return boolean
 	 */
 	private boolean isLocation(double lat, double lon) {
 		if ((lon >= -180 && lon <= 180) && (lat >= -90 && lat <= 90))
@@ -96,20 +92,11 @@ public class Position {
 		return this.longitude;
 	}
 
+	/**
+	 * @return position to string
+	 */
 	public String toString() {
 		return "Lat: " + this.latitude + ", Long: " + this.longitude;
 	}
-
-	/**
-	public static void main(String[] args) {
-		try {
-			Position pos = new Position("189.71.67.129");
-			System.out.println(pos.getLatitude());
-			System.out.println(pos.getLongitude());
-		} catch (PositionException e) {
-			e.printStackTrace();
-		}
-
-	}**/
 
 }

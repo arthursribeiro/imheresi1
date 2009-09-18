@@ -10,9 +10,17 @@ import com.googlecode.imheresi1.message.Email;
 import com.googlecode.imheresi1.message.Invitation;
 import com.googlecode.imheresi1.message.Message;
 import com.googlecode.imheresi1.message.MessageController;
+import com.googlecode.imheresi1.message.MessageControllerException;
 import com.googlecode.imheresi1.message.SMS;
 
-
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
 public class MainSystem {
 
 	public static final int OCULTAR = 1;
@@ -27,6 +35,9 @@ public class MainSystem {
 	//Map<userName, List<mails>>
 	private Map<String,List<String>> invitations;
 
+	/**
+	 * Constructor
+	 */
 	public MainSystem() {
 		this.persistenceManager = new PersistenceManagerImpl();
 		this.messageController = new MessageController();
@@ -35,14 +46,23 @@ public class MainSystem {
 		this.createdUsers = new ArrayList<User>();
 	}
 
-	public void confirmSharing(String from, String with, int mode) throws Exception{
-		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
-		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+	/**
+	 * 
+	 * @param from
+	 * @param with
+	 * @param mode
+	 * @throws MainSystemException
+	 * @throws IOException 
+	 * @throws UserException 
+	 */
+	public void confirmSharing(String from, String with, int mode) throws MainSystemException, IOException, UserException{
+		if(!this.invitations.containsKey(with)) throw new MainSystemException("Convite nao foi enviado.");
+		if(!this.loggedUsers.containsKey(from)) throw new MainSystemException("Permissao negada.");
 
 		User f = this.loggedUsers.get(from);
 		User w = this.getUserByUserName(with);
 
-		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
+		if(!this.invitations.get(with).contains(f.getMail())) throw new MainSystemException("Convite nao foi enviado.");
 	
 		f.addFriend(w.getPublicInfo(),2);
 		w.addFriend(f.getPublicInfo(),mode);
@@ -55,29 +75,52 @@ public class MainSystem {
 		this.invitations.get(with).remove(f.getMail());
 	}
 
-	public void refuseSharing(String from, String with) throws Exception{
-		if(!this.invitations.containsKey(with)) throw new Exception("Convite nao foi enviado.");
-		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+	/**
+	 * 
+	 * @param from
+	 * @param with
+	 * @param mode
+	 * @throws MainSystemException
+	 */
+	public void refuseSharing(String from, String with) throws MainSystemException{
+		if(!this.invitations.containsKey(with)) throw new MainSystemException("Convite nao foi enviado.");
+		if(!this.loggedUsers.containsKey(from)) throw new MainSystemException("Permissao negada.");
 
 		User f = this.loggedUsers.get(from);
 
-		if(!this.invitations.get(with).contains(f.getMail())) throw new Exception("Convite nao foi enviado.");
+		if(!this.invitations.get(with).contains(f.getMail())) throw new MainSystemException("Convite nao foi enviado.");
 
 		this.invitations.get(with).remove(f.getMail());
 	}
 
-	public String getFriends(String userName) throws Exception{
-		if(!this.loggedUsers.containsKey(userName)) throw new Exception("Permissao negada.");
+	/**
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws MainSystemException
+	 * @throws IOException 
+	 */
+	public String getFriends(String userName) throws MainSystemException, IOException{
+		if(!this.loggedUsers.containsKey(userName)) throw new MainSystemException("Permissao negada.");
 		User u = getUserByUserName(userName);
 		return u.getFriendsNames();
 	}
 
-	public String logIn(String userName, String password, String ip) throws Exception{
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param ip
+	 * @return
+	 * @throws UserException
+	 * @throws IOException 
+	 */
+	public String logIn(String userName, String password, String ip) throws UserException, IOException {
 		User userToLogIn = this.getCreatedUserByUserName(userName);
 
 		if(userToLogIn == null){
 			if(!persistenceManager.hasUser(userName))
-				throw new Exception("Login/senha invalidos.");
+				throw new UserException("Login/senha invalidos.");
 
 			userToLogIn = persistenceManager.getUserByUserName(userName);
 		}
@@ -85,7 +128,7 @@ public class MainSystem {
 		userToLogIn.setIp(ip);
 		
 		if(!userToLogIn.getPassword().equals(password))
-			throw new Exception("Login/senha invalidos.");
+			throw new UserException("Login/senha invalidos.");
 
 
 //		Quando for encerrar o sistema, deve-se salvar os usuarios do mapa e do array!		
@@ -99,14 +142,30 @@ public class MainSystem {
 		return userToLogIn.getUserName();
 	}
 	
+	/**
+	 * 
+	 * @param userName
+	 * @return
+	 */
 	public boolean isConected(String userName) {
 		return this.loggedUsers.containsKey(userName);
 	}
 
-	public User createUser(String userName, String password, String email, String name, String phone) throws Exception{
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param email
+	 * @param name
+	 * @param phone
+	 * @return
+	 * @throws MainSystemException
+	 * @throws UserException
+	 */
+	public User createUser(String userName, String password, String email, String name, String phone) throws MainSystemException, UserException{
 
 		if((persistenceManager.hasUser(userName)) || (this.getCreatedUserByUserName(userName) != null)) 
-			throw new Exception("O username jah existe.");
+			throw new MainSystemException("O username jah existe.");
 
 		User newUser = new User(userName, password);
 		newUser.setMail(email);
@@ -118,30 +177,50 @@ public class MainSystem {
 		return newUser;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param occurrence
+	 * @return
+	 * @throws Exception 
+	 */
 	public User getUserbyName(String name, int occurrence) throws Exception{
 		User foundUser = this.getCreatedUserByName(name, occurrence);
 
 		if( foundUser != null)return foundUser; 
 
 		foundUser = persistenceManager.getUserByName(name, occurrence);
-		if(foundUser == null) throw new Exception("O usuario nao existe.");
+		if(foundUser == null) throw new MainSystemException("O usuario nao existe.");
 
 		return foundUser;
 	}
 
-	public User getUserByUserName(String userName) throws Exception{
+	/**
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws MainSystemException
+	 * @throws IOException 
+	 */
+	public User getUserByUserName(String userName) throws MainSystemException, IOException{
 		User foundUser = this.getCreatedUserByUserName(userName);
 
 		if(foundUser != null) return foundUser;
 
 		foundUser = persistenceManager.getUserByUserName(userName);
-		if(foundUser == null) throw new Exception("O usuario nao existe.");
+		if(foundUser == null) throw new MainSystemException("O usuario nao existe.");
 
 		return foundUser;
 	}
 	//Accessory Methods for created users - One might be created and don`t logIn.
 	//It`s important to save them when the system might be closed.
 
+	/**
+	 * 
+	 * @param name
+	 * @param occurance
+	 * @return
+	 */
 	private User getCreatedUserByName(String name, int occurance){
 		int found = 0;
 
@@ -152,6 +231,11 @@ public class MainSystem {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param userName
+	 * @return
+	 */
 	private User getCreatedUserByUserName(String userName){
 		for(User usuario: this.createdUsers){
 			if(usuario.getUserName().equals(userName))
@@ -161,8 +245,15 @@ public class MainSystem {
 		return null;
 	}
 
-	public void sendInvitation(String from, String to) throws Exception {
-		if(!this.loggedUsers.containsKey(from)) throw new Exception("Permissao negada.");
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @throws MainSystemException
+	 * @throws MessageControllerException
+	 */
+	public void sendInvitation(String from, String to) throws MainSystemException,MessageControllerException {
+		if(!this.loggedUsers.containsKey(from)) throw new MainSystemException("Permissao negada.");
 		if(this.invitations.containsKey(from)) this.invitations.get(from).add(to);
 		else {
 			List<String> mails = new ArrayList<String>();
@@ -174,64 +265,131 @@ public class MainSystem {
 		this.messageController.sendMessage(m);
 	}
 
-	public void logOut(String userName) throws Exception {
-		if(!loggedUsers.containsKey(userName)) throw new Exception("Sessao inexistente.");
+	/**
+	 * 
+	 * @param userName
+	 * @throws MainSystemException
+	 * @throws IOException 
+	 */
+	public void logOut(String userName) throws MainSystemException, IOException {
+		if(!loggedUsers.containsKey(userName)) throw new MainSystemException("Sessao inexistente.");
 		this.persistenceManager.saveUser(this.getUserByUserName(userName), userName);
 		this.loggedUsers.remove(userName);
 	}
 
-	public void sendMail(String from, String to, String subject, String msg) throws Exception{
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param subject
+	 * @param msg
+	 * @throws MainSystemException
+	 * @throws MessageControllerException
+	 * @throws IOException 
+	 */
+	public void sendMail(String from, String to, String subject, String msg) throws MainSystemException,MessageControllerException, IOException{
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject, msg);
 		messageController.sendMessage(mail);
 	}
 
-	public void sendSMS(String from, String to, String msg) throws Exception{
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param msg
+	 * @throws MainSystemException
+	 * @throws MessageControllerException
+	 * @throws IOException 
+	 */
+	public void sendSMS(String from, String to, String msg) throws MainSystemException,MessageControllerException, IOException{
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
 		messageController.sendMessage(sms);
 	}
 
+	/**
+	 * 
+	 * @param u1
+	 * @param u2
+	 */
 	public void initChat(String u1, String u2){
 		chat = new Chat(u1,u2);
 	}
 
+	/**
+	 * 
+	 * @throws MessageControllerException
+	 */
 	public void endChat() throws Exception{
 		messageController.sendMessage(chat);
 		chat = null;
 	}
 
+	/**
+	 * 
+	 * @param receiver
+	 * @param msg
+	 * @throws MainSystemException
+	 */
 	public void sendChat(String receiver, String msg) throws Exception{
 		if(chat == null) throw new Exception("Chat nao foi iniciado.");
 		chat.addMsg(receiver, msg);
 	}
 
+	/**
+	 * resets the database
+	 */
 	public void resetBD() {
 		persistenceManager.resetBD();		
 	}
 
+	/**
+	 * 
+	 * @param user
+	 */
 	public void saveUser(User user) throws IOException {
 		persistenceManager.saveUser(user, user.getUserName());
 	}
 
+	/**
+	 * 
+	 * @param userName
+	 * @param valor
+	 * @throws Exception 
+	 */
 	public void updateName(String userName, String valor) throws Exception{
 		User user = this.getUserByUserName(userName);
 		user.setName(valor);
 	}
 
-	public void updateMail(String userName, String valor) throws Exception{
+    /**
+     * 
+     * @param userName
+     * @param valor
+     * @throws MainSystemException
+     * @throws UserException 
+     * @throws IOException 
+     */
+	public void updateMail(String userName, String valor) throws MainSystemException, UserException, IOException{
 		User user = this.getUserByUserName(userName);
 		user.setMail(valor);
 	}
 
-	public void updatePhone(String userName , String valor) throws Exception{
+	/**
+	 * 
+	 * @param userName
+	 * @throws MainSystemException
+	 * @throws IOException 
+	 */
+	public void updatePhone(String userName , String valor) throws MainSystemException, IOException{
 		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
 	}
 	
-	public void removeAllFriends(User user) throws Exception{
+	public void removeAllFriends(User user) throws UserException, MainSystemException, IOException{
 		User auxUser;
 		for(PublicInfo pInfo: user.getFriendsPublicInfo()){
 			auxUser = this.getUserByUserName(pInfo.getLogin());
@@ -240,7 +398,15 @@ public class MainSystem {
 		}
 	}
 
-	public void removeUser(String userName) throws Exception{
+	/**
+	 * 
+	 * @param userName
+	 * @throws MainSystemException
+	 * @throws UserException 
+	 * @throws IOException 
+	 * @throws PersistenceManagerException 
+	 */
+	public void removeUser(String userName) throws MainSystemException, UserException, IOException, PersistenceManagerException{
 		User userToRemove = this.getUserByUserName(userName);
 		this.removeAllFriends(userToRemove);
 

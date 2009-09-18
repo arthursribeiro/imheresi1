@@ -1,17 +1,34 @@
 package com.googlecode.imheresi1.message;
 
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
 public class Invitation implements Message{
 
 	private String fromName;
 	private String to;
 	private String fromMail;
 	
+	/**
+	 * Constructor
+	 * @param fromName
+	 * @param fromMail
+	 * @param to
+	 */
 	public Invitation(String fromName, String fromMail, String to){
 		this.fromName = fromName;
 		this.to = to;
 		this.fromMail = fromMail;
 	}
 
+	/**
+	 * @return full message
+	 */
 	public String build() {
 		StringBuilder sB = new StringBuilder();
 		sB.append("From: iam@email.com");
@@ -35,6 +52,9 @@ public class Invitation implements Message{
 		return sB.toString();
 	}
 
+	/**
+	 * @return path
+	 */
 	public String getPath() {
 		return "files/outputs/convites.log";
 	}
