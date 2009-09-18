@@ -365,7 +365,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void sendMail(String from, String to, String subject, String msg)
-	throws MainSystemException, MessageControllerException, IOException {
+	throws MainSystemException, MessageControllerException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject,
@@ -383,7 +383,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void sendSMS(String from, String to, String msg)
-	throws MainSystemException, MessageControllerException, IOException {
+	throws MainSystemException, MessageControllerException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		if(receiver.getPhone().equals("")) throw new MainSystemException("Numero de telefone nao encontrado.");
