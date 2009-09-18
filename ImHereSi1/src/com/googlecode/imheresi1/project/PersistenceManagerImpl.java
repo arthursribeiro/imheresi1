@@ -1,6 +1,5 @@
 package com.googlecode.imheresi1.project;
 
-import java.io.Closeable;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +35,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 * @param occurrence - Name occurrence in the users
 	 * @exception Exception
 	 */
-	public User getUserByName(String name, int occurrence) throws Exception {
+	public User getUserByName(String name, int occurrence) {
 		ArrayList<User> users = new ArrayList<User>();
 		ArrayList<String> names = new ArrayList<String>();
 		
@@ -67,7 +66,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				}
 			}
 		}
-		throw new Exception("No user with this occurrence");
+		return null;
 	}
 
 	/**
@@ -75,11 +74,19 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 * @param userName - That will represent the xml file name
 	 * @return User that represents the user
 	 */
-	public User getUserByUserName(String userName) throws IOException {
-		FileReader reader = new FileReader("files/users/" + userName+".xml");
-		User returnUser = (User)xstream.fromXML(reader);
-		reader.close();
-		return returnUser;
+	public User getUserByUserName(String userName){
+		FileReader reader;
+		try {
+			reader = new FileReader("files/users/" + userName+".xml");
+			User returnUser = (User)xstream.fromXML(reader);
+			reader.close();
+			return returnUser;
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void resetBD() {
@@ -96,11 +103,19 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 * 
 	 * @param user - User that contains User information
 	 * @param userName - String that will represent the file name
+	 * @throws Exception 
 	 */
-	public void saveUser(User user, String userName) throws IOException {
-		DataOutputStream dos = new DataOutputStream(new FileOutputStream("files/users/" + userName + ".xml"));
-		xstream.toXML(user, dos);
-		dos.close();
+	public void saveUser(User user, String userName) {
+		DataOutputStream dos;
+		try {
+			dos = new DataOutputStream(new FileOutputStream("files/users/" + userName + ".xml"));
+			xstream.toXML(user, dos);
+			dos.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void removeUser(String userName) throws PersistenceManagerException {

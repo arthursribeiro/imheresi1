@@ -16,11 +16,11 @@ public interface PersistenceManager {
 
 	User getUserByName(String name, int occurrence) throws Exception;
 
-	User getUserByUserName(String userName) throws IOException;
+	User getUserByUserName(String userName) ;
 
 	void resetBD();
 
-	void saveUser(User user, String userName) throws IOException;
+	void saveUser(User user, String userName);
 
 	void removeUser(String userName) throws PersistenceManagerException;
 
