@@ -8,7 +8,8 @@ import com.googlecode.imheresi1.project.User;
 public class SystemFacade {
 
 	private MainSystem mySystem = new MainSystem();
-
+	private String diretorio = "";
+	
 	public void zerarSistema() {
 		this.mySystem.resetBD();
 	}
@@ -128,7 +129,8 @@ public class SystemFacade {
 	}
 
 	public String enviarConvite(String de, String para) throws Exception {
-		mySystem.sendInvitation(de, para);
+		if(diretorio.equals("")) throw new Exception("Diretorio desconhecido");
+		mySystem.sendInvitation(de, para,diretorio);
 		return "Documento convite.txt enviado com sucesso.";
 	}
 
@@ -137,7 +139,7 @@ public class SystemFacade {
 	}
 
 	public void setDiretorioGabaritos(String valor) {
-
+		this.diretorio = valor;
 	}
 
 	public String getAmigos(String id) throws Exception {

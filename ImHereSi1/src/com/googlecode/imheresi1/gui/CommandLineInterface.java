@@ -63,6 +63,7 @@ public class CommandLineInterface {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			createUser(entrada);
+			return;
 		}	
 		
 		System.out.println(SEPARATOR + "Usuario criado com sucesso!");
@@ -77,15 +78,14 @@ public class CommandLineInterface {
 			mySystem.setLocal(userName, ip);
 		} catch (UserException e) {
 			System.out.println(SEPARATOR + e.getMessage()); //"Login/senha invalidos." ou "IP invalido."
+			if(e.getMessage().equals("IP invalido."))
 			getLocationData(userName, entrada, password);
 		} catch (PositionException e) {
 			double latitude, longitude;
 			System.out.println(e.getMessage()); //"Nao foi possivel obter a localizacao."
 			System.out.println(SEPARATOR + "Digite sua localizacao manualmente");
-			System.out.print(SEPARATOR + "Latitude: ");
-			latitude = Double.parseDouble(entrada.nextLine().trim());
-			System.out.print(SEPARATOR + "Longitude: ");
-			longitude = Double.parseDouble(entrada.nextLine().trim());
+			latitude = getDoubleValue("Latitude: ", entrada);
+			longitude = getDoubleValue("Longitude: ", entrada);
 			try {
 				mySystem.setLocal(userName, latitude, longitude);
 				System.out.println("<<< Login efetuado com sucesso >>>");
@@ -99,8 +99,27 @@ public class CommandLineInterface {
 		}
 	}
 	
-	private void getDoubleValue(String prompt, Scanner entrada, String value){
-		System.out.print(SEPARATOR + prompt);
+	private static void logIn(Scanner entrada){
+		String userNameToLogIn, passwordToLogin;
+		System.out.println(SEPARATOR + "<<< Log In >>>");
+		System.out.print(SEPARATOR + "Username: ");
+		userNameToLogIn = entrada.nextLine().trim();
+		System.out.print(SEPARATOR + "Senha: ");
+		passwordToLogin = entrada.nextLine().trim();
+		
+		getLocationData(userNameToLogIn, entrada, passwordToLogin);
+	}
+	
+	private static double getDoubleValue(String prompt, Scanner entrada){
+		while(true){
+			System.out.print(SEPARATOR + prompt);
+			try {
+				String numero = entrada.nextLine();
+				double valorDouble = Double.parseDouble(numero);
+				return valorDouble;
+			} catch(NumberFormatException n) {
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -112,7 +131,7 @@ public class CommandLineInterface {
 		while (option != EXIT) {
 			switch (option) {
 			case LOGIN:
-				System.out.println("oi");
+				logIn(input);
 				break;
 			case CREATE_USER:
 				createUser(input);
