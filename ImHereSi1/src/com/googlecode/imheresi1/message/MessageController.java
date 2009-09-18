@@ -7,9 +7,22 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
 public class MessageController {
 
-	public void sendMessage(Message msg) throws Exception{
+	/**
+	 * 
+	 * @param msg
+	 * @throws MessageControllerException
+	 */
+	public void sendMessage(Message msg) throws MessageControllerException{
 		try {
 			FileInputStream file = new FileInputStream(msg.getPath());
 			FileWriter bOut = new FileWriter(new File(msg.getPath()), true);
@@ -22,10 +35,10 @@ public class MessageController {
 				fs.write(msg.build().getBytes());
 				fs.close();
 			} catch (IOException io) {
-				throw new Exception("Nao foi possivel enviar o email.");
+				throw new MessageControllerException("Nao foi possivel enviar o email.");
 			}
 		} catch(IOException io){
-			throw new Exception("Nao foi possivel enviar o email.");
+			throw new MessageControllerException("Nao foi possivel enviar o email.");
 		}
 	}
 

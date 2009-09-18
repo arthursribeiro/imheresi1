@@ -1,5 +1,14 @@
 package com.googlecode.imheresi1.message;
 
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
+
 public class Email implements Message{
 
 	private String from;
@@ -7,6 +16,13 @@ public class Email implements Message{
 	private String subject;
 	private String msg;
 	
+	/**
+	 * Constructor
+	 * @param from
+	 * @param to
+	 * @param subject
+	 * @param msg
+	 */
 	public Email(String from, String to, String subject, String msg){
 		this.from = from;
 		this.to = to;
@@ -14,10 +30,16 @@ public class Email implements Message{
 		this.msg = msg;
 	}
 	
+	/**
+	 * @return path
+	 */
 	public String getPath(){
 		return "files/outputs/emails.log";
 	}
 	
+	/**
+	 * @return Full message
+	 */
 	public String build(){
 		
 		StringBuilder sB = new StringBuilder();

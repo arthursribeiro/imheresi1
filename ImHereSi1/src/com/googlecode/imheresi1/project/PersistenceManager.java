@@ -2,6 +2,14 @@ package com.googlecode.imheresi1.project;
 
 import java.io.IOException;
 
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
 public interface PersistenceManager {
 
 	boolean hasUser(String user);
@@ -14,6 +22,6 @@ public interface PersistenceManager {
 
 	void saveUser(User user, String userName) throws IOException;
 
-	void removeUser(String userName) throws Exception;
+	void removeUser(String userName) throws PersistenceManagerException;
 
 }

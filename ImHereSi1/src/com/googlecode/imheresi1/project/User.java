@@ -8,8 +8,14 @@ import java.util.regex.Pattern;
 import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 
-
-
+/**
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ *
+ */
 public class User{
 
 	private List<PublicInfo> friends;
@@ -19,7 +25,12 @@ public class User{
 	private PublicInfo myPublicInfo;
 	
 	//Usar sets para setar qualquer tipo de atributo devido aos tratamentos de erros!
-	public User(String userName, String password) throws Exception {
+	/**
+	 * Constructor
+	 * @param userName
+	 * @param password
+	 */
+	public User(String userName, String password) throws UserException {
 		setPassword(password);
 		this.myPublicInfo = new PublicInfo();
 		setUserName(userName);
@@ -27,14 +38,27 @@ public class User{
 		this.visibleFriends = new ArrayList<String>();
 	}
 
+	/**
+	 * @return public info
+	 */
 	public PublicInfo getPublicInfo(){
 		return this.myPublicInfo;
 	}
 		
-	public void addFriend(PublicInfo friend,int mode) throws Exception{
-		if(this.friends.contains(friend)) throw new Exception("Usuario ja eh amigo.");
+	/**
+	 * 
+	 * @param friend
+	 * @param mode
+	 */
+	public void addFriend(PublicInfo friend,int mode) throws UserException{
+		if(this.friends.contains(friend)) throw new UserException("Usuario ja eh amigo.");
 		this.friends.add(friend);
 		if(mode == 2) this.visibleFriends.add(friend.getLogin());
+	}
+	
+	public void updatePassword(String newPass) throws UserException {
+		if(newPass == null || password.trim().equals("") || newPass.length() < 6) throw new UserException("Senha deve ter no minimo 6 caracteres.");
+		this.password = newPass;	
 	}
 	
 	public boolean isVisible(String friendUserName) throws Exception{
@@ -63,11 +87,19 @@ public class User{
 	
 	//Coloquei os tratamentos de erros nos sets aqui pra poder dar uma refatorada! Lembrar de sempre usar os sets pra colocafr alguma coisa
 	//inclusive no construtor!
-	public void setIp(String ip) throws Exception{
-		if(!this.validIp(ip)) throw new Exception("IP invalido.");
+	/**
+	 * @param ip
+	 */
+	public void setIp(String ip) throws UserException{
+		if(!this.validIp(ip)) throw new UserException("IP invalido.");
 		this.ip = ip;
 	}
 	
+	/**
+	 * 
+	 * @param Ip
+	 * @return boolean
+	 */
 	private boolean validIp(String Ip){
 		String expression = "^((0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})\\.){3}(0|1[0-9]{0,2}|2[0-9]{0,1}|2[0-4][0-9]|25[0-5]|[3-9][0-9]{0,1})$";
 	       
@@ -77,12 +109,22 @@ public class User{
         return matcher.matches();
 	}
 	
-	public void setMail(String email) throws Exception{
-		if((email == null) || (email.trim().equals(""))) throw new Exception("E-mail eh um dado obrigatorio.");
-		if(!this.validMail(email)) throw new Exception("E-mail invalido.");
+	/**
+	 * 
+	 * @param email
+	 * @throws UserException
+	 */
+	public void setMail(String email) throws UserException{
+		if((email == null) || (email.trim().equals(""))) throw new UserException("E-mail eh um dado obrigatorio.");
+		if(!this.validMail(email)) throw new UserException("E-mail invalido.");
 		this.myPublicInfo.setEmail(email);
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @return boolean
+	 */
 	private boolean validMail(String email) {
 		String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 	       
@@ -92,59 +134,111 @@ public class User{
         return matcher.matches();
 	}	
 
-	public void setPassword(String password) throws Exception{
-		if((password == null) || (password.trim().equals(""))) throw new Exception("Senha eh um dado obrigatorio.");
-		if(password.length() < 6) throw new Exception("Senha deve ter no minimo 6 caracteres.");
+	/**
+	 * 
+	 * @param password
+	 * @throws UserException
+	 */
+	public void setPassword(String password) throws UserException{
+		if((password == null) || (password.trim().equals(""))) throw new UserException("Senha eh um dado obrigatorio.");
+		if(password.length() < 6) throw new UserException("Senha deve ter no minimo 6 caracteres.");
 		this.password = password;
 	}
 	
-	public void setName(String name) throws Exception{
-		if((name == null) || (name.trim().equals(""))) throw new Exception("Nome eh um dado obrigatorio.");
+	/**
+	 * 
+	 * @param name
+	 * @throws UserException
+	 */
+	public void setName(String name) throws UserException{
+		if((name == null) || (name.trim().equals(""))) throw new UserException("Nome eh um dado obrigatorio.");
 		this.myPublicInfo.setName(name);
 	}
 	
 	/*
 	 * Nao Pode resetar o Username!! 
 	 */
-	private void setUserName(String userName) throws Exception{
-		if((userName == null) || (userName.trim().equals(""))) throw new Exception("Username eh um dado obrigatorio.");
+	/**
+	 * 
+	 * @param userName
+	 * @throws UserException
+	 */
+	private void setUserName(String userName) throws UserException{
+		if((userName == null) || (userName.trim().equals(""))) throw new UserException("Username eh um dado obrigatorio.");
 		this.myPublicInfo.setLogin(userName);
 	}
 
+	/**
+	 * 
+	 * @param phone
+	 */
 	public void setPhone(String phone) {
 		this.myPublicInfo.setTelephoneNumber(phone);
 	}
 	
+	/**
+	 * 
+	 * @throws PositionException
+	 */
 	public void setPosition() throws PositionException {
 		this.myPublicInfo.setPosition(this.ip);
 	}
 	
+	/**
+	 * 
+	 * @param latitude
+	 * @param longitude
+	 * @throws PositionException
+	 */
 	public void setPositionManual(double latitude, double longitude) throws PositionException {
 		this.myPublicInfo.setPositionManual(latitude, longitude);
 	}
 	
+	/**
+	 * 
+	 * @return Position
+	 * @throws PositionException
+	 */
 	public Position getPosition() throws PositionException {
 		return this.myPublicInfo.getPosition();
 	}
 	
-		
+    /**
+     * 
+     * @return password
+     */
 	public String getPassword(){
 		return this.password;
 	}
 	
+	/**
+	 * 
+	 * @return name
+	 */
 	public String getName() {
 		return this.myPublicInfo.getName();
 	}
 
+	/**
+	 * 
+	 * @return email
+	 */
 	public String getMail() {
 		return this.myPublicInfo.getEMail();
 	}
 	
-
+	/**
+	 * 
+	 * @return phone
+	 */
 	public String getPhone() {
 		return this.myPublicInfo.getTelephoneNumber();
 	}
 
+	/**
+	 * 
+	 * @return username
+	 */
 	public String getUserName() {
 		return this.myPublicInfo.getLogin();
 	}
@@ -165,7 +259,7 @@ public class User{
 		}
 	}
 
-	public void removeFriend(String friend) throws Exception  {
+	public void removeFriend(String friend) throws UserException  {
 		for(PublicInfo pInfo : this.friends){
 			if(pInfo.getLogin().equals(friend)) {
 				this.friends.remove(pInfo);
@@ -173,7 +267,7 @@ public class User{
 				return;
 			}
 		}
-		throw new Exception("Usuario desconhecido.");
+		throw new UserException("Usuario desconhecido.");
 	}
 
 	public Position getFriendLocation(String friend) throws Exception {
