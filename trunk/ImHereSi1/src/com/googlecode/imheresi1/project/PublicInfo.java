@@ -4,12 +4,13 @@ import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 
 /**
+ * Class that implements the MessageController type
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
  * @author Raquel Rolim
  * @author Raissa Sarmento
- *
+ * 
  */
 public class PublicInfo {
 
@@ -103,9 +104,7 @@ public class PublicInfo {
 			throws PositionException {
 		if (this.position == null) {
 			this.position = new Position(latitude, longitude);
-		} else { // Se eu ja tenho uma localizacao valida
-			// q foi criada a partir de um ip, eu posso
-			// setar manualmente uma nova lat e longi? :B
+		} else {
 			this.position.setPosition(latitude, longitude);
 		}
 	}

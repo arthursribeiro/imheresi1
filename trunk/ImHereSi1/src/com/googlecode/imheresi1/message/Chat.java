@@ -1,23 +1,25 @@
 package com.googlecode.imheresi1.message;
 
 /**
+ * Class that implements an interface Message and handles the Chat type
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
  * @author Raquel Rolim
  * @author Raissa Sarmento
- *
+ * 
  */
 
 public class Chat implements Message {
 
 	private String user1;
 	private String user2;
-	
+
 	private StringBuilder sB;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param u1
 	 * @param u2
 	 */
@@ -32,13 +34,15 @@ public class Chat implements Message {
 	 * @param receiver
 	 * @param msg
 	 */
-	public void addMsg(String receiver, String msg){
-		if(receiver.equals(user1)) sB.append(user2);
-		else sB.append(user1);
-		sB.append(": "+msg);
+	public void addMsg(String receiver, String msg) {
+		if (receiver.equals(user1))
+			sB.append(user2);
+		else
+			sB.append(user1);
+		sB.append(": " + msg);
 		sB.append(System.getProperty("line.separator"));
 	}
-	
+
 	/**
 	 * @return full message
 	 */
@@ -50,8 +54,9 @@ public class Chat implements Message {
 	 * @return path
 	 */
 	public String getPath() {
-		if(user1.compareToIgnoreCase(user2) > 0) return  "files/chats/"+user2+"-"+user1+".log";
-		return "files/chats/"+user1+"-"+user2+".log";
+		if (user1.compareToIgnoreCase(user2) > 0)
+			return "files/chats/" + user2 + "-" + user1 + ".log";
+		return "files/chats/" + user1 + "-" + user2 + ".log";
 	}
 
 }
