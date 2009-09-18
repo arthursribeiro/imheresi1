@@ -3,19 +3,21 @@ package com.google.code.imheresi1.gui;
 import java.util.Scanner;
 
 public class CommandLineInterface {
+	
+	
 
-	static Scanner input;
-	static final String SEPARATOR = System.getProperty("line.separator");
+	private static Scanner input;
+	private static final String SEPARATOR = System.getProperty("line.separator");
 
 
-	static final String PROMPT_1 = "Bem vindo ao I'm her!" + SEPARATOR +  SEPARATOR + 
+	private static final String PROMPT_1 = "Bem vindo ao I'm her!" + SEPARATOR +  SEPARATOR + 
 	"Escolha a opcao desejada:" + SEPARATOR + "1. Login" 	+ SEPARATOR + "2. hIHI" + SEPARATOR + "3. Exit";
-	static final String PROMPT_2 = "Opcao: ";
+	private static final String PROMPT_2 = "Opcao: ";
 
 
-	static final int LOGIN = 1;
-	static final int CREATE_USER = 2;
-	static final int SAIR = 3;
+	private static final int LOGIN = 1;
+	private static final int CREATE_USER = 2;
+	private static final int SAIR = 3;
 
 	private static int getOption(String option){
 		int chosenNumber;
@@ -30,7 +32,7 @@ public class CommandLineInterface {
 	}
 
 	private static void createUser() {
-
+		
 
 	}
 
