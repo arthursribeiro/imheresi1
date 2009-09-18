@@ -87,7 +87,7 @@ expect "fulanop@email.com" getAtributoUsuario id=${id1} atributo=email
 expect "558333332222" getAtributoUsuario id=${id1} atributo=telefone
 
 # erros possiveis
-expectError "Nao eh permitido alterar o username." atualizarUsuario id=id1 \
+expectError "Nao eh permitido alterar o username." atualizarUsuario id=${id1} \
 atributo=userName valor="fulanop"
 expectError "O usuario nao existe." atualizarUsuario id=id00 atributo=email \
 valor="clementino@email.com"

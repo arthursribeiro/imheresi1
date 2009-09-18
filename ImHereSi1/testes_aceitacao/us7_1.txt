@@ -13,11 +13,11 @@ id2=login userName="beltrana" senha="654321" ip="127.0.0.1"
 initMensageiro sistema="email"
 
 expect "Email enviado com sucesso." \
-	enviarEmail de=fulano para="fulano" assunto="Como estais?" \
+	enviarEmail de=${id2} para="fulano" assunto="Como estais?" \
 	msg="Nao tive mais noticias suas. Por onde vc anda? Saudades!"
 
 expect "Email enviado com sucesso." \
-	enviarEmail de=sicrano para="sicrano" assunto="Moras aqui ainda?" \
+	enviarEmail de=${id1} para="sicrano" assunto="Moras aqui ainda?" \
 	msg="Passei proximo a sua casa, verifiquei no I'mHere para saber se vc se encontrava la, mas sua localizacao nao estava disponivel. Vc se mudou? Ate mais!"
 
 equalFiles arq1=files/outputs/emails.log arq2=testes_aceitacao/saidas/us7_1.txt

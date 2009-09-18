@@ -71,3 +71,5 @@ expectError "Sessao inexistente." logout id=${id2}
 id4=cadastrarUsuario userName="clementino" nome="Clementino Pereira" email="clementino@email.com" \
 senha="97887huy" telefone="558366666666" ip="127.0.0.1"
 logout id=${id4}
+
+zerarSistema
