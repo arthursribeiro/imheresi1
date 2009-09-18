@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.message.Chat;
 import com.googlecode.imheresi1.message.Email;
 import com.googlecode.imheresi1.message.Invitation;
@@ -121,7 +122,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public String logIn(String userName, String password, String ip)
-			throws UserException, IOException {
+			throws UserException, IOException, PositionException {
 		User userToLogIn = this.getCreatedUserByUserName(userName);
 
 		if (userToLogIn == null) {
@@ -131,14 +132,28 @@ public class MainSystem {
 			userToLogIn = persistenceManager.getUserByUserName(userName);
 		}
 
-		userToLogIn.setIp(ip);
-
+		if(userToLogIn.willChangeIp(ip)){
+			userToLogIn.setIp(ip);
+			this.refreshMyLocalization(userToLogIn, ip);
+		}
+		
 		if (!userToLogIn.getPassword().equals(password))
 			throw new UserException("Login/senha invalidos.");
 
 		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
 
 		return userToLogIn.getUserName();
+	}
+	
+	private void refreshMyLocalization(User user, String ip) 
+									throws PositionException, IOException{
+		for(PublicInfo friendInfo : user.getFriendsPublicInfo()){
+			User friend = this.persistenceManager.
+							getUserByUserName(friendInfo.getLogin());
+			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
+			pInfo.setPosition(ip);
+			this.saveUser(friend);
+		}
 	}
 
 	/**
