@@ -1,13 +1,19 @@
 package com.googlecode.imheresi1.localization;
+
 import java.io.IOException;
+
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
 /**
- * Constructor receiving ip (GeoIP)
  * 
- * @param ip
- * @throws PositionException
+ * Class that handles the position type
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author Jose Laerte
+ * @author Raquel Rolim
+ * @author Raissa Sarmento
+ * 
  */
 public class Position {
 
@@ -18,7 +24,7 @@ public class Position {
 	private final String DATABASE = DIR + SEPARATOR + "GeoLiteCity.dat";
 
 	/**
-	 * Construtor a partir de um ip (GeoIP)
+	 * Constructor receiving an ip (GeoIP)
 	 * 
 	 * @param ip
 	 * @throws PositionException
