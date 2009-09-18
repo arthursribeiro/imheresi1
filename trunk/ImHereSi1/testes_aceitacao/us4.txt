@@ -12,7 +12,7 @@ id2=login userName="beltrana" senha="654321" ip="127.0.0.1"
 #####################################################################################
 
 initMensageiro sistema="email"
-setDiretorioGabaritos valor=gabaritos
+setDiretorioGabaritos valor=gabarito
 
 expect "Documento convite.txt enviado com sucesso." \
 	enviarConvite de=${id1} para="beltrana@email.com"

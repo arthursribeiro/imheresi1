@@ -78,6 +78,15 @@ public class MainSystem {
 		this.persistenceManager.saveUser(f, f.getUserName());
 	}
 
+	
+	public void setLocal(String userName, String ip) throws MainSystemException, PositionException{
+		User user = this.getUserByUserName(userName);
+		user.setPosition();
+		this.loggedUsers.put(user.getUserName(), user);
+		this.refreshMyLocalization(user, ip);
+		this.persistenceManager.saveUser(user, user.getUserName());
+	}
+	
 	public void setLocal(String userName, double latitude, double longitude) throws PositionException, MainSystemException{
 		User user = this.getUserByUserName(userName);
 		user.setPositionManual(latitude, longitude);
@@ -86,13 +95,7 @@ public class MainSystem {
 		this.persistenceManager.saveUser(user, user.getUserName());
 	}
 
-	public void setLocal(String userName, String ip) throws PositionException, MainSystemException{
-		User user = this.getUserByUserName(userName);
-		user.setPosition();
-		this.loggedUsers.put(user.getUserName(), user);
-		this.refreshMyLocalization(user, ip);
-		this.persistenceManager.saveUser(user, user.getUserName());
-	}
+
 
 	public void removeFriend(String userName, String friend) throws Exception{
 		User user;
@@ -321,7 +324,7 @@ public class MainSystem {
 	 * @throws MainSystemException
 	 * @throws MessageControllerException
 	 */
-	public void sendInvitation(String from, String to)
+	public void sendInvitation(String from, String to, String diretorio)
 	throws MainSystemException, MessageControllerException {
 		if (!this.loggedUsers.containsKey(from))
 			throw new MainSystemException("Permissao negada.");
@@ -333,7 +336,7 @@ public class MainSystem {
 			this.invitations.put(from, mails);
 		}
 		User u = this.loggedUsers.get(from);
-		Message m = new Invitation(u.getName(), u.getMail(), to);
+		Message m = new Invitation(u.getName(), u.getMail(), to, diretorio);
 		this.messageController.sendMessage(m);
 	}
 
@@ -383,6 +386,7 @@ public class MainSystem {
 	throws MainSystemException, MessageControllerException, IOException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
+		if(receiver.getPhone().equals("")) throw new MainSystemException("Numero de telefone nao encontrado.");
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
 		messageController.sendMessage(sms);
 	}
@@ -438,9 +442,10 @@ public class MainSystem {
 	 * 
 	 * @param userName
 	 * @param valor
+	 * @throws UserException 
 	 * @throws Exception
 	 */
-	public void updateName(String userName, String valor) throws Exception {
+	public void updateName(String userName, String valor) throws MainSystemException, UserException {
 		User user = this.getUserByUserName(userName);
 		user.setName(valor);
 	}
@@ -454,7 +459,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void updateMail(String userName, String valor)
-	throws MainSystemException, UserException, IOException {
+	throws MainSystemException, UserException {
 		User user = this.getUserByUserName(userName);
 		user.setMail(valor);
 	}
@@ -466,9 +471,15 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void updatePhone(String userName, String valor)
-	throws MainSystemException, IOException {
+	throws MainSystemException {
 		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
+	}
+	
+	public void updatePass(String userName, String valor)
+	throws MainSystemException, UserException {
+		User user = this.getUserByUserName(userName);
+		user.updatePassword(valor);
 	}
 
 	/**
@@ -479,7 +490,7 @@ public class MainSystem {
 	 * @throws IOException
 	 */
 	public void removeAllFriends(User user) throws UserException,
-	MainSystemException, IOException {
+	MainSystemException {
 		User auxUser;
 		for (PublicInfo pInfo : user.getFriendsPublicInfo()) {
 			auxUser = this.getUserByUserName(pInfo.getLogin());
@@ -509,7 +520,7 @@ public class MainSystem {
 	 * @throws PersistenceManagerException
 	 */
 	public void removeUser(String userName) throws MainSystemException,
-	UserException, IOException {
+	UserException{
 		User userToRemove = this.getUserByUserName(userName);
 		this.removeAllFriends(userToRemove);
 
@@ -521,10 +532,12 @@ public class MainSystem {
 				this.persistenceManager.removeUser(userToRemove.getUserName());
 		} catch (PersistenceManagerException e) {
 			throw new MainSystemException("O usuario nao existe.");
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 		}
 	}
-
+	
+	public String getFriendsList(String userName) throws MainSystemException {
+		User user = this.getUserByUserName(userName);
+		return user.toStringFriends();
+	}
 
 }

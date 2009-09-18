@@ -354,4 +354,16 @@ public class User {
 		}
 		return null;
 	}
+
+	public String toStringFriends() {
+		String separator = System.getProperty("line.separator"); 
+		String saida = "===================================================================" + separator
+					   + "Username                      Usuario                            " + separator
+					   + "================================================================="  + separator;
+		
+		for(int i = 0; i < this.friends.size(); i++){
+			saida += this.friends.get(i).getLogin() + "      " + this.friends.get(i).getName() + separator;
+		}
+		return saida;
+	}
 }
