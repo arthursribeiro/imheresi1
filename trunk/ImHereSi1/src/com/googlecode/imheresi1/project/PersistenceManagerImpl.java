@@ -89,6 +89,9 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		return null;
 	}
 
+	/**
+	 * Resets the Database
+	 */
 	public void resetBD() {
 		File file = new File("files/users");
 		
@@ -118,6 +121,9 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		}
 	}
 
+	/**
+	 * Removes the user
+	 */
 	public void removeUser(String userName) throws PersistenceManagerException {
 		if(hasUser(userName)){
 		    File file = new File("files/users/"+ userName + ".xml");
