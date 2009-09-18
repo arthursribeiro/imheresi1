@@ -7,16 +7,15 @@ import com.googlecode.imheresi1.project.User;
 
 public class SystemFacade {
 
-	private MainSystem mySystem;
+	private MainSystem mySystem = new MainSystem();
 	
 	public void zerarSistema(){
-		this.mySystem = new MainSystem();
 		this.mySystem.resetBD();
 	}
 	
 	//Encerra o sistema, gravando log e informacoes dos usuarios
 	public void encerrarSistema(){
-		
+		this.mySystem.exitSystem();
 	}
 	
 	public void criarUsuario(String userName, String nome, String email, String senha, String telefone) throws Exception{
@@ -93,8 +92,7 @@ public class SystemFacade {
 
 	public void setLocalizacao(String userName, double latitude,
 			double longitude) throws Exception, PositionException {
-		User user = this.mySystem.getUserByUserName(userName);
-		user.setPositionManual(latitude, longitude);
+		this.mySystem.setLocal(userName, latitude, longitude);
 	}
 
 	public String getLocalizacao(String userName) throws Exception,
@@ -167,19 +165,11 @@ public class SystemFacade {
 	}
 	
 	public void setCompartilhamento(String usuario, String amigo, int modo) throws Exception{
-		User user = this.mySystem.getUserByUserName(amigo);
-		user.setSharingOption(usuario, modo);
+		this.mySystem.setSharing(usuario, amigo, modo);
 	}
 	
 	public void removerAmigo(String usuario, String amigo) throws Exception {
-		User user;
-		try{
-			user = this.mySystem.getUserByUserName(usuario);
-
-		} catch (Exception ex){
-			throw new Exception("Permissao negada.");
-		}
-		user.removeFriend(amigo);
+		this.mySystem.removeFriend(usuario, amigo);
 	}
 	
 	public String getLocalizacaoAmigo(String userName, String amigo) throws PositionException, Exception {

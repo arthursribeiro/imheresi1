@@ -37,6 +37,7 @@ public class User {
 		setUserName(userName);
 		this.friends = new ArrayList<PublicInfo>();
 		this.visibleFriends = new ArrayList<String>();
+		this.ip = "000.0.0.0";
 	}
 
 	/**
@@ -54,7 +55,9 @@ public class User {
 	public void addFriend(PublicInfo friend, int mode) throws UserException {
 		if (this.friends.contains(friend))
 			throw new UserException("Usuario ja eh amigo.");
+		
 		this.friends.add(friend);
+		
 		if (mode == 2)
 			this.visibleFriends.add(friend.getLogin());
 	}
@@ -340,7 +343,7 @@ public class User {
 	}
 
 	public boolean willChangeIp(String ip2) {
-		return this.ip.equals(ip2);
+		return !this.ip.equals(ip2);
 	}
 
 	public PublicInfo getAFriendPublicInfo(String userName) {
