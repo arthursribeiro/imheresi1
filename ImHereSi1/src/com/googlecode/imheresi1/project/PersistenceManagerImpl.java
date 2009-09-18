@@ -47,7 +47,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				User a = (User)xstream.fromXML(reader);
 				users.add(a);
 			} catch (FileNotFoundException e) {
-				System.err.println("File not found");;
+			//	System.err.println("File not found");;
 			}
 		}
 		for(User i : users){
@@ -82,9 +82,9 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			reader.close();
 			return returnUser;
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+		//	e1.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+		//	e.printStackTrace();
 		}
 		return null;
 	}
@@ -96,9 +96,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		File file = new File("files/users");
 		
 		for(String i : file.list()){
-			System.out.println(i);
 			File del = new File("files/users/"+i);
-			System.out.println(del.delete());
 		}
 	}
 

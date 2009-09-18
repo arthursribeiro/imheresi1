@@ -433,14 +433,22 @@ public class MainSystem {
 	 * @throws PersistenceManagerException
 	 */
 	public void removeUser(String userName) throws MainSystemException,
-			UserException, IOException, PersistenceManagerException {
+			UserException, IOException {
 		User userToRemove = this.getUserByUserName(userName);
 		this.removeAllFriends(userToRemove);
 
 		if (this.createdUsers.contains(userToRemove))
 			this.createdUsers.remove(userToRemove);
 
-		this.persistenceManager.removeUser(userToRemove.getUserName());
+		try {
+			if(this.persistenceManager.hasUser(userName))
+				this.persistenceManager.removeUser(userToRemove.getUserName());
+		} catch (PersistenceManagerException e) {
+			System.out.println("IEFIHDFIDHDI");
+			throw new MainSystemException("O usuario nao existe.");
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 	}
 
 }
