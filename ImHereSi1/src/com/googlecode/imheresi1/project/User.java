@@ -339,4 +339,16 @@ public class User {
 		return null;
 	}
 
+	public boolean willChangeIp(String ip2) {
+		return this.ip.equals(ip2);
+	}
+
+	public PublicInfo getAFriendPublicInfo(String userName) {
+		for(PublicInfo pInfo : this.friends){
+			if(pInfo.getLogin().equals(userName)){
+				return pInfo;
+			}
+		}
+		return null;
+	}
 }
