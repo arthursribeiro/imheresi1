@@ -159,7 +159,7 @@ public class SystemSecondMenu {
 			System.out.println(SEPARATOR + "Nenhum convite!" + SEPARATOR);
 			return;
 		}
-
+		System.out.println(prompt);
 		String uName = "";
 		while(true){
 			System.out.print("Digite o username: ");
@@ -206,29 +206,7 @@ public class SystemSecondMenu {
 		}
 	}
 
-	private void recuperarLocalizacao() {
-		String userNameParaLocalizar;
-		String menu = "";
-		try {
-			menu += SEPARATOR + this.system.getFriendsList(userName);
-		} catch (MainSystemException e) {
-			// System.out.println("entrei");
-		}
-		menu += "Selecione um amigo: ";
-		System.out.print(menu);
-		userNameParaLocalizar = this.input.nextLine().trim();
-		try {
-			String localizacao = this.system.getAFriendPosition(this.userName,
-					userNameParaLocalizar);
-			System.out.println("Posicao de " + userNameParaLocalizar + " >>> "
-					+ localizacao);
-		} catch (MainSystemException e) {
-			System.out.println(e.getMessage());
-			recuperarLocalizacao();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
+
 
 	private void enviar() {
 		while(true){
@@ -303,32 +281,67 @@ public class SystemSecondMenu {
 
 	}
 
-	private void editarCompartilhamento() {
-		String userNameParaEscolher;
+	private void recuperarLocalizacao() {
+		String userNameParaLocalizar;
 		String menu = "";
-		try{
-			menu += SEPARATOR + this.system.getFriendsList(userName);
+		try {
+			menu = this.system.getFriendsList(userName);
+            if(menu.equals("")) {
+                System.out.println(SEPARATOR + "Nenhum Amigo" + SEPARATOR);
+                return;
+            }
 		} catch (MainSystemException e) {
-			//			System.out.println("entrei");
+			//Do Nothing
 		}
 		menu += "Selecione um amigo: ";
 		System.out.print(menu);
-		userNameParaEscolher = this.input.nextLine().trim();
+		userNameParaLocalizar = this.input.nextLine().trim();
 		
-		System.out.println("Opcao de compartilhamento: " + SEPARATOR + "1. Ocultar" + SEPARATOR + "2. Exibir" + "Opcao: ");
-		int opcao = this.getOption(this.input.nextLine().trim());
-
-		while(opcao != -1){
-			opcao = this.getOption(this.input.nextLine().trim());
-		}
-
-		try{
-			this.system.setSharing(this.userName, userNameParaEscolher, opcao);
+		try {
+			String localizacao = this.system.getAFriendPosition(this.userName,
+					userNameParaLocalizar);
+			System.out.println("Posicao de " + userNameParaLocalizar + " >>> "
+					+ localizacao);
+		} catch (MainSystemException e) {
+			System.out.println(e.getMessage());
+			recuperarLocalizacao();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			editarCompartilhamento();
 		}
 	}
+	
+	private void editarCompartilhamento() {
+        String userNameParaEscolher;
+        String menu = "";
+        try{
+            menu = this.system.getFriendsList(userName);
+            if(menu.equals("")) {
+                System.out.println(SEPARATOR + "Nenhum Amigo" + SEPARATOR);
+                return;
+            }
+        } catch (MainSystemException e) {
+            //            System.out.println("entrei");
+        }
+        menu += "Selecione um amigo: ";
+        System.out.print(menu);
+        userNameParaEscolher = this.input.nextLine().trim();
+        
+        System.out.println("Opcao de compartilhamento: " + SEPARATOR + "1. Ocultar" + SEPARATOR + "2. Exibir");
+        System.out.print(SEPARATOR + "Opcao: ");
+        int opcao = this.getOption(this.input.nextLine().trim());
+
+        while(opcao == -1){
+            System.out.println(SEPARATOR + "Opcao: ");
+            opcao = this.getOption(this.input.nextLine().trim());
+        }
+
+        try{
+            this.system.setSharing(this.userName, userNameParaEscolher, opcao);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            editarCompartilhamento();
+        }
+    }
 
 	private void deletar() {
 		while(true){
@@ -336,7 +349,12 @@ public class SystemSecondMenu {
 			String escolha = input.nextLine().trim();
 			if(escolha.equalsIgnoreCase("s")){
 				try {
-					system.removeUser(this.userName);
+					try {
+						system.removeUser(this.userName);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+					}
 					sair = true;
 					return;
 				} catch (MainSystemException e) {
