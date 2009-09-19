@@ -185,10 +185,8 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 */
 	public void removeUser(String userName) throws PersistenceManagerException {
 		if (hasUser(userName)) {
-			System.out.println("Achou");
 			File file = new File("files/users/" + userName + ".xml");
 			file.delete();
-			System.out.println("mandou");
 			return;
 		}
 		throw new PersistenceManagerException("File doesn't exist");
