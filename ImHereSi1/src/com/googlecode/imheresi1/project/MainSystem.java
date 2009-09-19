@@ -268,10 +268,11 @@ public class MainSystem {
 	 * @param ip
 	 * @return
 	 * @throws UserException
+	 * @throws IOException 
 	 * @throws IOException
 	 */
 	public String logIn(String userName, String password, String ip)
-			throws UserException, PositionException {
+			throws UserException, PositionException, IOException {
 		User userToLogIn = this.getCreatedUserByUserName(userName);
 
 		if (userToLogIn == null) {
@@ -348,10 +349,11 @@ public class MainSystem {
 	 * @return
 	 * @throws MainSystemException
 	 * @throws UserException
+	 * @throws IOException 
 	 */
 	public User createUser(String userName, String password, String email,
 			String name, String phone) throws MainSystemException,
-			UserException {
+			UserException, IOException {
 
 		if ((persistenceManager.hasUser(userName))
 				|| (this.getCreatedUserByUserName(userName) != null))
@@ -656,11 +658,12 @@ public class MainSystem {
 	 * @param userName
 	 * @throws MainSystemException
 	 * @throws UserException
+	 * @throws IOException 
 	 * @throws IOException
 	 * @throws PersistenceManagerException
 	 */
 	public void removeUser(String userName) throws MainSystemException,
-			UserException {
+			UserException, IOException {
 		User userToRemove = this.getUserByUserName(userName);
 		this.removeAllFriends(userToRemove);
 
