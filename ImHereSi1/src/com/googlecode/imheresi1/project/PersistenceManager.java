@@ -1,5 +1,6 @@
 package com.googlecode.imheresi1.project;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public interface PersistenceManager {
 
-	boolean hasUser(String user);
+	boolean hasUser(String user) throws IOException;
 
 	User getUserByName(String name, int occurrence) throws Exception;
 
