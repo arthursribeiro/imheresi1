@@ -1,6 +1,7 @@
 package com.googlecode.imheresi1.project;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class that implements the PersistenceManager type
@@ -21,6 +22,12 @@ public interface PersistenceManager {
 
 	void resetBD();
 
+	void clearInvitations();
+	
+	Map<String, List<String>> getInvitations();
+	
+	void saveInvitations(Map<String, List<String>> invitations);
+	
 	void saveUser(User user, String userName);
 
 	void removeUser(String userName) throws PersistenceManagerException;

@@ -1,0 +1,35 @@
+<com.googlecode.imheresi1.project.User>
+  <friends>
+    <com.googlecode.imheresi1.project.PublicInfo>
+      <name>raissa</name>
+      <login>raisaa</login>
+      <position>
+        <latitude>10.0</latitude>
+        <longitude>20.0</longitude>
+        <DIR>C:\Users\User\workspaces\AEE\ImHereSi1</DIR>
+        <SEPARATOR>\</SEPARATOR>
+        <DATABASE>C:\Users\User\workspaces\AEE\ImHereSi1\GeoLiteCity.dat</DATABASE>
+      </position>
+      <telephoneNumber></telephoneNumber>
+      <email>raisaa@gmail.com</email>
+    </com.googlecode.imheresi1.project.PublicInfo>
+  </friends>
+  <visibleFriends>
+    <string>raisaa</string>
+  </visibleFriends>
+  <password>123456</password>
+  <ip>127.0.0.1</ip>
+  <myPublicInfo>
+    <name>laerte</name>
+    <login>laerte30</login>
+    <position>
+      <latitude>10.0</latitude>
+      <longitude>20.0</longitude>
+      <DIR>C:\Users\User\workspaces\AEE\ImHereSi1</DIR>
+      <SEPARATOR>\</SEPARATOR>
+      <DATABASE>C:\Users\User\workspaces\AEE\ImHereSi1\GeoLiteCity.dat</DATABASE>
+    </position>
+    <telephoneNumber></telephoneNumber>
+    <email>laertexavierjr@gmail.com</email>
+  </myPublicInfo>
+</com.googlecode.imheresi1.project.User>

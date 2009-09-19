@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -28,6 +30,27 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		} catch (FileNotFoundException e) {
 			return false;
 		}
+	}
+	
+	public void clearInvitations() {
+		File file = new File("files/invitation/invitation.xml");
+		file.delete();
+	}
+	
+
+	public Map<String, List<String>> getInvitations() {
+		FileReader reader;
+		try {
+			reader = new FileReader("files/invitation/invitation.xml");
+			Map<String, List<String>> returnUser = (Map<String, List<String>>)xstream.fromXML(reader);
+			reader.close();
+			return returnUser;
+		} catch (FileNotFoundException e1) {
+			//	e1.printStackTrace();
+		} catch (IOException e) {
+			//	e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -50,6 +73,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			//	System.err.println("File not found");;
 			}
 		}
+		
 		for(User i : users){
 			names.add(i.getName());
 		}
@@ -124,5 +148,19 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		    return;
 		}
 		throw new PersistenceManagerException("File doesn't exist");
+	}
+
+	public void saveInvitations(Map<String, List<String>> invitations) {
+		DataOutputStream dos;
+		try {
+			dos = new DataOutputStream(new FileOutputStream("files/invitation/" + "invitation.xml"));
+			xstream.toXML(invitations, dos);
+			dos.close();
+		} catch (FileNotFoundException e1) {
+			System.out.println(e1.getMessage());
+		} catch(IOException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 }

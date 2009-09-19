@@ -129,7 +129,6 @@ public class SystemFacade {
 	}
 
 	public String enviarConvite(String de, String para) throws Exception {
-		if(diretorio.equals("")) throw new Exception("Diretorio desconhecido");
 		mySystem.sendInvitation(de, para);
 		return "Documento convite.txt enviado com sucesso.";
 	}
