@@ -17,11 +17,11 @@ public class SystemSecondMenu {
 
 	private final static String SEPARATOR = System.getProperty("line.separator");
 
-	private static final String PROMPT_1 = "<< Bem Vindo " + userName + " >>" + SEPARATOR + 
+	private static final String PROMPT_1 = SEPARATOR + 
 	"1. Atualizar informacoes" + SEPARATOR + "2. Deletar Conta" + SEPARATOR + "3. Editar compartilhamento" + 
 	SEPARATOR + "4. Adicionar amigos" + SEPARATOR + "5. Recuperar localizacao dos amigos" + 
 	SEPARATOR + "6. Enviar mensagem" + SEPARATOR + "7. Aceitar/Recusar Convites" + SEPARATOR + "8. Logout";
-
+	private String welcomeUser;
 	private static final int ATUALIZAR = 1;
 	private static final int DELETAR = 2;
 	private static final int EDITAR_COMPARTILHAMENTO = 3;
@@ -36,6 +36,7 @@ public class SystemSecondMenu {
 		system = mySystem;
 		this.userName = userName;
 		this.input = input;
+		this.welcomeUser = "<< Bem Vindo " + userName + " >>";
 		sair = false;
 	}
 
@@ -114,7 +115,7 @@ public class SystemSecondMenu {
 	}
 
 	public void mainLoop(){
-		System.out.print(PROMPT_1 + SEPARATOR + PROMPT_2);
+		System.out.print(this.welcomeUser + PROMPT_1 + SEPARATOR + PROMPT_2);
 
 		String opt = input.nextLine();
 		int option = getOption(opt);
@@ -148,7 +149,7 @@ public class SystemSecondMenu {
 				break;
 			}
 
-			System.out.print(SEPARATOR + PROMPT_1 + SEPARATOR + PROMPT_2);
+			System.out.print(SEPARATOR + this.welcomeUser+ PROMPT_1 + SEPARATOR + PROMPT_2);
 			option = getOption(input.nextLine());
 		}
 	}
