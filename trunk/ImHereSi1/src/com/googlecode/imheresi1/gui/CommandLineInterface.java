@@ -138,7 +138,7 @@ public class CommandLineInterface {
 			switch (option) {
 			case LOGIN:
 				String username = logIn(input);
-				if(username != null){
+				if(username != null) {
 					SystemSecondMenu secondMenu = new SystemSecondMenu(mySystem, input, username);
 					secondMenu.mainLoop();
 				}
