@@ -1,10 +1,14 @@
 package com.googlecode.imheresi1.project;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import sun.misc.BASE64Encoder;
 
 import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.message.Chat;
@@ -287,12 +291,24 @@ public class MainSystem {
 			this.refreshMyLocalization(userToLogIn, ip);
 		}
 
-		if (!userToLogIn.getPassword().equals(password))
+		if (!userToLogIn.getPassword().equals(encripta(password)))
 			throw new UserException("Login/senha invalidos.");
 
 		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
 
 		return userToLogIn.getUserName();
+	}
+	
+	public static String encripta(String senha) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(senha.getBytes());
+			BASE64Encoder encoder = new BASE64Encoder();
+			return encoder.encode(digest.digest());
+		} catch (NoSuchAlgorithmException ns) {
+			ns.printStackTrace();
+			return senha;
+		}
 	}
 
 	/**
