@@ -62,6 +62,10 @@ public class Invitation implements Message {
 		return sB.toString();
 	}
 
+	/**
+	 * 
+	 * @return string
+	 */
 	private String getInviteText(){
 		StringBuffer buffer = new StringBuffer();
 		try {

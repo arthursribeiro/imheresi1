@@ -327,7 +327,7 @@ public class User {
 	/**
 	 * 
 	 * @param friend
-	 * @return
+	 * @return Position
 	 * @throws Exception
 	 */
 	public Position getFriendLocation(String friend) throws Exception {
@@ -342,10 +342,20 @@ public class User {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param ip2
+	 * @return boolean
+	 */
 	public boolean willChangeIp(String ip2) {
 		return !this.ip.equals(ip2);
 	}
 
+	/**
+	 * 
+	 * @param userName
+	 * @return PublicInfo
+	 */
 	public PublicInfo getAFriendPublicInfo(String userName) {
 		for(PublicInfo pInfo : this.friends){
 			if(pInfo.getLogin().equals(userName)){
@@ -355,6 +365,10 @@ public class User {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return string
+	 */
 	public String toStringFriends() {
 		String separator = System.getProperty("line.separator"); 
 		String saida = "==================================================================" + separator

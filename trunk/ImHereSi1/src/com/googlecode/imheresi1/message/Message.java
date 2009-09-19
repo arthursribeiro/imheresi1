@@ -1,7 +1,7 @@
 package com.googlecode.imheresi1.message;
 
 /**
- * Interface message
+ * Interface Message
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte

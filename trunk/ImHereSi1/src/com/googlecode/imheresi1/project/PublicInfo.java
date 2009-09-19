@@ -4,7 +4,7 @@ import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 
 /**
- * Class that implements the MessageController type
+ * Class that implements the PublicInfo type
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
