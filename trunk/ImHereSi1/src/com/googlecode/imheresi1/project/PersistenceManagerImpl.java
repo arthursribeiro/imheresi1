@@ -36,6 +36,12 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		try {
 			FileInputStream a = new FileInputStream("files/users/" + user
 					+ ".xml");
+			try {
+				a.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
 			return true;
 		} catch (FileNotFoundException e) {
 			return false;
@@ -87,6 +93,12 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				FileReader reader = new FileReader("files/users/"
 						+ file.list()[i]);
 				User a = (User) xstream.fromXML(reader);
+				try {
+					reader.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
 				users.add(a);
 			} catch (FileNotFoundException e) {
 				// System.err.println("File not found");;
@@ -173,8 +185,10 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	 */
 	public void removeUser(String userName) throws PersistenceManagerException {
 		if (hasUser(userName)) {
+			System.out.println("Achou");
 			File file = new File("files/users/" + userName + ".xml");
 			file.delete();
+			System.out.println("mandou");
 			return;
 		}
 		throw new PersistenceManagerException("File doesn't exist");
