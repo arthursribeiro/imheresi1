@@ -1,9 +1,14 @@
 package com.googlecode.imheresi1.project;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import sun.misc.BASE64Encoder;
 
 import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
@@ -172,8 +177,22 @@ public class User {
 			throw new UserException("Senha eh um dado obrigatorio.");
 		if (password.length() < 6)
 			throw new UserException("Senha deve ter no minimo 6 caracteres.");
-		this.password = password;
+		this.password = encripta(password);
 	}
+	
+	public static String encripta(String senha) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(senha.getBytes());
+			BASE64Encoder encoder = new BASE64Encoder();
+			return encoder.encode(digest.digest());
+		} catch (NoSuchAlgorithmException ns) {
+			ns.printStackTrace();
+			return senha;
+		}
+	}
+	
+	
 
 	/**
 	 * 
