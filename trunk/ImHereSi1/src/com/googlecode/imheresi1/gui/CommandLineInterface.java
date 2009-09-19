@@ -73,7 +73,12 @@ public class CommandLineInterface {
 		System.out.print(SEPARATOR + "Ip: ");
 		String ip = entrada.nextLine().trim();
 		try {
-			mySystem.logIn(userName, password, ip);
+			try {
+				mySystem.logIn(userName, password, ip);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
 			mySystem.setLocal(userName, ip);
 		} catch (UserException e) {
 			System.out.println(SEPARATOR + e.getMessage()); //"Login/senha invalidos." ou "IP invalido."
