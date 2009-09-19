@@ -1,0 +1,19 @@
+<com.googlecode.imheresi1.project.User>
+  <friends/>
+  <visibleFriends/>
+  <password>laertexavier</password>
+  <ip>127.0.0.1</ip>
+  <myPublicInfo>
+    <name>laerte</name>
+    <login>laerteXavierJr</login>
+    <position>
+      <latitude>10.0</latitude>
+      <longitude>20.0</longitude>
+      <DIR>C:\Users\User\workspaces\AEE\ImHereSi1</DIR>
+      <SEPARATOR>\</SEPARATOR>
+      <DATABASE>C:\Users\User\workspaces\AEE\ImHereSi1\GeoLiteCity.dat</DATABASE>
+    </position>
+    <telephoneNumber></telephoneNumber>
+    <email>laerte@gmIL.COM</email>
+  </myPublicInfo>
+</com.googlecode.imheresi1.project.User>

@@ -32,8 +32,8 @@ public class SystemSecondMenu {
 	private static final int LOGOUT = 8;
 	private static final String PROMPT_2 = "Opcao: ";
 
-	public SystemSecondMenu(Scanner input, String userName){
-		system = new MainSystem();
+	public SystemSecondMenu(MainSystem mySystem,Scanner input, String userName){
+		system = mySystem;
 		this.userName = userName;
 		this.input = input;
 		sair = false;
@@ -135,6 +135,7 @@ public class SystemSecondMenu {
 				adicionarAmigos();
 				break;
 			case RECUPERAR_LOCALIZACAO:
+				recuperarLocalizacao();
 				break;
 			case ENVIAR:
 				enviar();
@@ -153,7 +154,12 @@ public class SystemSecondMenu {
 	}
 
 	private void accRecCompartilhamento() {
-		System.out.println(system.toStringMyInvitations(this.userName));
+		String prompt = system.toStringMyInvitations(this.userName);
+		if(prompt.equals("")) {
+			System.out.println(SEPARATOR + "Nenhum convite!" + SEPARATOR);
+			return;
+		}
+
 		String uName = "";
 		while(true){
 			System.out.print("Digite o username: ");
@@ -200,7 +206,29 @@ public class SystemSecondMenu {
 		}
 	}
 
-
+	private void recuperarLocalizacao() {
+		String userNameParaLocalizar;
+		String menu = "";
+		try {
+			menu += SEPARATOR + this.system.getFriendsList(userName);
+		} catch (MainSystemException e) {
+			// System.out.println("entrei");
+		}
+		menu += "Selecione um amigo: ";
+		System.out.print(menu);
+		userNameParaLocalizar = this.input.nextLine().trim();
+		try {
+			String localizacao = this.system.getAFriendPosition(this.userName,
+					userNameParaLocalizar);
+			System.out.println("Posicao de " + userNameParaLocalizar + " >>> "
+					+ localizacao);
+		} catch (MainSystemException e) {
+			System.out.println(e.getMessage());
+			recuperarLocalizacao();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	private void enviar() {
 		while(true){
@@ -255,7 +283,24 @@ public class SystemSecondMenu {
 	}
 
 	private void adicionarAmigos() {
-		System.out.print(SEPARATOR + "");
+		System.out.print(SEPARATOR + "<<< Adicionar um amigo! >>>" + SEPARATOR
+				+ "Digite o email: ");
+		String email = this.input.nextLine().trim();
+		
+		while((email.equals("")) || (email == null)){
+			System.out.print("Email invalido: ");
+			email = this.input.nextLine().trim();
+		}
+		
+		try {
+			this.system.sendInvitation(this.userName, email);
+		} catch (MainSystemException e) {
+			// Do nothing
+		} catch (MessageControllerException e) {
+			System.out.println(e.getMessage());
+			adicionarAmigos();
+		}
+
 	}
 
 	private void editarCompartilhamento() {
@@ -269,6 +314,7 @@ public class SystemSecondMenu {
 		menu += "Selecione um amigo: ";
 		System.out.print(menu);
 		userNameParaEscolher = this.input.nextLine().trim();
+		
 		System.out.println("Opcao de compartilhamento: " + SEPARATOR + "1. Ocultar" + SEPARATOR + "2. Exibir" + "Opcao: ");
 		int opcao = this.getOption(this.input.nextLine().trim());
 
@@ -290,7 +336,7 @@ public class SystemSecondMenu {
 			String escolha = input.nextLine().trim();
 			if(escolha.equalsIgnoreCase("s")){
 				try {
-					system.removeUser(userName);
+					system.removeUser(this.userName);
 					sair = true;
 					return;
 				} catch (MainSystemException e) {
@@ -306,9 +352,4 @@ public class SystemSecondMenu {
 		}
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		SystemSecondMenu s = new SystemSecondMenu(sc, "dasdasd");
-		s.mainLoop();
-	}
 }

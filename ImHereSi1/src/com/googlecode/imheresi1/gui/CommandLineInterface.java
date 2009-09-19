@@ -39,7 +39,7 @@ public class CommandLineInterface {
 		return chosenNumber;
 	}
 
-	private static void createUser(Scanner entrada) {
+	private static String createUser(Scanner entrada) {
 		String userName, password, email, name, phone;
 	
 		System.out.println(SEPARATOR + "<<< Cadastro de usuario >>>" + SEPARATOR + 
@@ -62,15 +62,14 @@ public class CommandLineInterface {
 			mySystem.createUser(userName, password, email, name, phone);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
-			createUser(entrada);
-			return;
+			return createUser(entrada);
 		}	
 		
 		System.out.println(SEPARATOR + "Usuario criado com sucesso!");
-		getLocationData(userName, entrada, password);
+		return getLocationData(userName, entrada, password);
 	}
 
-	private static void getLocationData(String userName, Scanner entrada, String password){
+	private static String getLocationData(String userName, Scanner entrada, String password){
 		System.out.print(SEPARATOR + "Ip: ");
 		String ip = entrada.nextLine().trim();
 		try {
@@ -89,17 +88,19 @@ public class CommandLineInterface {
 			try {
 				mySystem.setLocal(userName, latitude, longitude);
 				System.out.println("<<< Login efetuado com sucesso >>>");
+				return userName;
 			} catch (PositionException e1) {
-				//e1.printStackTrace();
+				e1.printStackTrace();
 			} catch (MainSystemException e1) {
-				//e1.printStackTrace();
+				e1.printStackTrace();
 			}
 		} catch (MainSystemException e) {
 			//e.printStackTrace();
 		}
+		return null;
 	}
 	
-	private static void logIn(Scanner entrada){
+	private static String logIn(Scanner entrada){
 		String userNameToLogIn, passwordToLogin;
 		System.out.println(SEPARATOR + "<<< Log In >>>");
 		System.out.print(SEPARATOR + "Username: ");
@@ -107,7 +108,7 @@ public class CommandLineInterface {
 		System.out.print(SEPARATOR + "Senha: ");
 		passwordToLogin = entrada.nextLine().trim();
 		
-		getLocationData(userNameToLogIn, entrada, passwordToLogin);
+		return getLocationData(userNameToLogIn, entrada, passwordToLogin);
 	}
 	
 	private static double getDoubleValue(String prompt, Scanner entrada){
@@ -131,10 +132,18 @@ public class CommandLineInterface {
 		while (option != EXIT) {
 			switch (option) {
 			case LOGIN:
-				logIn(input);
+				String username = logIn(input);
+				if(username != null){
+					SystemSecondMenu secondMenu = new SystemSecondMenu(mySystem, input, username);
+					secondMenu.mainLoop();
+				}
 				break;
 			case CREATE_USER:
-				createUser(input);
+				String userName = createUser(input);
+				if(userName != null){
+					SystemSecondMenu secondMenu = new SystemSecondMenu(mySystem, input, userName);
+					secondMenu.mainLoop();
+				}
 				break;
 			case EXIT:
 				System.out.println(SEPARATOR + "Obrigado, volte sempre!");

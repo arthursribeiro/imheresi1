@@ -44,13 +44,27 @@ public class MainSystem {
 	public MainSystem() {
 		this.persistenceManager = new PersistenceManagerImpl();
 		this.messageController = new MessageController();
-		this.invitations = new HashMap<String, List<String>>();
+		this.invitations = this.persistenceManager.getInvitations();
+		if(this.invitations == null) this.invitations = new HashMap<String, List<String>>();
 		this.loggedUsers = new HashMap<String, User>();
 		this.createdUsers = new ArrayList<User>();
 	}
 
 	public void setDirectory(String value) {
 		this.directory = value;
+	}
+	
+	/**
+	 * 
+	 * @param userName
+	 * @param userNameParaLocalizar
+	 * @return
+	 * @throws MainSystemException
+	 * @throws Exception
+	 */
+	public String getAFriendPosition(String userName, String userNameParaLocalizar) throws MainSystemException, Exception {
+		User user = this.getUserByUserName(userName);
+		return user.getFriendLocation(userNameParaLocalizar).toString();
 	}
 
 	public String toStringMyInvitations(String username) {
@@ -65,16 +79,18 @@ public class MainSystem {
 		}
 
 		String separator = System.getProperty("line.separator"); 
-		String saida = "===================================================================" + separator
-					   + "Username                      Usuario                            " + separator
+		String saida = " ==================================================================" + separator
+					   + "Username                      Nome                            " + separator
 					   + "================================================================="  + separator;
+		
+		if(map.size() == 0) return "";
 		
 		for(int i = 0; i < map.size(); i++){
 			String userName = map.get(i);
 			User u;
 			try {
-				u = this.getUserByUserName(username);
-				saida += username + "      " + u.getName(); 
+				u = this.getUserByUserName(userName);
+				saida += userName + "      " + u.getName(); 
 			} catch (MainSystemException e) {
 //				e.printStackTrace();
 			}
@@ -474,6 +490,7 @@ public class MainSystem {
 	 */
 	public void resetBD() {
 		persistenceManager.resetBD();
+		persistenceManager.clearInvitations();
 		this.loggedUsers.clear();
 		this.createdUsers.clear();
 	}
@@ -555,6 +572,8 @@ public class MainSystem {
 			this.persistenceManager.saveUser(this.loggedUsers.get(userName), userName);
 		}
 
+		this.persistenceManager.saveInvitations(invitations);
+		
 		this.createdUsers.clear();
 		this.loggedUsers.clear();
 	}
@@ -575,12 +594,18 @@ public class MainSystem {
 		if (this.createdUsers.contains(userToRemove))
 			this.createdUsers.remove(userToRemove);
 
+		if (this.loggedUsers.containsKey(userName))
+			this.loggedUsers.remove(userName);
+		
 		try {
-			if(this.persistenceManager.hasUser(userName))
+			if(this.persistenceManager.hasUser(userName)){
 				this.persistenceManager.removeUser(userToRemove.getUserName());
+			}
+				
 		} catch (PersistenceManagerException e) {
 			throw new MainSystemException("O usuario nao existe.");
 		}
+		
 	}
 	
 	public String getFriendsList(String userName) throws MainSystemException {

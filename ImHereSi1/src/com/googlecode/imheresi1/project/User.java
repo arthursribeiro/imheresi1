@@ -357,9 +357,11 @@ public class User {
 
 	public String toStringFriends() {
 		String separator = System.getProperty("line.separator"); 
-		String saida = "===================================================================" + separator
-					   + "Username                      Usuario                            " + separator
+		String saida = "==================================================================" + separator
+					   + "Username                      Nome                            " + separator
 					   + "================================================================="  + separator;
+		
+		if(this.friends.size() == 0) return "";
 		
 		for(int i = 0; i < this.friends.size(); i++){
 			saida += this.friends.get(i).getLogin() + "      " + this.friends.get(i).getName() + separator;
