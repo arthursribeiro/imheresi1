@@ -79,9 +79,7 @@ public class Position {
 	 * @return boolean
 	 */
 	private boolean isLocation(double lat, double lon) {
-		if ((lon >= -180 && lon <= 180) && (lat >= -90 && lat <= 90))
-			return true;
-		return false;
+		return ((lon >= -180 && lon <= 180) && (lat >= -90 && lat <= 90));
 	}
 
 	/**
