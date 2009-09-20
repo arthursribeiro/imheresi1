@@ -10,6 +10,7 @@ import java.util.Map;
 
 import sun.misc.BASE64Encoder;
 
+import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.message.Chat;
 import com.googlecode.imheresi1.message.Email;
@@ -74,6 +75,7 @@ public class MainSystem {
 	public String getAFriendPosition(String userName,
 			String userNameParaLocalizar) throws MainSystemException, Exception {
 		User user = this.getUserByUserName(userName);
+		if(user.getFriendLocation(userNameParaLocalizar) == null) return null;
 		return user.getFriendLocation(userNameParaLocalizar).toString();
 	}
 
@@ -89,14 +91,13 @@ public class MainSystem {
 			user = this.getUserByUserName(username);
 			map = getInvitationList(user.getMail());
 		} catch (MainSystemException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		//	e1.printStackTrace();
 		}
 
 		String separator = System.getProperty("line.separator");
-		String saida = " =================================================================="
+		String saida = "================================================================="
 				+ separator
-				+ "Username                      Nome                            "
+				+ "Username                  Nome                            "
 				+ separator
 				+ "================================================================="
 				+ separator;
@@ -109,7 +110,7 @@ public class MainSystem {
 			User u;
 			try {
 				u = this.getUserByUserName(userName);
-				saida += userName + "      " + u.getName();
+				saida += userName + "                   " + u.getName();
 			} catch (MainSystemException e) {
 				// e.printStackTrace();
 			}
@@ -161,6 +162,7 @@ public class MainSystem {
 		this.invitations.get(with).remove(f.getMail());
 		this.persistenceManager.saveUser(w, w.getUserName());
 		this.persistenceManager.saveUser(f, f.getUserName());
+		this.persistenceManager.saveInvitations(invitations);
 	}
 
 	/**
@@ -248,6 +250,7 @@ public class MainSystem {
 			throw new MainSystemException("Convite nao foi enviado.");
 
 		this.invitations.get(with).remove(f.getMail());
+		this.persistenceManager.saveInvitations(invitations);
 	}
 
 	/**
@@ -291,7 +294,7 @@ public class MainSystem {
 			this.refreshMyLocalization(userToLogIn, ip);
 		}
 
-		if (!userToLogIn.getPassword().equals(encripta(password)))
+		if (password == null || !userToLogIn.getPassword().equals(encripta(password)))
 			throw new UserException("Login/senha invalidos.");
 
 		loggedUsers.put(userToLogIn.getUserName(), userToLogIn);
@@ -310,7 +313,7 @@ public class MainSystem {
 			return senha;
 		}
 	}
-
+	
 	/**
 	 * 
 	 * @param user
@@ -478,7 +481,7 @@ public class MainSystem {
 		User u = this.loggedUsers.get(from);
 
 		Message m = new Invitation(u.getName(), u.getMail(), to, this.directory);
-
+		this.persistenceManager.saveInvitations(this.invitations);
 		this.messageController.sendMessage(m);
 	}
 
@@ -564,6 +567,12 @@ public class MainSystem {
 		chat.addMsg(receiver, msg);
 	}
 
+	public String receiveChat(String user) throws Exception {
+		if (chat == null)
+			throw new Exception("Chat nao foi iniciado.");
+		return chat.getMessage(user);
+	}
+	
 	/**
 	 * resets the database
 	 */
@@ -593,6 +602,17 @@ public class MainSystem {
 			throws MainSystemException, UserException {
 		User user = this.getUserByUserName(userName);
 		user.setName(valor);
+		
+		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+			User friend = this.persistenceManager.getUserByUserName(friendInfo
+					.getLogin());
+			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
+			pInfo.setName(valor);
+			this.saveUser(friend);
+		}		
+		
+		this.persistenceManager.saveUser(user, userName);
+		this.loggedUsers.put(user.getUserName(), user);
 	}
 
 	/**
@@ -607,6 +627,17 @@ public class MainSystem {
 			throws MainSystemException, UserException {
 		User user = this.getUserByUserName(userName);
 		user.setMail(valor);
+		
+		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+			User friend = this.persistenceManager.getUserByUserName(friendInfo
+					.getLogin());
+			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
+			pInfo.setEmail(valor);
+			this.saveUser(friend);
+		}		
+		
+		this.persistenceManager.saveUser(user, userName);
+		this.loggedUsers.put(user.getUserName(), user);
 	}
 
 	/**
@@ -619,6 +650,17 @@ public class MainSystem {
 			throws MainSystemException {
 		User user = this.getUserByUserName(userName);
 		user.setPhone(valor);
+		
+		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+			User friend = this.persistenceManager.getUserByUserName(friendInfo
+					.getLogin());
+			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
+			pInfo.setTelephoneNumber(valor);
+			this.saveUser(friend);
+		}		
+		
+		this.persistenceManager.saveUser(user, userName);
+		this.loggedUsers.put(user.getUserName(), user);
 	}
 
 	/**
@@ -632,6 +674,9 @@ public class MainSystem {
 			throws MainSystemException, UserException {
 		User user = this.getUserByUserName(userName);
 		user.updatePassword(valor);
+				
+		this.persistenceManager.saveUser(user, userName);
+		this.loggedUsers.put(user.getUserName(), user);
 	}
 
 	/**
@@ -709,6 +754,20 @@ public class MainSystem {
 	public String getFriendsList(String userName) throws MainSystemException {
 		User user = this.getUserByUserName(userName);
 		return user.toStringFriends();
+	}
+
+	public boolean hasInvitation(String userName, String uName) {
+		try {
+			User key = this.getUserByUserName(uName);
+			User value = this.getUserByUserName(userName);
+
+			if(this.invitations.containsKey(key.getUserName()) && this.invitations.get(key.getUserName()).contains(value.getMail())) return true;
+			
+		} catch (MainSystemException e) {
+			//e.printStackTrace();
+		}
+
+		return false;
 	}
 
 }

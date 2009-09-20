@@ -14,6 +14,7 @@ public class Chat implements Message {
 
 	private String user1;
 	private String user2;
+	private String[] lastMessages;
 
 	private StringBuilder sB;
 
@@ -27,18 +28,27 @@ public class Chat implements Message {
 		this.user1 = u1;
 		this.user2 = u2;
 		sB = new StringBuilder();
+		lastMessages = new String[2];
 	}
 
+	public String getMessage(String username){
+		if(username.equals(user1)) return this.lastMessages[0];
+		return this.lastMessages[1];
+	}
+	
 	/**
 	 * 
 	 * @param receiver
 	 * @param msg
 	 */
 	public void addMsg(String receiver, String msg) {
-		if (receiver.equals(user1))
+		if (receiver.equals(user1)){
 			sB.append(user2);
-		else
+			this.lastMessages[1] = msg;
+		}else {
 			sB.append(user1);
+			this.lastMessages[0] = msg;
+		}
 		sB.append(": " + msg);
 		sB.append(System.getProperty("line.separator"));
 	}
