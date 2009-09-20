@@ -10,8 +10,6 @@ import com.googlecode.imheresi1.project.UserException;
 
 public class CommandLineInterface {
 	
-	
-
 	private static Scanner input;
 	private static MainSystem mySystem = new MainSystem();
 	private static final String SEPARATOR = System.getProperty("line.separator");
@@ -83,7 +81,7 @@ public class CommandLineInterface {
 		} catch (UserException e) {
 			System.out.println(SEPARATOR + e.getMessage()); //"Login/senha invalidos." ou "IP invalido."
 			if(e.getMessage().equals("IP invalido."))
-			getLocationData(userName, entrada, password);
+			return getLocationData(userName, entrada, password);
 		} catch (PositionException e) {
 			double latitude, longitude;
 			System.out.println(e.getMessage()); //"Nao foi possivel obter a localizacao."
@@ -95,12 +93,12 @@ public class CommandLineInterface {
 				System.out.println("<<< Login efetuado com sucesso >>>");
 				return userName;
 			} catch (PositionException e1) {
-				e1.printStackTrace();
+				System.out.println(SEPARATOR + e1.getMessage() + SEPARATOR);
 			} catch (MainSystemException e1) {
-				e1.printStackTrace();
+				System.out.println(SEPARATOR + e1.getMessage() + SEPARATOR);
 			}
 		} catch (MainSystemException e) {
-			//e.printStackTrace();
+			System.out.println(SEPARATOR + e.getMessage() + SEPARATOR);
 		}
 		return null;
 	}

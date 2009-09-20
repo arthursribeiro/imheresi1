@@ -165,8 +165,8 @@ public class SystemFacade {
 		mySystem.initChat(u1, u2);
 	}
 
-	public String receberMensagem(String userName) {
-		return "";
+	public String receberMensagem(String userName) throws Exception {
+		return mySystem.receiveChat(userName);
 	}
 
 	public void enviarMensagem(String receiver, String msg) throws Exception {

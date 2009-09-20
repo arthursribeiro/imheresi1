@@ -352,12 +352,14 @@ public class User {
 	public Position getFriendLocation(String friend) throws Exception {
 		if (!isMyFriend(friend))
 			throw new Exception("Usuario desconhecido.");
+				
 		for (PublicInfo pInfo : this.friends) {
 			if (pInfo.getLogin().equals(friend)
 					&& this.visibleFriends.contains(pInfo.getLogin())) {
 				return pInfo.getPosition();
 			}
 		}
+
 		return null;
 	}
 
@@ -390,14 +392,14 @@ public class User {
 	 */
 	public String toStringFriends() {
 		String separator = System.getProperty("line.separator"); 
-		String saida = "==================================================================" + separator
+		String saida = "=================================================================" + separator
 					   + "Username                      Nome                            " + separator
 					   + "================================================================="  + separator;
 		
 		if(this.friends.size() == 0) return "";
 		
 		for(int i = 0; i < this.friends.size(); i++){
-			saida += this.friends.get(i).getLogin() + "      " + this.friends.get(i).getName() + separator;
+			saida += this.friends.get(i).getLogin() + "                  " + this.friends.get(i).getName() + separator;
 		}
 		return saida;
 	}

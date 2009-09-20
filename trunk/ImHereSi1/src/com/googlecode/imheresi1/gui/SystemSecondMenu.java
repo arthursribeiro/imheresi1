@@ -12,7 +12,7 @@ public class SystemSecondMenu {
 
 	private Scanner input;
 	private MainSystem system;
-	private static String userName;
+	private String userName;
 	private boolean sair;
 
 	private final static String SEPARATOR = System.getProperty("line.separator");
@@ -160,13 +160,20 @@ public class SystemSecondMenu {
 			System.out.println(SEPARATOR + "Nenhum convite!" + SEPARATOR);
 			return;
 		}
-		System.out.println(prompt);
+		System.out.println(SEPARATOR + prompt + SEPARATOR);
 		String uName = "";
 		while(true){
 			System.out.print("Digite o username: ");
 			uName = input.nextLine().trim();
 			if(!uName.equals("")) break;
+			
 		}
+		
+		if(!system.hasInvitation(this.userName,uName)) {
+			System.out.println(SEPARATOR + "Username Invalido" + SEPARATOR);
+			return;
+		}
+		
 		System.out.println("Deseja:" + SEPARATOR + "1. Recusar" + SEPARATOR + "2. Aceitar");
 		while(true){
 			System.out.print("Opcao: ");
@@ -211,15 +218,16 @@ public class SystemSecondMenu {
 
 	private void enviar() {
 		while(true){
-			System.out.println("1. Email");
+			System.out.println(SEPARATOR + "1. Email");
 			System.out.println("2. SMS");
 			System.out.println("3. Voltar");
 			System.out.print("Opcao: ");
-			int option = 0;
+			String opt = input.nextLine().trim();
+			int option = getOption(opt);
 			switch(option){
 			case(1):
 				String to, subject, msg;
-			System.out.print("Enviar email para (nome do usuario): ");
+			System.out.print(SEPARATOR + "Enviar email para (nome do usuario): ");
 			while(true){
 				to = input.nextLine().trim();
 				if(!to.equals("")) break;
@@ -237,7 +245,7 @@ public class SystemSecondMenu {
 			}
 			break;
 			case(2):
-				System.out.print("Enviar SMS para (nome do usuario): ");
+				System.out.print(SEPARATOR + "Enviar SMS para (nome do usuario): ");
 			while(true){
 				to = input.nextLine().trim();
 				if(!to.equals("")) break;
@@ -255,7 +263,7 @@ public class SystemSecondMenu {
 			case(3):
 				return;
 			default:
-				System.out.println("Opcao Invalida!");
+				System.out.println(SEPARATOR +  "Opcao Invalida!" + SEPARATOR);
 			}
 		}
 
@@ -294,15 +302,19 @@ public class SystemSecondMenu {
 		} catch (MainSystemException e) {
 			//Do Nothing
 		}
-		menu += "Selecione um amigo: ";
-		System.out.print(menu);
+		System.out.print(SEPARATOR + menu + SEPARATOR);
+		System.out.print("Selecione um amigo: ");
+
 		userNameParaLocalizar = this.input.nextLine().trim();
 		
 		try {
+
 			String localizacao = this.system.getAFriendPosition(this.userName,
 					userNameParaLocalizar);
-			System.out.println("Posicao de " + userNameParaLocalizar + " >>> "
-					+ localizacao);
+
+			if(localizacao == null) System.out.println(SEPARATOR + "Localizacao Desconhecida" + SEPARATOR);
+			else System.out.println(SEPARATOR + "Posicao de " + userNameParaLocalizar + " >>> "	+ localizacao + SEPARATOR);
+			
 		} catch (MainSystemException e) {
 			System.out.println(e.getMessage());
 			recuperarLocalizacao();
@@ -323,8 +335,9 @@ public class SystemSecondMenu {
         } catch (MainSystemException e) {
             //            System.out.println("entrei");
         }
-        menu += "Selecione um amigo: ";
-        System.out.print(menu);
+        System.out.print(SEPARATOR + menu + SEPARATOR);
+        System.out.print("Selecione um amigo: ");
+        
         userNameParaEscolher = this.input.nextLine().trim();
         
         System.out.println("Opcao de compartilhamento: " + SEPARATOR + "1. Ocultar" + SEPARATOR + "2. Exibir");
