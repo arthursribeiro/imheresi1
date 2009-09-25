@@ -106,7 +106,8 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		}
 
 		for (User i : users) {
-			names.add(i.getName());
+			if(i.getName().substring(0, name.length()).equals(name))
+			    names.add(i.getName().toLowerCase());
 		}
 		Object[] sorted = names.toArray();
 		Arrays.sort(sorted);
