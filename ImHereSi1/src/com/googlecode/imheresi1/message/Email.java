@@ -19,11 +19,12 @@ public class Email implements Message {
 
 	/**
 	 * Constructor
+	 * Creates a new Email object.
 	 * 
-	 * @param from
-	 * @param to
-	 * @param subject
-	 * @param msg
+	 * @param from - string representing the user who sent the email
+	 * @param to - string representing the the user who will receive the email
+	 * @param subject - string representing the subject of the email
+	 * @param msg - string representing the email message itself.
 	 */
 	public Email(String from, String to, String subject, String msg) {
 		this.from = from;
@@ -33,14 +34,14 @@ public class Email implements Message {
 	}
 
 	/**
-	 * @return path
+	 * @see Message#getPath()
 	 */
 	public String getPath() {
 		return "files/outputs/emails.log";
 	}
 
 	/**
-	 * @return Full message
+	 * @see Message#build()
 	 */
 	public String build() {
 

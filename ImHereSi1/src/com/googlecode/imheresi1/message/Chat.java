@@ -2,6 +2,8 @@ package com.googlecode.imheresi1.message;
 
 /**
  * Class that implements an interface Message and handles the Chat type
+ * This class records the last message sent by each user.
+ * Chat handles single user to user type conversations.
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -20,9 +22,10 @@ public class Chat implements Message {
 
 	/**
 	 * Constructor
+	 * Creates a new Chat object. 
 	 * 
-	 * @param u1
-	 * @param u2
+	 * @param u1 - user that will participate in the chat.
+	 * @param u2 - the other user in the chat.
 	 */
 	public Chat(String u1, String u2) {
 		this.user1 = u1;
@@ -31,15 +34,21 @@ public class Chat implements Message {
 		lastMessages = new String[2];
 	}
 
-	public String getMessage(String username){
+	/**
+	 * Returns the last message the user has sent.
+	 * @param username - user to get his last message sent 
+	 * @return string representing the last message
+	 */
+	public String getLastMessage(String username){
 		if(username.equals(user1)) return this.lastMessages[0];
 		return this.lastMessages[1];
 	}
 	
 	/**
-	 * 
-	 * @param receiver
-	 * @param msg
+	 * Adds a new chat message to the current chat.
+	 * sets the last message attribute. Which saves each users last message sent.  
+	 * @param receiver - the user that received the message.
+	 * @param msg - the message the user received.
 	 */
 	public void addMsg(String receiver, String msg) {
 		if (receiver.equals(user1)){
@@ -54,14 +63,14 @@ public class Chat implements Message {
 	}
 
 	/**
-	 * @return full message
+	 * @see Message#build()
 	 */
 	public String build() {
 		return sB.toString();
 	}
 
 	/**
-	 * @return path
+	 * @see Message#getPath()
 	 */
 	public String getPath() {
 		if (user1.compareToIgnoreCase(user2) > 0)

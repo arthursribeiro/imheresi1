@@ -16,6 +16,7 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * Class that handles the PersistenceManagerImpl type
+ * Type that writes the System's database
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -28,9 +29,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	XStream xstream = new XStream();
 
 	/**
-	 * 
-	 * @param user
-	 * @return boolean representing if the user exists or not
+	 * @see PersistenceManager#hasUser(String)
 	 */
 	public boolean hasUser(String user) {
 		try {
@@ -49,7 +48,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * 
+	 * @see PersistenceManager#clearInvitations()
 	 */
 	public void clearInvitations() {
 		File file = new File("files/invitation/invitation.xml");
@@ -57,7 +56,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * @return Map<String, List<String>>
+	 * @see PersistenceManager#getInvitations()
 	 */
 	public Map<String, List<String>> getInvitations() {
 		FileReader reader;
@@ -76,11 +75,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * @param name
-	 *            - Name to be searched
-	 * @param occurrence
-	 *            - Name occurrence in the users
-	 * @exception Exception
+	 * @see PersistenceManager#getUserByName(String, int)
 	 */
 	public User getUserByName(String name, int occurrence) {
 		ArrayList<User> users = new ArrayList<User>();
@@ -126,10 +121,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * 
-	 * @param userName
-	 *            - That will represent the xml file name
-	 * @return User that represents the user
+	 * @see PersistenceManager#getUserByUserName(String)
 	 */
 	public User getUserByUserName(String userName) {
 		FileReader reader;
@@ -147,7 +139,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * 
+	 * @see PersistenceManager#resetBD()
 	 */
 	public void resetBD() {
 		File file = new File("files/users");
@@ -159,12 +151,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 *            - User that contains User information
-	 * @param userName
-	 *            - String that will represent the file name
-	 * @throws Exception
+	 * @see PersistenceManager#saveUser(User, String)
 	 */
 	public void saveUser(User user, String userName) {
 		DataOutputStream dos;
@@ -181,8 +168,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * @param userName
-	 * 
+	 * @see PersistenceManager#removeUser(String)
 	 */
 	public void removeUser(String userName) throws PersistenceManagerException {
 		if (hasUser(userName)) {
@@ -194,7 +180,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 
 	/**
-	 * @param invitations
+	 * @see PersistenceManager#saveInvitations(Map)
 	 */
 	public void saveInvitations(Map<String, List<String>> invitations) {
 		DataOutputStream dos;

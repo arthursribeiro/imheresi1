@@ -22,10 +22,12 @@ public class Invitation implements Message {
 
 	/**
 	 * Constructor
+	 * Creates a new Invitation object
 	 * 
-	 * @param fromName
-	 * @param fromMail
-	 * @param to
+	 * @param fromName - string representing the name of the user who sent the invitation
+	 * @param fromMail - string representing the email of the user who sent the invitation 
+	 * @param to - string representing the user who receives the invitation
+	 * @param dir - string representing the directory in which the predetermined invitation text is stored 
 	 */
 	public Invitation(String fromName, String fromMail, String to, String dir) {
 		this.fromName = fromName;
@@ -35,7 +37,7 @@ public class Invitation implements Message {
 	}
 
 	/**
-	 * @return full message
+	 * @see Message#build()
 	 */
 	public String build() {
 		StringBuilder sB = new StringBuilder();
@@ -63,8 +65,8 @@ public class Invitation implements Message {
 	}
 
 	/**
-	 * 
-	 * @return string
+	 * Method to get the predetermined invitation text stored as "convite.txt" in the directory set by the creator of the invitation. 
+	 * @return string - representing the invitation.
 	 */
 	private String getInviteText(){
 		StringBuffer buffer = new StringBuffer();
@@ -81,7 +83,7 @@ public class Invitation implements Message {
 	}
 	
 	/**
-	 * @return path
+	 * @see Message#getPath()
 	 */
 	public String getPath() {
 		return "files/outputs/convites.log";

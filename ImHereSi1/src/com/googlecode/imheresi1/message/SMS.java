@@ -16,10 +16,12 @@ public class SMS implements Message {
 	private String msg;
 
 	/**
+	 * Constructor
+	 * Creates a new SMS object
 	 * 
-	 * @param from
-	 * @param to
-	 * @param msg
+	 * @param from - string representing the user who sent the SMS
+	 * @param to - string representing the user who will receive the SMS
+	 * @param msg - string representing the message itself.
 	 */
 	public SMS(String from, String to, String msg) {
 		this.from = from;
@@ -28,7 +30,7 @@ public class SMS implements Message {
 	}
 
 	/**
-	 * @return full message
+	 * @see Message#build()
 	 */
 	public String build() {
 
@@ -50,7 +52,7 @@ public class SMS implements Message {
 	}
 
 	/**
-	 * @return path
+	 * @see Message#getPath()
 	 */
 	public String getPath() {
 		return "files/outputs/sms.log";
