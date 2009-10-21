@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Class that implements the MessageController type
+ * Class that implements a method to save the message, given a Message object
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -19,11 +19,10 @@ import java.io.IOException;
 public class MessageController {
 
 	/**
-	 * 
-	 * @param msg
+	 * @param msg - Message object that contains the data to be saved
 	 * @throws MessageControllerException
 	 */
-	public void sendMessage(Message msg) throws MessageControllerException {
+	public static void sendMessage(Message msg) throws MessageControllerException {
 		try {
 			FileInputStream file = new FileInputStream(msg.getPath());
 			FileWriter bOut = new FileWriter(new File(msg.getPath()), true);

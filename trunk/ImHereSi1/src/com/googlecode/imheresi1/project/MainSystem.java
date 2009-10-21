@@ -10,7 +10,6 @@ import java.util.Map;
 
 import sun.misc.BASE64Encoder;
 
-import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.message.Chat;
 import com.googlecode.imheresi1.message.Email;
@@ -37,7 +36,6 @@ public class MainSystem {
 	private HashMap<String, User> loggedUsers;
 	private ArrayList<User> createdUsers;
 	private PersistenceManager persistenceManager;
-	private MessageController messageController;
 	private Chat chat;
 	private String directory = "";
 
@@ -48,7 +46,6 @@ public class MainSystem {
 	 */
 	public MainSystem() {
 		this.persistenceManager = new PersistenceManagerImpl();
-		this.messageController = new MessageController();
 		this.invitations = this.persistenceManager.getInvitations();
 		if (this.invitations == null)
 			this.invitations = new HashMap<String, List<String>>();
@@ -482,7 +479,7 @@ public class MainSystem {
 
 		Message m = new Invitation(u.getName(), u.getMail(), to, this.directory);
 		this.persistenceManager.saveInvitations(this.invitations);
-		this.messageController.sendMessage(m);
+		MessageController.sendMessage(m);
 	}
 
 	/**
@@ -515,7 +512,7 @@ public class MainSystem {
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject,
 				msg);
-		messageController.sendMessage(mail);
+		MessageController.sendMessage(mail);
 	}
 
 	/**
@@ -534,7 +531,7 @@ public class MainSystem {
 		if (receiver.getPhone().equals(""))
 			throw new MainSystemException("Numero de telefone nao encontrado.");
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
-		messageController.sendMessage(sms);
+		MessageController.sendMessage(sms);
 	}
 
 	/**
@@ -551,7 +548,7 @@ public class MainSystem {
 	 * @throws MessageControllerException
 	 */
 	public void endChat() throws Exception {
-		messageController.sendMessage(chat);
+		MessageController.sendMessage(chat);
 		chat = null;
 	}
 
@@ -570,7 +567,7 @@ public class MainSystem {
 	public String receiveChat(String user) throws Exception {
 		if (chat == null)
 			throw new Exception("Chat nao foi iniciado.");
-		return chat.getMessage(user);
+		return chat.getLastMessage(user);
 	}
 	
 	/**

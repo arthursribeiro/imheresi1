@@ -12,9 +12,9 @@ package com.googlecode.imheresi1.project;
 public class PersistenceManagerException extends Exception {
 
 	/**
-	 * Constructor
-	 * 
-	 * @param reason
+	 * Constructor for the exception. 
+	 * String passed is the error message
+	 * @param motivo  - reason for which the exception was thrown.
 	 */
 	public PersistenceManagerException(String reason) {
 		super(reason);
