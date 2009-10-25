@@ -47,9 +47,9 @@ public class Us4_Facade {
 	
 	public String cadastrarUsuario(String userName, String nome, String email,
 			String senha, String phone, String ip) throws Exception {
-		User user = mySystem.createUser(userName, senha, email, nome, phone);
+		mySystem.createUser(userName, senha, email, nome, phone);
 		this.mySystem.logIn(userName, senha, ip);
-		return user.getUserName();
+		return userName;
 	}
 	
 }

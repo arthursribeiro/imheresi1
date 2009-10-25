@@ -3,7 +3,9 @@ package com.googlecode.imheresi1.acceptancetests;
 import com.googlecode.imheresi1.localization.Position;
 import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.project.MainSystem;
+import com.googlecode.imheresi1.project.MainSystemException;
 import com.googlecode.imheresi1.project.User;
+import com.googlecode.imheresi1.project.UserException;
 
 public class SystemFacade {
 
@@ -188,8 +190,14 @@ public class SystemFacade {
 		this.mySystem.setSharing(usuario, amigo, modo);
 	}
 
-	public void removerAmigo(String usuario, String amigo) throws Exception {
-		this.mySystem.removeFriend(usuario, amigo);
+	public void removerAmigo(String usuario, String amigo) throws Exception{
+		try {
+			this.mySystem.removeFriend(usuario, amigo);
+		} catch (MainSystemException e) {
+			throw new Exception("Permissao negada.");
+		} catch (UserException e) {
+			throw new Exception("Usuario desconhecido.");
+		}
 	}
 
 	public String getLocalizacaoAmigo(String userName, String amigo)

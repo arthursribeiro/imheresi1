@@ -83,7 +83,7 @@ public class User {
 		if (newPass == null || password.trim().equals("")
 				|| newPass.length() < 6)
 			throw new UserException("Senha deve ter no minimo 6 caracteres.");
-		this.password = newPass;
+		this.password = encripta(newPass);
 	}
 
 	/**
@@ -207,8 +207,6 @@ public class User {
 		}
 	}
 	
-	
-
 	/**
 	 * Method that sets the user's name
 	 * @param name - string representing the new name.
