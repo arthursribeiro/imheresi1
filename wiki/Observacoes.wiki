@@ -14,3 +14,4 @@ Comentários colocar em baixo da questão =D
    # getAFriendPublicInfo retorna null caso não seja amigo... exceção?
    # toStringFriends ta meio tronxo =X
    # remover amigos ta unitaleral... é assim mesmo?
+   # não sei o que colocar no javadoc geral de MainSystem
