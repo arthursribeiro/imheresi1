@@ -51,13 +51,12 @@ public interface PersistenceManager {
 	void resetBD();
 
 	/**
-	 * Method that deletes all invitations send through the System
+	 * Method that deletes all invitations sent through the System
 	 */
 	void clearInvitations();
 	
 	/**
-	 * Method that returns an object representing all the invitations sent.
-	 *  
+	 * Method that returns an object representing all the invitations sent. 
 	 * @return Map - map that links a string (representing the userName of the user who sent the invitation) to a list of strings (representing all the usernames to which an invitation was sent).
 	 */
 	Map<String, List<String>> getInvitations();

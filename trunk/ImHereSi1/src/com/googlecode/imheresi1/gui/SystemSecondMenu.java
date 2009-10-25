@@ -3,6 +3,7 @@ package com.googlecode.imheresi1.gui;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.googlecode.imheresi1.localization.PositionException;
 import com.googlecode.imheresi1.message.MessageControllerException;
 import com.googlecode.imheresi1.project.MainSystem;
 import com.googlecode.imheresi1.project.MainSystemException;
@@ -155,7 +156,12 @@ public class SystemSecondMenu {
 	}
 
 	private void accRecCompartilhamento() {
-		String prompt = system.toStringMyInvitations(this.userName);
+		String prompt = "";
+		try {
+			prompt = system.toStringMyInvitations(this.userName);
+		} catch (MainSystemException e) {
+			System.out.println(e.getMessage());
+		}
 		if(prompt.equals("")) {
 			System.out.println(SEPARATOR + "Nenhum convite!" + SEPARATOR);
 			return;
@@ -166,7 +172,6 @@ public class SystemSecondMenu {
 			System.out.print("Digite o username: ");
 			uName = input.nextLine().trim();
 			if(!uName.equals("")) break;
-			
 		}
 		
 		if(!system.hasInvitation(this.userName,uName)) {
@@ -213,8 +218,6 @@ public class SystemSecondMenu {
 
 		}
 	}
-
-
 
 	private void enviar() {
 		while(true){
@@ -318,7 +321,9 @@ public class SystemSecondMenu {
 		} catch (MainSystemException e) {
 			System.out.println(e.getMessage());
 			recuperarLocalizacao();
-		} catch (Exception e) {
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+		} catch (PositionException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -363,17 +368,10 @@ public class SystemSecondMenu {
 			String escolha = input.nextLine().trim();
 			if(escolha.equalsIgnoreCase("s")){
 				try {
-					try {
-						system.removeUser(this.userName);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
-					}
+					system.removeUser(this.userName);
 					sair = true;
 					return;
 				} catch (MainSystemException e) {
-					System.out.println(e.getMessage());
-				} catch (UserException e) {
 					System.out.println(e.getMessage());
 				} 
 			} else if(escolha.equalsIgnoreCase("n")){
