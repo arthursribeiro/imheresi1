@@ -1,6 +1,5 @@
 package com.googlecode.imheresi1.gui;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import com.googlecode.imheresi1.localization.PositionException;
@@ -41,7 +40,7 @@ public class SystemSecondMenu {
 		sair = false;
 	}
 
-	private static int getOption(String option){
+	private int getOption(String option){
 		int chosenNumber;
 
 		try{

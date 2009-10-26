@@ -1,6 +1,5 @@
 package com.googlecode.imheresi1.gui;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import com.googlecode.imheresi1.localization.PositionException;
@@ -19,7 +18,6 @@ public class CommandLineInterface {
 	SEPARATOR +	"Escolha a opcao desejada:" + SEPARATOR + "1. Login" 	+ SEPARATOR + 
 	"2. Criar Usuario" 	+ SEPARATOR + "3. Exit";
 	private static final String PROMPT_2 = "Opcao: ";
-
 
 	private static final int LOGIN = 1;
 	private static final int CREATE_USER = 2;

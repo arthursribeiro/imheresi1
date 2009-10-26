@@ -10,7 +10,11 @@ import com.googlecode.imheresi1.project.UserException;
 public class SystemFacade {
 
 	private MainSystem mySystem = new MainSystem();
-	private String diretorio = "";
+	private final String NOME = "nome";
+	private final String EMAIL = "email";
+	private final String USERNAME = "userName";
+	private final String TELEFONE = "telefone";
+	private final String SENHA = "senha";
 	
 	public void zerarSistema() {
 		this.mySystem.resetBD();
@@ -39,13 +43,13 @@ public class SystemFacade {
 			throws Exception {
 		User user = this.getUsuarioPorUserName(userName);
 
-		if (atributo.equalsIgnoreCase("nome"))
+		if (atributo.equalsIgnoreCase(NOME))
 			return user.getName();
-		if (atributo.equalsIgnoreCase("email"))
+		if (atributo.equalsIgnoreCase(EMAIL))
 			return user.getMail();
-		if (atributo.equalsIgnoreCase("userName"))
+		if (atributo.equalsIgnoreCase(USERNAME))
 			return user.getUserName();
-		if (atributo.equalsIgnoreCase("telefone"))
+		if (atributo.equalsIgnoreCase(TELEFONE))
 			return user.getPhone();
 
 		return null;
@@ -53,19 +57,19 @@ public class SystemFacade {
 
 	public void atualizarUsuario(String userName, String atributo, String valor)
 			throws Exception {
-		if (atributo.equalsIgnoreCase("userName"))
+		if (atributo.equalsIgnoreCase(USERNAME))
 			throw new Exception("Nao eh permitido alterar o username.");
 		User user = this.getUsuarioPorUserName(userName);
 
 		// Os updates utilizam os sets que ja lancam as excecoes.. refatoramento
 		// das exececoes!
-		if (atributo.equalsIgnoreCase("nome"))
+		if (atributo.equalsIgnoreCase(NOME))
 			user.setName(valor);
-		if (atributo.equalsIgnoreCase("email"))
+		if (atributo.equalsIgnoreCase(EMAIL))
 			user.setMail(valor);
-		if (atributo.equalsIgnoreCase("telefone"))
+		if (atributo.equalsIgnoreCase(TELEFONE))
 			user.setPhone(valor);
-		if (atributo.equalsIgnoreCase("senha"))
+		if (atributo.equalsIgnoreCase(SENHA))
 			user.updatePassword(valor);
 
 	}

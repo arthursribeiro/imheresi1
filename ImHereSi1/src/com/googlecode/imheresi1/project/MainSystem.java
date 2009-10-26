@@ -1,6 +1,5 @@
 package com.googlecode.imheresi1.project;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -351,13 +350,12 @@ public class MainSystem {
 	 * @param email - string representing the new user's email
 	 * @param name - string representing the new user's name
 	 * @param phone - string representing the new user's phone number
-	 * @return
 	 * @throws MainSystemException
 	 * @throws UserException
 	 */
 	public void createUser(String userName, String password, String email,
 			String name, String phone) throws MainSystemException,
-			UserException, IOException {
+			UserException {
 
 		if ((persistenceManager.hasUser(userName))
 				|| (this.getCreatedUserByUserName(userName) != null))
