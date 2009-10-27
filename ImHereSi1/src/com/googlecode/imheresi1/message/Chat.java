@@ -1,9 +1,9 @@
 package com.googlecode.imheresi1.message;
 
 /**
- * Class that implements an interface Message and handles the Chat type
+ * Class that implements Message and handles the Chat type
  * This class records the last message sent by each user.
- * Chat handles single user to user type conversations.
+ * Chat handles sinple user to user type conversations.
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -12,7 +12,7 @@ package com.googlecode.imheresi1.message;
  * 
  */
 
-public class Chat implements Message {
+public class Chat extends Message {
 
 	private String user1;
 	private String user2;
@@ -28,10 +28,12 @@ public class Chat implements Message {
 	 * @param u2 - the other user in the chat.
 	 */
 	public Chat(String u1, String u2) {
+		super("");
 		this.user1 = u1;
 		this.user2 = u2;
 		sB = new StringBuilder();
 		lastMessages = new String[2];
+		setPath();
 	}
 
 	/**
@@ -70,12 +72,13 @@ public class Chat implements Message {
 	}
 
 	/**
-	 * @see Message#getPath()
+	 * Method to set the path name according to the user's envolved
 	 */
-	public String getPath() {
+	private void setPath() {
 		if (user1.compareToIgnoreCase(user2) > 0)
-			return "files/chats/" + user2 + "-" + user1 + ".log";
-		return "files/chats/" + user1 + "-" + user2 + ".log";
+			super.path = "files/chats/" + user2 + "-" + user1 + ".log";
+		else
+			super.path = "files/chats/" + user1 + "-" + user2 + ".log";
 	}
 
 }

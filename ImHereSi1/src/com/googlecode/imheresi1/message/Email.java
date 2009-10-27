@@ -1,7 +1,7 @@
 package com.googlecode.imheresi1.message;
 
 /**
- * Class that implements an interface Message and handles the Email type
+ * Class that implements Message and handles the Email type
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -10,7 +10,7 @@ package com.googlecode.imheresi1.message;
  * 
  */
 
-public class Email implements Message {
+public class Email extends Message {
 
 	private String from;
 	private String to;
@@ -27,18 +27,13 @@ public class Email implements Message {
 	 * @param msg - string representing the email message itself.
 	 */
 	public Email(String from, String to, String subject, String msg) {
+		super(EMAIL_PATH);
 		this.from = from;
 		this.to = to;
 		this.subject = subject;
 		this.msg = msg;
 	}
 
-	/**
-	 * @see Message#getPath()
-	 */
-	public String getPath() {
-		return "files/outputs/emails.log";
-	}
 
 	/**
 	 * @see Message#build()

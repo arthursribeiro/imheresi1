@@ -14,8 +14,7 @@ import com.googlecode.imheresi1.message.Chat;
 import com.googlecode.imheresi1.message.Email;
 import com.googlecode.imheresi1.message.Invitation;
 import com.googlecode.imheresi1.message.Message;
-import com.googlecode.imheresi1.message.MessageController;
-import com.googlecode.imheresi1.message.MessageControllerException;
+import com.googlecode.imheresi1.message.MessageException;
 import com.googlecode.imheresi1.message.SMS;
 
 /**
@@ -450,7 +449,7 @@ public class MainSystem {
 	 * @throws MessageControllerException if the message was not possible to be sent
 	 */
 	public void sendInvitation(String from, String to)
-			throws MainSystemException, MessageControllerException {
+			throws MainSystemException, MessageException {
 		if (!this.loggedUsers.containsKey(from))
 			throw new MainSystemException("Permissao negada.");
 		if (this.invitations.containsKey(from))
@@ -464,7 +463,7 @@ public class MainSystem {
 
 		Message m = new Invitation(u.getName(), u.getMail(), to, this.invitationsDirectory);
 		this.persistenceManager.saveInvitations(this.invitations);
-		MessageController.sendMessage(m);
+		m.sendMessage();
 	}
 
 	/**
@@ -490,12 +489,12 @@ public class MainSystem {
 	 * @throws MessageControllerException if the message was not possible to be sent
 	 */
 	public void sendMail(String from, String to, String subject, String msg)
-			throws MainSystemException, MessageControllerException {
+			throws MainSystemException, MessageException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		Message mail = new Email(sender.getMail(), receiver.getMail(), subject,
 				msg);
-		MessageController.sendMessage(mail);
+		mail.sendMessage();
 	}
 
 	/**
@@ -507,13 +506,13 @@ public class MainSystem {
 	 * @throws MessageControllerException if the message was not possible to be sent
 	 */
 	public void sendSMS(String from, String to, String msg)
-			throws MainSystemException, MessageControllerException {
+			throws MainSystemException, MessageException {
 		User sender = getUserByUserName(from);
 		User receiver = getUserByUserName(to);
 		if (receiver.getPhone().equals(""))
 			throw new MainSystemException("Numero de telefone nao encontrado.");
 		Message sms = new SMS(sender.getName(), receiver.getPhone(), msg);
-		MessageController.sendMessage(sms);
+		sms.sendMessage();
 	}
 
 	/**
@@ -529,8 +528,8 @@ public class MainSystem {
 	 * Method to end a chat
 	 * @throws MessageControllerException if the chat log could not be saved in the System 
 	 */
-	public void endChat() throws MessageControllerException {
-		MessageController.sendMessage(chat);
+	public void endChat() throws MessageException {
+		chat.sendMessage();
 		chat = null;
 	}
 

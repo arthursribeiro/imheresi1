@@ -1,8 +1,15 @@
 package com.googlecode.imheresi1.message;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
- * Message Interface
- * This interface dictates that every message needs to declare it's path and a how to be build
+ * Message abstract Class
+ * This class implements all methods associated with messages, except for the build Method.
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -10,18 +17,48 @@ package com.googlecode.imheresi1.message;
  * @author Raissa Sarmento
  * 
  */
-public interface Message {
+public abstract class Message {
 
-	/**
-	 * Method to return the path and archive name to save the message in.
-	 * @return string representing the messages path.
-	 */
-	public String getPath();
+	protected static final String EMAIL_PATH = "files/outputs/emails.log";
+	protected static final String SMS_PATH = "files/outputs/sms.log";
+	protected static final String INVITATION_PATH = "files/outputs/convites.log";	
 
+	protected String path;
+	
+	public Message(String path){
+		this.path = path;
+	}
+	
 	/**
 	 * Method to return the whole message, already formated and ready to be sent  
 	 * @return string representing the formated message.
 	 */
-	public String build();
+	public abstract String build();
+	
+	/**
+	 * Method to effectively send a message, writes the content in the log. if no log exists, creates a new file
+	 * @throws MessageException
+	 */
+	public void sendMessage() throws MessageException {
+		try {
+			FileInputStream file = new FileInputStream(this.path);
+			FileWriter bOut = new FileWriter(new File(this.path), true);
+			bOut.write(this.build());
+			bOut.close();
+			file.close();
+		} catch (FileNotFoundException e) {
+			try {
+				FileOutputStream fs = new FileOutputStream(this.path);
+				fs.write(this.build().getBytes());
+				fs.close();
+			} catch (IOException io) {
+				throw new MessageException(
+						"Nao foi possivel enviar o email.");
+			}
+		} catch (IOException io) {
+			throw new MessageException(
+					"Nao foi possivel enviar o email.");
+		}
+	}
 
 }
