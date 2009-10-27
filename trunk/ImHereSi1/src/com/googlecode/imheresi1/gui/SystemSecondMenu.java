@@ -3,7 +3,7 @@ package com.googlecode.imheresi1.gui;
 import java.util.Scanner;
 
 import com.googlecode.imheresi1.localization.PositionException;
-import com.googlecode.imheresi1.message.MessageControllerException;
+import com.googlecode.imheresi1.message.MessageException;
 import com.googlecode.imheresi1.project.MainSystem;
 import com.googlecode.imheresi1.project.MainSystemException;
 import com.googlecode.imheresi1.project.UserException;
@@ -242,7 +242,7 @@ public class SystemSecondMenu {
 				system.sendMail(userName, to, subject, msg);
 			} catch (MainSystemException e) {
 				System.out.println(e.getMessage());
-			} catch (MessageControllerException e) {
+			} catch (MessageException e) {
 				System.out.println(e.getMessage());
 			}
 			break;
@@ -258,7 +258,7 @@ public class SystemSecondMenu {
 				system.sendSMS(userName, to, msg);
 			} catch (MainSystemException e) {
 				System.out.println(e.getMessage());
-			} catch (MessageControllerException e) {
+			} catch (MessageException e) {
 				System.out.println(e.getMessage());
 			}
 			break;
@@ -285,7 +285,7 @@ public class SystemSecondMenu {
 			this.system.sendInvitation(this.userName, email);
 		} catch (MainSystemException e) {
 			// Do nothing
-		} catch (MessageControllerException e) {
+		} catch (MessageException e) {
 			System.out.println(e.getMessage());
 			adicionarAmigos();
 		}

@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author Raissa Sarmento
  * 
  */
-public class Invitation implements Message {
+public class Invitation extends Message {
 
 	private String fromName;
 	private String to;
@@ -30,6 +30,7 @@ public class Invitation implements Message {
 	 * @param dir - string representing the directory in which the predetermined invitation text is stored 
 	 */
 	public Invitation(String fromName, String fromMail, String to, String dir) {
+		super(INVITATION_PATH);
 		this.fromName = fromName;
 		this.to = to;
 		this.fromMail = fromMail;
@@ -82,11 +83,4 @@ public class Invitation implements Message {
 		return buffer.toString();
 	}
 	
-	/**
-	 * @see Message#getPath()
-	 */
-	public String getPath() {
-		return "files/outputs/convites.log";
-	}
-
 }

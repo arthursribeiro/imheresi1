@@ -9,15 +9,15 @@ package com.googlecode.imheresi1.message;
  * @author Raissa Sarmento
  * 
  */
-public class EmailException extends Exception {
+public class MessageException extends Exception {
 
 	/**
 	 * Constructor for the exception. 
 	 * String passed is the error message
-	 * @param motivo - reason for which the exception was thrown.
+	 * @param reason - reason for which the exception was thrown.
 	 */
-	public EmailException(String motivo) {
-		super(motivo);
+	public MessageException(String reason) {
+		super(reason);
 	}
 
 }

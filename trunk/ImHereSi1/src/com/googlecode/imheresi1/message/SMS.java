@@ -1,7 +1,7 @@
 package com.googlecode.imheresi1.message;
 
 /**
- * Class that implements an interface Message and implements a SMS type
+ * Class that implements Message and implements a SMS type
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -9,7 +9,7 @@ package com.googlecode.imheresi1.message;
  * @author Raissa Sarmento
  * 
  */
-public class SMS implements Message {
+public class SMS extends Message {
 
 	private String from;
 	private String to;
@@ -24,6 +24,7 @@ public class SMS implements Message {
 	 * @param msg - string representing the message itself.
 	 */
 	public SMS(String from, String to, String msg) {
+		super(SMS_PATH);
 		this.from = from;
 		this.to = to;
 		this.msg = msg;
@@ -49,13 +50,6 @@ public class SMS implements Message {
 		sB.append(System.getProperty("line.separator"));
 
 		return sB.toString();
-	}
-
-	/**
-	 * @see Message#getPath()
-	 */
-	public String getPath() {
-		return "files/outputs/sms.log";
 	}
 
 }
