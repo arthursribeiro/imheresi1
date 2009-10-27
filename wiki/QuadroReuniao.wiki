@@ -12,7 +12,7 @@
      * User
   * Checar se na atualização ta salvando no BD
 
-== Coisas que Lembrei ==
+== Outras Coisas ==
 
   * Mudar nome da classe PersistenceManagerImpl
   * MySQL (se der tempo)
