@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.localization;
+package com.googlecode.imheresi1.logiclayer.localization;
 
 import java.io.IOException;
 

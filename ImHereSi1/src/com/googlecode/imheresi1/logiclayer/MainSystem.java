@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,13 +10,13 @@ import java.util.Map;
 
 import sun.misc.BASE64Encoder;
 
-import com.googlecode.imheresi1.localization.PositionException;
-import com.googlecode.imheresi1.message.Chat;
-import com.googlecode.imheresi1.message.Email;
-import com.googlecode.imheresi1.message.Invitation;
-import com.googlecode.imheresi1.message.Message;
-import com.googlecode.imheresi1.message.MessageException;
-import com.googlecode.imheresi1.message.SMS;
+import com.googlecode.imheresi1.logiclayer.localization.PositionException;
+import com.googlecode.imheresi1.logiclayer.message.Chat;
+import com.googlecode.imheresi1.logiclayer.message.Email;
+import com.googlecode.imheresi1.logiclayer.message.Invitation;
+import com.googlecode.imheresi1.logiclayer.message.Message;
+import com.googlecode.imheresi1.logiclayer.message.MessageException;
+import com.googlecode.imheresi1.logiclayer.message.SMS;
 
 /**
  * Class that implements the MainSystem type
@@ -479,7 +479,7 @@ public class MainSystem {
 		}
 		User u = this.loggedUsers.get(from);
 
-		if(this.invitationsDirectory.equals("")) throw new MainSystemException("Diretorio dos convites não especificado.");
+		if(this.invitationsDirectory.equals("")) throw new MainSystemException("Diretorio dos convites nï¿½o especificado.");
 		
 		Message m = new Invitation(u.getName(), u.getMail(), to, this.invitationsDirectory);
 		this.persistenceManager.saveInvitations(this.invitations);

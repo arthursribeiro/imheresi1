@@ -1,7 +1,7 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
 /**
- * Class that handles the User class exceptions
+ * Class that handles the PublicInfo class exceptions
  * 
  * @author Arthur de Souza Ribeiro
  * @author Jose Laerte
@@ -9,14 +9,14 @@ package com.googlecode.imheresi1.project;
  * @author Raissa Sarmento
  * 
  */
-public class UserException extends Exception {
+public class PublicInfoException extends Exception {
 
 	/**
 	 * Constructor for the exception. 
 	 * String passed is the error message
 	 * @param motivo  - reason for which the exception was thrown.
 	 */
-	public UserException(String reason) {
+	public PublicInfoException(String reason) {
 		super(reason);
 	}
 

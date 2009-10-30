@@ -1,11 +1,11 @@
 package com.googlecode.imheresi1.acceptancetests;
 
-import com.googlecode.imheresi1.localization.Position;
-import com.googlecode.imheresi1.localization.PositionException;
-import com.googlecode.imheresi1.project.MainSystem;
-import com.googlecode.imheresi1.project.MainSystemException;
-import com.googlecode.imheresi1.project.User;
-import com.googlecode.imheresi1.project.UserException;
+import com.googlecode.imheresi1.logiclayer.MainSystem;
+import com.googlecode.imheresi1.logiclayer.MainSystemException;
+import com.googlecode.imheresi1.logiclayer.User;
+import com.googlecode.imheresi1.logiclayer.UserException;
+import com.googlecode.imheresi1.logiclayer.localization.Position;
+import com.googlecode.imheresi1.logiclayer.localization.PositionException;
 
 public class SystemFacade {
 

@@ -1,7 +1,7 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
-import com.googlecode.imheresi1.localization.Position;
-import com.googlecode.imheresi1.localization.PositionException;
+import com.googlecode.imheresi1.logiclayer.localization.Position;
+import com.googlecode.imheresi1.logiclayer.localization.PositionException;
 
 /**
  * Class that implements the PublicInfo type

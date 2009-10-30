@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -38,7 +38,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 	
 	/**
-	 * Singleton method that guarantees a single instance.
+	 * Singleton method that garantees a single instance.
 	 * @return PersistenceManagerImpl single instance
 	 */
 	public static PersistenceManagerImpl getInstance(){
@@ -108,6 +108,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				try {
 					reader.close();
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
 					//e.printStackTrace();
 				}
 				users.add(a);
