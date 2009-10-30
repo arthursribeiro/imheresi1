@@ -461,6 +461,8 @@ public class MainSystem {
 		}
 		User u = this.loggedUsers.get(from);
 
+		if(this.invitationsDirectory.equals("")) throw new MainSystemException("Diretorio dos convites não especificado.");
+		
 		Message m = new Invitation(u.getName(), u.getMail(), to, this.invitationsDirectory);
 		this.persistenceManager.saveInvitations(this.invitations);
 		m.sendMessage();

@@ -34,7 +34,6 @@ public class Email extends Message {
 		this.msg = msg;
 	}
 
-
 	/**
 	 * @see Message#build()
 	 */
@@ -52,8 +51,7 @@ public class Email extends Message {
 		sB.append(this.msg);
 		sB.append(System.getProperty("line.separator"));
 		sB.append(System.getProperty("line.separator"));
-		sB
-				.append("***************************************************************************************************");
+		sB.append("***************************************************************************************************");
 		sB.append(System.getProperty("line.separator"));
 		return sB.toString();
 	}
