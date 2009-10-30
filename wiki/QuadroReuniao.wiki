@@ -16,8 +16,8 @@
   * ~~Mudar nome da classe PersistenceManagerImpl~~
   * MySQL (se der tempo)
   * ~~zerarSistema() tem que apagar os logs~~
-  * CHAT
-  * Template
+  * ~~CHAT~~
+  * ~~Template~~
   * Ler sobre Strategy
   * Javadoc
   * Exceções
