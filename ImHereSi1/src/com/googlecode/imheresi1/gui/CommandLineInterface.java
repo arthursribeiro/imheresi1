@@ -10,7 +10,7 @@ import com.googlecode.imheresi1.project.UserException;
 public class CommandLineInterface {
 	
 	private static Scanner input;
-	private static MainSystem mySystem = new MainSystem();
+	private static MainSystem mySystem;
 	private static final String SEPARATOR = System.getProperty("line.separator");
 
 
@@ -23,6 +23,10 @@ public class CommandLineInterface {
 	private static final int CREATE_USER = 2;
 	private static final int EXIT = 3;
 
+	public CommandLineInterface(){
+		mySystem = MainSystem.getInstance();
+	}
+	
 	private static int getOption(String option){
 		int chosenNumber;
 
@@ -130,14 +134,14 @@ public class CommandLineInterface {
 			case LOGIN:
 				String username = logIn(input);
 				if(username != null) {
-					SystemSecondMenu secondMenu = new SystemSecondMenu(mySystem, input, username);
+					SystemSecondMenu secondMenu = new SystemSecondMenu(input, username);
 					secondMenu.mainLoop();
 				}
 				break;
 			case CREATE_USER:
 				String userName = createUser(input);
 				if(userName != null){
-					SystemSecondMenu secondMenu = new SystemSecondMenu(mySystem, input, userName);
+					SystemSecondMenu secondMenu = new SystemSecondMenu(input, userName);
 					secondMenu.mainLoop();
 				}
 				break;

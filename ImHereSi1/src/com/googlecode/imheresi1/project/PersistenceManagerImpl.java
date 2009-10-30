@@ -38,7 +38,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 	}
 	
 	/**
-	 * Singleton method that garantees a single instance.
+	 * Singleton method that guarantees a single instance.
 	 * @return PersistenceManagerImpl single instance
 	 */
 	public static PersistenceManagerImpl getInstance(){
@@ -108,7 +108,6 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				try {
 					reader.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					//e.printStackTrace();
 				}
 				users.add(a);
