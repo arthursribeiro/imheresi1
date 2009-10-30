@@ -17,4 +17,12 @@
   * MySQL (se der tempo)
   * ~~zerarSistema() tem que apagar os logs~~
   * Relatorio
-  
+
+== Entregar no MileStone 2 ==
+
+  * Diagrama de classes UML
+  * Projetos arquitetural e de baixo nível atualizados
+  * Relatorio de utilização dos padrões, explicitando quais padrões e porque foram utilizados
+  * Código fonte da API
+  * Documentação JavaDoc da API
+  * Arquivo build.xml
