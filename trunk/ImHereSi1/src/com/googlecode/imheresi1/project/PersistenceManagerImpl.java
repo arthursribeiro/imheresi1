@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +39,6 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			try {
 				a.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
 			}
 			return true;
 		} catch (FileNotFoundException e) {
@@ -62,8 +61,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		FileReader reader;
 		try {
 			reader = new FileReader("files/invitation/invitation.xml");
-			Map<String, List<String>> returnUser = (Map<String, List<String>>) xstream
-					.fromXML(reader);
+			Map<String, List<String>> returnUser = (Map<String, List<String>>) xstream.fromXML(reader);
 			reader.close();
 			return returnUser;
 		} catch (FileNotFoundException e1) {
@@ -82,7 +80,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 		ArrayList<String> names = new ArrayList<String>();
 
 		File file = new File("files/users");
-
+ 
 		for (int i = 0; i < file.list().length; i++) {
 			try {
 				FileReader reader = new FileReader("files/users/"
@@ -100,16 +98,19 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			}
 		}
 
-		for (User i : users) {
-			if(i.getName().substring(0, name.length()).equals(name))
-			    names.add(i.getName().toLowerCase());
+		Iterator<User> iter = users.iterator();
+		while(iter.hasNext()) {
+			User user = iter.next();
+			if(user.getName().substring(0, name.length()).equals(name))
+				names.add(user.getName().toLowerCase());
 		}
+		
 		Object[] sorted = names.toArray();
 		Arrays.sort(sorted);
 		int occ = 0;
 		for (Object i : sorted) {
 			for (User u : users) {
-				if (u.getName().equals(i)) {
+				if (u.getName().toLowerCase().equals(i)) {
 					occ++;
 				}
 				if (occ == occurrence) {
@@ -117,6 +118,7 @@ public class PersistenceManagerImpl implements PersistenceManager {
 				}
 			}
 		}
+		
 		return null;
 	}
 
@@ -161,9 +163,9 @@ public class PersistenceManagerImpl implements PersistenceManager {
 			xstream.toXML(user, dos);
 			dos.close();
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 		}
 	}
 
