@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 import sun.misc.BASE64Encoder;
 
-import com.googlecode.imheresi1.localization.Position;
-import com.googlecode.imheresi1.localization.PositionException;
+import com.googlecode.imheresi1.logiclayer.localization.Position;
+import com.googlecode.imheresi1.logiclayer.localization.PositionException;
 
 /**
  * Class that implements the User type

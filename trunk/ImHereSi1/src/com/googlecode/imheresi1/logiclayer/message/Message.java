@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.message;
+package com.googlecode.imheresi1.logiclayer.message;
 
 import java.io.File;
 import java.io.FileInputStream;

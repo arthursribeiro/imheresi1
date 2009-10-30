@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.message;
+package com.googlecode.imheresi1.logiclayer.message;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,7 +47,7 @@ public class Invitation extends Message {
 		sB.append("to: " + this.to);
 		sB.append(System.getProperty("line.separator"));
 		sB.append("Subject: " + this.fromName
-				+ " gostaria de compartilhar sua localização com você");
+				+ " gostaria de compartilhar sua localizaï¿½ï¿½o com vocï¿½");
 		sB.append(System.getProperty("line.separator"));
 		sB.append(System.getProperty("line.separator"));
 		

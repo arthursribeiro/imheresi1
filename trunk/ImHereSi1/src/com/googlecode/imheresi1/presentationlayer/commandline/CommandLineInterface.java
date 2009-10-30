@@ -1,11 +1,11 @@
-package com.googlecode.imheresi1.gui;
+package com.googlecode.imheresi1.presentationlayer.commandline;
 
 import java.util.Scanner;
 
-import com.googlecode.imheresi1.localization.PositionException;
-import com.googlecode.imheresi1.project.MainSystem;
-import com.googlecode.imheresi1.project.MainSystemException;
-import com.googlecode.imheresi1.project.UserException;
+import com.googlecode.imheresi1.logiclayer.MainSystem;
+import com.googlecode.imheresi1.logiclayer.MainSystemException;
+import com.googlecode.imheresi1.logiclayer.UserException;
+import com.googlecode.imheresi1.logiclayer.localization.PositionException;
 
 public class CommandLineInterface {
 	

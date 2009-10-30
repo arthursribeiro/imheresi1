@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.message;
+package com.googlecode.imheresi1.logiclayer.message;
 
 /**
  * Class that implements Message and handles the Chat type

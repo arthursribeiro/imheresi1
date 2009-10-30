@@ -1,4 +1,4 @@
-package com.googlecode.imheresi1.project;
+package com.googlecode.imheresi1.logiclayer;
 
 import java.util.List;
 import java.util.Map;
