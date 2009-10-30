@@ -4,9 +4,8 @@
 
   * REFATORAMENTO
   * Criar as pastas para o .jar
-  * Substituir for's por Iterator
-  * PersistenceManager => Singleton
-  * Position => FactoryMethod
+  * ~~Substituir for's por Iterator~~
+  * ~~PersistenceManager => Singleton~~
   * MainSystem => Façade/Singleton
   * PublicInfo => Observer
      * User
