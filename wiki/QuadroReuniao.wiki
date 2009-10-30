@@ -18,7 +18,7 @@
   * ~~zerarSistema() tem que apagar os logs~~
   * Relatorio
 
-== Entregar no MileStone 2 ==
+== Entregar no Mile Stone 2 ==
 
   * Diagrama de classes UML
   * Projetos arquitetural e de baixo nível atualizados
