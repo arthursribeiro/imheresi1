@@ -27,7 +27,26 @@ import com.thoughtworks.xstream.XStream;
  */
 public class PersistenceManagerImpl implements PersistenceManager {
 
-	XStream xstream = new XStream();
+	private XStream xstream;
+	private static PersistenceManagerImpl singletonAttribute = null;
+	
+	/**
+	 * Private constructor to be used in getInstance, used in singleton
+	 */
+	private PersistenceManagerImpl(){
+		xstream = new XStream();
+	}
+	
+	/**
+	 * Singleton method that garantees a single instance.
+	 * @return PersistenceManagerImpl single instance
+	 */
+	public static PersistenceManagerImpl getInstance(){
+		if(singletonAttribute == null){
+			singletonAttribute = new PersistenceManagerImpl();
+		}
+		return singletonAttribute;
+	}
 
 	/**
 	 * @see PersistenceManager#hasUser(String)
