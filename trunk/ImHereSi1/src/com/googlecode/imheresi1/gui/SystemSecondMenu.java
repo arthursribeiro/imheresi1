@@ -32,8 +32,8 @@ public class SystemSecondMenu {
 	private static final int LOGOUT = 8;
 	private static final String PROMPT_2 = "Opcao: ";
 
-	public SystemSecondMenu(MainSystem mySystem,Scanner input, String userName){
-		system = mySystem;
+	public SystemSecondMenu(Scanner input, String userName){
+		system = MainSystem.getInstance();
 		this.userName = userName;
 		this.input = input;
 		this.welcomeUser = "<< Bem Vindo " + userName + " >>";

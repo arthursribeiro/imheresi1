@@ -9,7 +9,7 @@ import com.googlecode.imheresi1.project.UserException;
 
 public class SystemFacade {
 
-	private MainSystem mySystem = new MainSystem();
+	private MainSystem mySystem ;
 	private final String NOME = "nome";
 	private final String EMAIL = "email";
 	private final String USERNAME = "userName";
@@ -20,6 +20,10 @@ public class SystemFacade {
 		this.mySystem.resetBD();
 	}
 
+	public SystemFacade(){
+		mySystem = MainSystem.getInstance();
+	}
+	
 	// Encerra o sistema, gravando log e informacoes dos usuarios
 	public void encerrarSistema() {
 		this.mySystem.exitSystem();

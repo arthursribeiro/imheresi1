@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,23 +33,35 @@ public class MainSystem {
 	public static final int EXIBIR = 2;
 
 	private HashMap<String, User> loggedUsers;
-	private ArrayList<User> createdUsers;
+	private List<User> createdUsers;
 	private PersistenceManager persistenceManager;
 	private Chat chat;
 	private String invitationsDirectory = "";
 
+	private static MainSystem singletonAttribute = null;
 	private Map<String, List<String>> invitations;
 
 	/**
 	 * Constructor
 	 */
-	public MainSystem() {
-		this.persistenceManager = new PersistenceManagerImpl();
+	private MainSystem() {
+		this.persistenceManager = PersistenceManagerImpl.getInstance();
 		this.invitations = this.persistenceManager.getInvitations();
 		if (this.invitations == null)
 			this.invitations = new HashMap<String, List<String>>();
 		this.loggedUsers = new HashMap<String, User>();
 		this.createdUsers = new ArrayList<User>();
+	}
+	
+	/**
+	 * Singleton method that guarantees a single instance.
+	 * @return MainSystem single instance
+	 */
+	public static MainSystem getInstance(){
+		if(singletonAttribute == null){
+			singletonAttribute = new MainSystem();
+		}
+		return singletonAttribute;
 	}
 
 	/**
@@ -83,10 +96,10 @@ public class MainSystem {
 	 */
 	public String toStringMyInvitations(String username) throws MainSystemException {
 		User user;
-		List<String> map = null;
+		List<String> invitationList = null;
 		
 		user = this.getUserByUserName(username);
-		map = getInvitationList(user.getMail());
+		invitationList = getInvitationList(user.getMail());
 
 		String separator = System.getProperty("line.separator");
 		String saida = "================================================================="
@@ -96,11 +109,12 @@ public class MainSystem {
 				+ "================================================================="
 				+ separator;
 
-		if (map.size() == 0)
+		if (invitationList.size() == 0)
 			return "";
 
-		for (int i = 0; i < map.size(); i++) {
-			String userName = map.get(i);
+		Iterator<String> iter = invitationList.iterator();
+		while(iter.hasNext()){
+			String userName = iter.next();
 			User u;
 			u = this.getUserByUserName(userName);
 			saida += userName + "                   " + u.getName();
@@ -114,14 +128,14 @@ public class MainSystem {
 	 * @return List<String> - List of userName's who sent an invitation to the e-mail
 	 */
 	private List<String> getInvitationList(String mail) {
-		List<String> map = new ArrayList<String>();
+		List<String> invitationList = new ArrayList<String>();
 
 		for (String username : this.invitations.keySet()) {
 			if (this.invitations.get(username).contains(mail))
-				map.add(username);
+				invitationList.add(username);
 		}
 
-		return map;
+		return invitationList;
 	}
 
 	/**
@@ -324,7 +338,11 @@ public class MainSystem {
 	 */
 	private void refreshMyLocalization(User user, String ip)
 			throws PositionException {
-		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+		
+		List<PublicInfo> friendsPublicInfo = user.getFriendsPublicInfo();
+		Iterator<PublicInfo> iter = friendsPublicInfo.iterator();
+		while(iter.hasNext()){
+			PublicInfo friendInfo = iter.next();
 			User friend = this.persistenceManager.getUserByUserName(friendInfo
 					.getLogin());
 			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
@@ -590,13 +608,17 @@ public class MainSystem {
 		User user = this.getUserByUserName(userName);
 		user.setName(newName);
 		
-		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+		List<PublicInfo> friendsPublicInfo = user.getFriendsPublicInfo();
+		Iterator<PublicInfo> iter = friendsPublicInfo.iterator();
+		while(iter.hasNext()){
+			PublicInfo friendInfo = iter.next();
 			User friend = this.persistenceManager.getUserByUserName(friendInfo
 					.getLogin());
 			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
 			pInfo.setName(newName);
 			this.saveUser(friend);
-		}		
+		}
+	
 		
 		this.persistenceManager.saveUser(user, userName);
 		this.loggedUsers.put(user.getUserName(), user);
@@ -614,13 +636,16 @@ public class MainSystem {
 		User user = this.getUserByUserName(userName);
 		user.setMail(newMail);
 		
-		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+		List<PublicInfo> friendsPublicInfo = user.getFriendsPublicInfo();
+		Iterator<PublicInfo> iter = friendsPublicInfo.iterator();
+		while(iter.hasNext()){
+			PublicInfo friendInfo = iter.next();
 			User friend = this.persistenceManager.getUserByUserName(friendInfo
 					.getLogin());
 			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
 			pInfo.setEmail(newMail);
 			this.saveUser(friend);
-		}		
+		}
 		
 		this.persistenceManager.saveUser(user, userName);
 		this.loggedUsers.put(user.getUserName(), user);
@@ -637,13 +662,16 @@ public class MainSystem {
 		User user = this.getUserByUserName(userName);
 		user.setPhone(newPhoneNumber);
 		
-		for (PublicInfo friendInfo : user.getFriendsPublicInfo()) {
+		List<PublicInfo> friendsPublicInfo = user.getFriendsPublicInfo();
+		Iterator<PublicInfo> iter = friendsPublicInfo.iterator();
+		while(iter.hasNext()){
+			PublicInfo friendInfo = iter.next();
 			User friend = this.persistenceManager.getUserByUserName(friendInfo
 					.getLogin());
 			PublicInfo pInfo = friend.getAFriendPublicInfo(user.getUserName());
 			pInfo.setTelephoneNumber(newPhoneNumber);
 			this.saveUser(friend);
-		}		
+		}
 		
 		this.persistenceManager.saveUser(user, userName);
 		this.loggedUsers.put(user.getUserName(), user);
@@ -674,7 +702,11 @@ public class MainSystem {
 	private void removeAllFriends(User user) throws UserException,
 			MainSystemException {
 		User auxUser;
-		for (PublicInfo pInfo : user.getFriendsPublicInfo()) {
+		
+		List<PublicInfo> friendsPublicInfo = user.getFriendsPublicInfo();
+		Iterator<PublicInfo> iter = friendsPublicInfo.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
 			auxUser = this.getUserByUserName(pInfo.getLogin());
 			auxUser.removeFriend(user.getUserName());
 			this.persistenceManager.saveUser(auxUser, auxUser.getUserName());
@@ -685,9 +717,12 @@ public class MainSystem {
 	 * Method to exit the System
 	 */
 	public void exitSystem() {
-		for (User user : this.createdUsers) {
+		Iterator<User> iter = this.createdUsers.iterator();
+		while(iter.hasNext()){
+			User user = iter.next();
 			this.persistenceManager.saveUser(user, user.getUserName());
 		}
+
 		for (String userName : this.loggedUsers.keySet()) {
 			this.persistenceManager.saveUser(this.loggedUsers.get(userName),
 					userName);
