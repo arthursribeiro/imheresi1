@@ -3,7 +3,7 @@
 == No Quadro ==
 
   * REFATORAMENTO
-  * Criar as pastas para o .jar
+  * ~~Criar as pastas para o .jar~~
   * ~~Substituir for's por Iterator~~
   * ~~PersistenceManager => Singleton~~
   * ~~MainSystem => Façade/Singleton~~
