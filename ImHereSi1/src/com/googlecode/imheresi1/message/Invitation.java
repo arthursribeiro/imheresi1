@@ -58,8 +58,7 @@ public class Invitation extends Message {
 		
 		sB.append(content);
 		sB.append(System.getProperty("line.separator"));
-		sB
-		.append("***************************************************************************************************");
+		sB.append("***************************************************************************************************");
 		sB.append(System.getProperty("line.separator"));
 
 		return sB.toString();
