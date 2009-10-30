@@ -16,4 +16,5 @@
   * ~~Mudar nome da classe PersistenceManagerImpl~~
   * MySQL (se der tempo)
   * ~~zerarSistema() tem que apagar os logs~~
+  * Relatorio
   
