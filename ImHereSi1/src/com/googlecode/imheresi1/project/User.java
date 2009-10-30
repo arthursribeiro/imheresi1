@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,11 +93,12 @@ public class User {
 	 * @return boolean - true if the friend is visible, false otherwise
 	 * @throws UserException if the userName passed is not known no user.
 	 */
-	public boolean isVisible(String friendUserName) throws UserException {
-		for (int i = 0; i < this.friends.size(); i++) {
-			PublicInfo pInfo = this.friends.get(i);
+	public boolean isVisible(String friendUserName) throws UserException {		
+		Iterator <PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
 			if (pInfo.getLogin().equals(friendUserName))
-				return this.visibleFriends.contains(friendUserName);
+			    return this.visibleFriends.contains(friendUserName);
 		}
 		throw new UserException("Usuario desconhecido.");
 	}
@@ -312,8 +314,10 @@ public class User {
 	 * @return boolean - true if the userName is a friend, false otherwise
 	 */
 	private boolean isMyFriend(String username) {
-		for (PublicInfo pInfo : this.friends) {
-			if (pInfo.getLogin().equals(username))
+		Iterator<PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
+			if(pInfo.getLogin().equals(username))
 				return true;
 		}
 		return false;
@@ -343,8 +347,10 @@ public class User {
 	 * @throws UserException if the userName is not a friend.
 	 */
 	public void removeFriend(String friend) throws UserException {
-		for (PublicInfo pInfo : this.friends) {
-			if (pInfo.getLogin().equals(friend)) {
+		Iterator<PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
+			if(pInfo.getLogin().equals(friend)) {
 				this.friends.remove(pInfo);
 				if (this.visibleFriends.contains(pInfo.getLogin()))
 					this.visibleFriends.remove(pInfo.getLogin());
@@ -364,14 +370,14 @@ public class User {
 	public Position getFriendLocation(String friend) throws UserException, PositionException {
 		if (!isMyFriend(friend))
 			throw new UserException("Usuario desconhecido.");
-				
-		for (PublicInfo pInfo : this.friends) {
-			if (pInfo.getLogin().equals(friend)
-					&& this.visibleFriends.contains(pInfo.getLogin())) {
+		
+		Iterator<PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
+			if (pInfo.getLogin().equals(friend) && this.visibleFriends.contains(pInfo.getLogin()))
 				return pInfo.getPosition();
-			}
 		}
-
+		
 		return null;
 	}
 
@@ -390,7 +396,9 @@ public class User {
 	 * @return PublicInfo - PublicInfo object of the friend
 	 */
 	public PublicInfo getAFriendPublicInfo(String userName) {
-		for(PublicInfo pInfo : this.friends){
+		Iterator<PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
 			if(pInfo.getLogin().equals(userName)){
 				return pInfo;
 			}
@@ -404,15 +412,17 @@ public class User {
 	 */
 	public String toStringFriends() {
 		String separator = System.getProperty("line.separator"); 
-		String saida = "=================================================================" + separator
-					   + "Username                      Nome                            " + separator
-					   + "================================================================="  + separator;
+		String returnString = "=================================================================" + separator
+					        + "Username                      Nome                            " + separator
+					        + "================================================================="  + separator;
 		
 		if(this.friends.size() == 0) return "";
 		
-		for(int i = 0; i < this.friends.size(); i++){
-			saida += this.friends.get(i).getLogin() + "                  " + this.friends.get(i).getName() + separator;
+		Iterator<PublicInfo> iter = this.friends.iterator();
+		while(iter.hasNext()){
+			PublicInfo pInfo = iter.next();
+			returnString += pInfo.getLogin() + "                  " + pInfo.getName() + separator;
 		}
-		return saida;
+		return returnString;
 	}
 }
