@@ -53,11 +53,11 @@ public abstract class Message {
 				fs.close();
 			} catch (IOException io) {
 				throw new MessageException(
-						"Nao foi possivel enviar o email.");
+						"Nao foi possivel enviar a mensagem.");
 			}
 		} catch (IOException io) {
 			throw new MessageException(
-					"Nao foi possivel enviar o email.");
+					"Nao foi possivel enviar a mensagem.");
 		}
 	}
 
