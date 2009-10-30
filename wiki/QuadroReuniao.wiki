@@ -10,7 +10,7 @@
   * MainSystem => Façade/Singleton
   * PublicInfo => Observer
      * User
-  * Checar se na atualização ta salvando no BD
+  * ~~Checar se na atualização ta salvando no BD~~
 
 == Outras Coisas ==
 
