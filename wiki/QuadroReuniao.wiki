@@ -6,7 +6,7 @@
   * Criar as pastas para o .jar
   * ~~Substituir for's por Iterator~~
   * ~~PersistenceManager => Singleton~~
-  * MainSystem => Façade/Singleton
+  * ~~MainSystem => Façade/Singleton~~
   * PublicInfo => Observer
      * User
   * ~~Checar se na atualização ta salvando no BD~~
