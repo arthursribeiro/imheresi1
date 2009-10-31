@@ -19,8 +19,8 @@
   * ~~CHAT~~
   * ~~Template~~
   * Ler sobre Strategy
-  * Javadoc
-  * Exceções
+  * ~~Javadoc~~
+  * ~~Exceções~~
   * Metodo que cria a super string formatada nao esta na UI
 
 == Entregar no Mile Stone 2 ==
