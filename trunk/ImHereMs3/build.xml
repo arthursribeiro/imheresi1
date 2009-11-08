@@ -1,0 +1,53 @@
+<project name="IamHere" basedir=".">
+
+	<target name="limpa">
+		<echo>Limpando...</echo>
+		<delete dir="doc" />
+		<delete includeemptydirs="true">
+			<fileset includes="**.log" dir="."/>
+			<fileset includes="**.xml" dir="usuarios"/>
+		</delete>
+	</target>
+
+	<target name="compila">
+		<echo>Compilando...</echo>
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin">
+			<classpath>
+				<pathelement path="src\lib\easyaccept.jar" />
+				<pathelement path="src\lib\geoIp.jar" />
+				<pathelement path="xstream-1.3.1.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="testa">
+		<echo>Testando...</echo>
+		<java classname="Test" fork="true">
+			<classpath path="bin" />
+			<classpath>
+				<pathelement path="src\lib\easyaccept.jar" />
+				<pathelement path="src\lib\geoIp.jar" />
+				<pathelement path="xstream-1.3.1.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="doc">
+		<echo>Gerando JavaDoc...</echo>
+		<mkdir dir="doc" />
+		<javadoc defaultexcludes="yes" sourcepath="src" access="public" destdir="doc" />
+	</target>
+
+	<target name="jar">
+		<echo>Gerando Jar...</echo>
+		<jar destfile="IamHere.jar" basedir="." duplicate="fail" index="true">
+			<zipfileset src="src\lib\geoIp.jar" includes="**/*.class" />
+			<zipfileset src="xstream-1.3.1.jar" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="Main" />
+			</manifest>
+		</jar>
+	</target>
+
+</project>
