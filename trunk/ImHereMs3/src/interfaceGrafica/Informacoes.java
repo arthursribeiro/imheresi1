@@ -17,7 +17,7 @@ public class Informacoes extends JFrame {
     private JLabel figura;
 	
     private final String textoInfo = "<html>I'm Here é um sistema que permite compartilhamento de localização de pessoas<br> Os usuários só poderão visualizar a informação de localização uns dos outros se<br> assim desejarem. Para que isso seja possível um convite de compartilhamento deve<br> ser enviado a um usuário, o qual define se exibe ou oculta sua localização. Nesse<br> cenário, os usuários podem trocar mensagens entre si, seja um e-mail, um SMS ou<br> até conversar por chat.</p></html>";
-    private static Informacoes informacoes;
+    private static Informacoes instanciaUnica;
     
 	private ActionListener voltar = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -32,8 +32,8 @@ public class Informacoes extends JFrame {
     }
     
     public static Informacoes getInstancia(){
-    	if(informacoes == null) informacoes = new Informacoes();
-    	return informacoes;
+    	if(instanciaUnica == null) instanciaUnica = new Informacoes();
+    	return instanciaUnica;
     }
 
     private void initComponents() {

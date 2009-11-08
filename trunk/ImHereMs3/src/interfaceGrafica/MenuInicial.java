@@ -27,12 +27,28 @@ public class MenuInicial extends JFrame {
 		}
 	};
 	
+	private ActionListener cadastroAction = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			Cadastro.getInstancia().limpaDados();
+			Cadastro.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+	};
+	
+	private ActionListener loginAction = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			Login.getInstancia().limpaDados();
+			Login.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+	};
+	
     private JButton botaoCadastro;
     private JButton botaoLogin;
     private JButton botaoInfo;
     private JButton botaoSair;
 	
-    private static MenuInicial menu;
+    private static MenuInicial instanciaUnica;
     
     private MenuInicial() {
     	super("Menu Inicial");
@@ -40,8 +56,8 @@ public class MenuInicial extends JFrame {
     }
 
     public static MenuInicial getInstancia(){
-    	if(menu == null) menu = new MenuInicial();
-    	return menu;
+    	if(instanciaUnica == null) instanciaUnica = new MenuInicial();
+    	return instanciaUnica;
     }
         
     private void initComponents() {
@@ -50,9 +66,12 @@ public class MenuInicial extends JFrame {
         botaoLogin = new JButton("Login");
         botaoInfo = new JButton("Informações");
         botaoSair = new JButton("Sair");
-
+        
         botaoInfo.addActionListener(infoAction);
         botaoSair.addActionListener(sairAction);
+        botaoCadastro.addActionListener(cadastroAction);
+        botaoLogin.addActionListener(loginAction);
+        
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
