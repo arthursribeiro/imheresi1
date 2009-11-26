@@ -1,6 +1,5 @@
 package interfaceGrafica;
 
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,31 +12,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class MenuInicial extends JFrame implements ActionListener {
-	
-	//public JFrame frameInicial;
+
 	private JButton botaoCadastro;
 	private JButton botaoLogin;
 	private JButton botaoInfo;
 	private JButton botaoSair;
 	static String nome;
-	public static final ImageIcon BACKGROUND = criaImagem("qualque.jpg");
+	private static final ImageIcon TELA_INICIAL = criaImagem("inicial.jpg");
+	public final ImageIcon BACKGROUND = criaImagem("background.jpg");
 	private static MenuInicial instanciaUnica;
-	
-	private MenuInicial()  {
-        botaoCadastro = new JButton("Cadastro");
-        botaoLogin = new JButton("Login");
-        botaoInfo = new JButton("Informações");
-        botaoSair = new JButton("Sair");
-        this.setTitle("Janelitxa");
-        this.montaJanela();
-        
+	public final JButton[] botoes = { botaoCadastro = new JButton("Cadastro"),
+			botaoLogin = new JButton("Login"),
+			botaoInfo = new JButton("Informações"),
+			botaoSair = new JButton("Sair") };
+
+	private MenuInicial() {
+		this.setTitle("I'm Here!");
+		this.montaJanela();
+
 	}
-	
-    public static MenuInicial getInstancia(){
-    	if(instanciaUnica == null) instanciaUnica = new MenuInicial();
-    	return instanciaUnica;
-    }
-    
+
+	public static MenuInicial getInstancia() {
+		if (instanciaUnica == null)
+			instanciaUnica = new MenuInicial();
+		return instanciaUnica;
+	}
+
 	private static ImageIcon criaImagem(String imagem) {
 		try {
 			return new ImageIcon(ImageIO.read(new File(imagem)));
@@ -45,74 +45,68 @@ public class MenuInicial extends JFrame implements ActionListener {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	private void montaJanela() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
-		
-		JLabel label = new JLabel();
-		label.setIcon(BACKGROUND); 
 
-		botaoCadastro.setSize(133, 37);
-		botaoCadastro.setLocation(213, 145);
+		JLabel label = new JLabel();
+		label.setIcon(TELA_INICIAL);
+		
 		botaoCadastro.setActionCommand("cadastro");
 		botaoCadastro.addActionListener(this);
-		label.add(botaoCadastro);
-		
-		botaoLogin.setSize(133, 37);
-		botaoLogin.setLocation(213, 190);
+
 		botaoLogin.setActionCommand("login");
 		botaoLogin.addActionListener(this);
-		label.add(botaoLogin);
-		
-		botaoInfo.setSize(133, 37);
-		botaoInfo.setLocation(213, 245);
+
 		botaoInfo.setActionCommand("info");
 		botaoInfo.addActionListener(this);
-		label.add(botaoInfo);
-		
-		botaoSair.setSize(133, 37);
-		botaoSair.setLocation(213, 305);
+
 		botaoSair.setActionCommand("sair");
 		botaoSair.addActionListener(this);
-		label.add(botaoSair);
+
+		int y = 145;
+		for(JButton botao : botoes) {
+			botao.setSize(133, 37);
+			botao.setLocation(230, y);
+			label.add(botao);
+			y+=45;
+		}
 		
 		getContentPane().add(label, BorderLayout.CENTER);
 		setBounds(new java.awt.Rectangle(0, 0, 400, 400));
-		//frameInicial.setIconImage(BACKGROUND);
 		pack();
 		setVisible(true);
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-		
-		if(command.equals("cadastro")) {
+
+		if (command.equals("cadastro")) {
 			Cadastro.getInstancia().limpaDados();
 			Cadastro.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
-		if(command.equals("login")) {
+
+		if (command.equals("login")) {
 			Login.getInstancia().limpaDados();
 			Login.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
-		if(command.equals("sair")) {
+
+		if (command.equals("sair")) {
 			System.exit(0);
-			//TODO Melhorar Isso!!
+			// TODO Melhorar Isso!!
 		}
-		
-		if(command.equals("info")) {
+
+		if (command.equals("info")) {
 			Informacoes.getInstancia().setVisible(true);
 			setVisible(false);
 		}
 	}
-	
-    public static void main(String[] args) {
-    	MenuInicial.getInstancia().setVisible(true);
+
+	public static void main(String[] args) {
+		MenuInicial.getInstancia().setVisible(true);
 	}
 }
