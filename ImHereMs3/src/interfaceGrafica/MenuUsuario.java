@@ -4,19 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
-
-import principal.Sistema;
-
 import util.Usuario;
 
-public class MenuUsuario extends JFrame {
+public class MenuUsuario extends JFrame implements ActionListener {
 
 	private JButton botaoEnviarConvite;
 	private JButton botaoLogOut;
@@ -29,15 +22,7 @@ public class MenuUsuario extends JFrame {
 	private JButton botaoEnviarSMS;
 	private JButton botaoChat;
 	private Usuario usuario;
-
 	private static MenuUsuario instanciaUnica;
-
-	private ActionListener logoutAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			MenuInicial.getInstancia().setVisible(true);
-			setVisible(false);
-		}
-	};
 
 	private MenuUsuario() {
 		super("Menu do Usuário");
@@ -53,7 +38,7 @@ public class MenuUsuario extends JFrame {
 			instanciaUnica = new MenuUsuario();
 		return instanciaUnica;
 	}
-
+	
 	private void initComponents() {
 		JButton[] botoes = {
 				botaoEnviarConvite = new JButton("Enviar Convite"),
@@ -66,6 +51,17 @@ public class MenuUsuario extends JFrame {
 				botaoEnviarSMS = new JButton("Enviar SMS"),
 				botaoChat = new JButton("Chat"),
 				botaoLogOut = new JButton("LogOut") };
+		
+		botaoEnviarConvite.setActionCommand("convite");
+		botaoVerAmigos.setActionCommand("amigos");
+		botaoVerificarModo.setActionCommand("compartilhamento");
+		botaoEditarModo.setActionCommand("editar");
+		botaoExcluirAmigo.setActionCommand("excluir");
+		botaoVerLocal.setActionCommand("localizar");
+		botaoEnviarEmail.setActionCommand("email");
+		botaoEnviarSMS.setActionCommand("sms");
+		botaoChat.setActionCommand("chat");
+		botaoLogOut.setActionCommand("logout");
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -89,15 +85,60 @@ public class MenuUsuario extends JFrame {
 		for(JButton botao : botoes) {
 			botao.setSize(190, 35);
 			botao.setFont(new Font("Tahoma", 10, 10));
+			botao.addActionListener(this);
 			label.add(botao);
 		}
 		
-		botaoLogOut.addActionListener(logoutAction);
 		
 		getContentPane().add(label, BorderLayout.CENTER);
 		setBounds(new java.awt.Rectangle(0, 0, 400, 400));
 		pack();
 		setVisible(true);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+
+		if (command.equals("convite")) {
+			System.out.println("convite :P");
+		}
+
+		if (command.equals("amigos")) {
+			System.out.println("esses sao meus amiguinhos");
+		}
+
+		if (command.equals("compartilhamento")) {
+			System.out.println("compartilhando geras");
+		}
+		
+		if (command.equals("editar")) {
+			System.out.println("editando :P");
+		}
+
+		if (command.equals("excluir")) {
+			System.out.println("excluindododo");
+		}
+		
+		if (command.equals("localizar")) {
+			System.out.println("localizando");
+		}
+		
+		if (command.equals("email")) {
+			System.out.println("emailizando");
+		}
+		
+		if (command.equals("sms")) {
+			System.out.println("smszando");
+		}
+		
+		if (command.equals("chat")) {
+			System.out.println("chat");
+		}
+		
+		if (command.equals("logout")) {
+			MenuInicial.getInstancia().setVisible(true);
+			setVisible(false);
+		}
 	}
 
 	/**
