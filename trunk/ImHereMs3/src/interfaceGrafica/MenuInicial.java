@@ -1,120 +1,118 @@
 package interfaceGrafica;
 
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
-import javax.swing.GroupLayout;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
+import javax.swing.JLabel;
 
-
-
-public class MenuInicial extends JFrame {
-
-	private ActionListener infoAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			Informacoes.getInstancia().setVisible(true);
-			setVisible(false);
-		}
-	};
+public class MenuInicial extends JFrame implements ActionListener {
 	
-	private ActionListener sairAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-			//TODO Melhorar Isso!!
-		}
-	};
+	//public JFrame frameInicial;
+	private JButton botaoCadastro;
+	private JButton botaoLogin;
+	private JButton botaoInfo;
+	private JButton botaoSair;
+	static String nome;
+	public static final ImageIcon BACKGROUND = criaImagem("qualque.jpg");
+	private static MenuInicial instanciaUnica;
 	
-	private ActionListener cadastroAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			Cadastro.getInstancia().limpaDados();
-			Cadastro.getInstancia().setVisible(true);
-			setVisible(false);
-		}
-	};
-	
-	private ActionListener loginAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			Login.getInstancia().limpaDados();
-			Login.getInstancia().setVisible(true);
-			setVisible(false);
-		}
-	};
-	
-    private JButton botaoCadastro;
-    private JButton botaoLogin;
-    private JButton botaoInfo;
-    private JButton botaoSair;
-	
-    private static MenuInicial instanciaUnica;
-    
-    private MenuInicial() {
-    	super("Menu Inicial");
-        initComponents();
-    }
-
-    public static MenuInicial getInstancia(){
-    	if(instanciaUnica == null) instanciaUnica = new MenuInicial();
-    	return instanciaUnica;
-    }
-        
-    private void initComponents() {
-
+	private MenuInicial()  {
         botaoCadastro = new JButton("Cadastro");
         botaoLogin = new JButton("Login");
         botaoInfo = new JButton("Informações");
         botaoSair = new JButton("Sair");
+        this.setTitle("Janelitxa");
+        this.montaJanela();
         
-        botaoInfo.addActionListener(infoAction);
-        botaoSair.addActionListener(sairAction);
-        botaoCadastro.addActionListener(cadastroAction);
-        botaoLogin.addActionListener(loginAction);
-        
-        setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(28, Short.MAX_VALUE)
-                        .addComponent(botaoCadastro)
-                        .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(botaoInfo)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoSair)
-                    .addComponent(botaoLogin))
-                .addGap(45, 45, 45))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoLogin)
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoInfo)
-                            .addComponent(botaoSair)))
-                    .addComponent(botaoCadastro))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
-
-        pack();
+	}
+	
+    public static MenuInicial getInstancia(){
+    	if(instanciaUnica == null) instanciaUnica = new MenuInicial();
+    	return instanciaUnica;
     }
     
+	private static ImageIcon criaImagem(String imagem) {
+		try {
+			return new ImageIcon(ImageIO.read(new File(imagem)));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private void montaJanela() {
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
+		
+		JLabel label = new JLabel();
+		label.setIcon(BACKGROUND); 
+
+		botaoCadastro.setSize(133, 37);
+		botaoCadastro.setLocation(213, 145);
+		botaoCadastro.setActionCommand("cadastro");
+		botaoCadastro.addActionListener(this);
+		label.add(botaoCadastro);
+		
+		botaoLogin.setSize(133, 37);
+		botaoLogin.setLocation(213, 190);
+		botaoLogin.setActionCommand("login");
+		botaoLogin.addActionListener(this);
+		label.add(botaoLogin);
+		
+		botaoInfo.setSize(133, 37);
+		botaoInfo.setLocation(213, 245);
+		botaoInfo.setActionCommand("info");
+		botaoInfo.addActionListener(this);
+		label.add(botaoInfo);
+		
+		botaoSair.setSize(133, 37);
+		botaoSair.setLocation(213, 305);
+		botaoSair.setActionCommand("sair");
+		botaoSair.addActionListener(this);
+		label.add(botaoSair);
+		
+		getContentPane().add(label, BorderLayout.CENTER);
+		setBounds(new java.awt.Rectangle(0, 0, 400, 400));
+		//frameInicial.setIconImage(BACKGROUND);
+		pack();
+		setVisible(true);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		
+		if(command.equals("cadastro")) {
+			Cadastro.getInstancia().limpaDados();
+			Cadastro.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+		
+		if(command.equals("login")) {
+			Login.getInstancia().limpaDados();
+			Login.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+		
+		if(command.equals("sair")) {
+			System.exit(0);
+			//TODO Melhorar Isso!!
+		}
+		
+		if(command.equals("info")) {
+			Informacoes.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+	}
+	
     public static void main(String[] args) {
     	MenuInicial.getInstancia().setVisible(true);
 	}
-    
-
 }

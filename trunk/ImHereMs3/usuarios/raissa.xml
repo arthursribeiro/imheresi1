@@ -1,0 +1,13 @@
+<util.Usuario>
+  <username>raissa</username>
+  <nome>Raissa</nome>
+  <senha>qu3senh4</senha>
+  <email>raissaa@gmail.com</email>
+  <telefone>33213125</telefone>
+  <ip>189.71.12.231</ip>
+  <estahConectado>true</estahConectado>
+  <convitesPendentes/>
+  <amigos>
+    <numbers/>
+  </amigos>
+</util.Usuario>
