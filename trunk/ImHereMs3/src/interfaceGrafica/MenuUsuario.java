@@ -28,7 +28,6 @@ public class MenuUsuario extends JFrame {
 	private JButton botaoEnviarEmail;
 	private JButton botaoEnviarSMS;
 	private JButton botaoChat;
-
 	private Usuario usuario;
 
 	private static MenuUsuario instanciaUnica;
@@ -41,8 +40,8 @@ public class MenuUsuario extends JFrame {
 	};
 
 	private MenuUsuario() {
-		super("Menu do Ususário");
-		begin();
+		super("Menu do Usuário");
+		initComponents();
 	}
 
 	public void setUsuario(Usuario u) {
@@ -55,29 +54,28 @@ public class MenuUsuario extends JFrame {
 		return instanciaUnica;
 	}
 
-	private void begin() {
-		
+	private void initComponents() {
 		JButton[] botoes = {
-		botaoEnviarConvite = new JButton("Enviar Convite"), //
-		botaoVerAmigos = new JButton("Ver Amigos"), //
-		botaoVerificarModo = new JButton("Modo de Compartilhamento"), //
-		botaoEditarModo = new JButton("Editar Modo de Compartilhamento"), //
-		botaoExcluirAmigo = new JButton("Excluir Amigo"),
-		botaoVerLocal = new JButton("Localização de Amigos"),
-		botaoEnviarEmail = new JButton("Enviar Email"),
-		botaoEnviarSMS = new JButton("Enviar SMS"),
-		botaoChat = new JButton("Chat"),
-		botaoLogOut = new JButton("LogOut") };
-
+				botaoEnviarConvite = new JButton("Enviar Convite"),
+				botaoVerAmigos = new JButton("Ver Amigos"),
+				botaoVerificarModo = new JButton("Modo de Compartilhamento"),
+				botaoEditarModo = new JButton("Editar Modo de Compartilhamento"),
+				botaoExcluirAmigo = new JButton("Excluir Amigo"),
+				botaoVerLocal = new JButton("Localização de Amigos"),
+				botaoEnviarEmail = new JButton("Enviar Email"),
+				botaoEnviarSMS = new JButton("Enviar SMS"),
+				botaoChat = new JButton("Chat"),
+				botaoLogOut = new JButton("LogOut") };
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 
 		JLabel label = new JLabel();
-		label.setIcon(MenuInicial.getInstancia().BACKGROUND);
+		label.setIcon(Images.BACKGROUND);
 
 		int x = 5;
 		int y = 105;
-		for(int i = 0; i < botoes.length; i++) {
+		for(int i = 0; i < 5; i++) {
 			botoes[i].setLocation(x, y);
 			y+=40;
 		}
@@ -100,129 +98,6 @@ public class MenuUsuario extends JFrame {
 		setBounds(new java.awt.Rectangle(0, 0, 400, 400));
 		pack();
 		setVisible(true);
-	}
-
-	private void initComponents() {
-
-		botaoEnviarConvite = new JButton("Enviar Convite");
-		botaoVerAmigos = new JButton("Ver Amigos");
-		botaoVerificarModo = new JButton("Verificar modo de Compartilhamento");
-		botaoEditarModo = new JButton("Editar modo de Compartilhamento");
-		botaoExcluirAmigo = new JButton("Excluir Amigo");
-		botaoVerLocal = new JButton("Ver localização de Amigos");
-		botaoEnviarEmail = new JButton("Enviar Email");
-		botaoEnviarSMS = new JButton("Enviar SMS");
-		botaoChat = new JButton("Chat");
-		botaoLogOut = new JButton("LogOut");
-
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		setResizable(false);
-
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout
-				.setHorizontalGroup(layout
-						.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(
-								layout
-										.createSequentialGroup()
-										.addGroup(
-												layout
-														.createParallelGroup(
-																GroupLayout.Alignment.LEADING)
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				layout
-																						.createParallelGroup(
-																								GroupLayout.Alignment.LEADING)
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												botaoEnviarConvite)
-																										.addPreferredGap(
-																												LayoutStyle.ComponentPlacement.RELATED,
-																												35,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												botaoVerAmigos)
-																										.addGap(
-																												33,
-																												33,
-																												33)
-																										.addComponent(
-																												botaoVerLocal))
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												botaoEditarModo)
-																										.addGap(
-																												18,
-																												18,
-																												18)
-																										.addComponent(
-																												botaoEnviarSMS)
-																										.addGap(
-																												18,
-																												18,
-																												18)
-																										.addComponent(
-																												botaoExcluirAmigo))
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												botaoEnviarEmail)
-																										.addGap(
-																												31,
-																												31,
-																												31)
-																										.addComponent(
-																												botaoVerificarModo)
-																										.addPreferredGap(
-																												LayoutStyle.ComponentPlacement.RELATED,
-																												31,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												botaoChat))))
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addGap(
-																				200,
-																				200,
-																				200)
-																		.addComponent(
-																				botaoLogOut)))
-										.addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup().addContainerGap().addGroup(
-						layout.createParallelGroup(
-								GroupLayout.Alignment.BASELINE).addComponent(
-								botaoEnviarConvite).addComponent(botaoVerLocal)
-								.addComponent(botaoVerAmigos)).addGap(18, 18,
-						18).addGroup(
-						layout.createParallelGroup(
-								GroupLayout.Alignment.BASELINE).addComponent(
-								botaoEditarModo)
-								.addComponent(botaoExcluirAmigo).addComponent(
-										botaoEnviarSMS)).addGap(18, 18, 18)
-						.addGroup(
-								layout.createParallelGroup(
-										GroupLayout.Alignment.BASELINE)
-										.addComponent(botaoEnviarEmail)
-										.addComponent(botaoChat).addComponent(
-												botaoVerificarModo)).addGap(18,
-								18, 18).addComponent(botaoLogOut)
-						.addContainerGap(21, Short.MAX_VALUE)));
-
-		pack();
 	}
 
 	/**

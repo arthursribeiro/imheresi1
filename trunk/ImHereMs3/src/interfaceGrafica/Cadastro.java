@@ -5,14 +5,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
-import javax.swing.WindowConstants;
 
 import principal.Sistema;
 import util.Usuario;
@@ -25,36 +22,11 @@ public class Cadastro extends JFrame {
 	private JPasswordField senhaField;
 	private JTextField loginField, nomeField, emailField, telefoneField,
 			ipField;
-
-	private JButton[] botoes = { botaoCancelar = new JButton("Cancelar"),
-			botaoOK = new JButton("OK") };
-	private JTextField[] fields = { loginField = new JTextField(),
-			nomeField = new JTextField(), emailField = new JTextField(),
-			telefoneField = new JTextField(), ipField = new JTextField(),
-			senhaField = new JPasswordField() };
-	private JLabel[] labels = { loginLabel = new JLabel("Login:"),
-			nomeLabel = new JLabel("Nome:"), emailLabel = new JLabel("Email:"),
-			telefoneLabel = new JLabel("Telefone:"),
-			senhaLabel = new JLabel("Senha:"), ipLabel = new JLabel("IP:") };
-
 	private static Cadastro instanciaUnica;
-
-	private ActionListener cacelarAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			MenuInicial.getInstancia().setVisible(true);
-			setVisible(false);
-		}
-	};
-
-	private ActionListener okAction = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			realizarCadastro();
-		}
-	};
 
 	private Cadastro() {
 		super("Cadastro de usuários");
-		comeca();
+		initComponents();
 	}
 
 	public void limpaDados() {
@@ -98,12 +70,23 @@ public class Cadastro extends JFrame {
 
 	}
 
-	private void comeca() {
+	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
+		JButton[] botoes = { botaoCancelar = new JButton("Cancelar"),
+				botaoOK = new JButton("OK") };
+		JTextField[] fields = { loginField = new JTextField(),
+				nomeField = new JTextField(), emailField = new JTextField(),
+				telefoneField = new JTextField(), ipField = new JTextField(),
+				senhaField = new JPasswordField() };
+		JLabel[] labels = { loginLabel = new JLabel("Login:"),
+				nomeLabel = new JLabel("Nome:"),
+				emailLabel = new JLabel("Email:"),
+				telefoneLabel = new JLabel("Telefone:"),
+				ipLabel = new JLabel("IP:"), senhaLabel = new JLabel("Senha:") };
 
 		JLabel label = new JLabel();
-		label.setIcon(MenuInicial.getInstancia().BACKGROUND);
+		label.setIcon(Images.BACKGROUND);
 
 		int y = 80;
 		for (JLabel jlab : labels) {
@@ -117,7 +100,7 @@ public class Cadastro extends JFrame {
 		y = 80;
 		for (JTextField field : fields) {
 			field.setSize(100, 25);
-			field.setLocation(100,y);
+			field.setLocation(100, y);
 			y += 40;
 			label.add(field);
 		}
@@ -138,5 +121,18 @@ public class Cadastro extends JFrame {
 		pack();
 		setVisible(true);
 	}
+
+	private ActionListener cacelarAction = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			MenuInicial.getInstancia().setVisible(true);
+			setVisible(false);
+		}
+	};
+
+	private ActionListener okAction = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			realizarCadastro();
+		}
+	};
 
 }
