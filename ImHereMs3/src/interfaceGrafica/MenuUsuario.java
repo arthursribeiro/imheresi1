@@ -65,9 +65,16 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
-
+		
 		JLabel label = new JLabel();
 		label.setIcon(Images.BACKGROUND);
+		
+		JLabel imagem = new JLabel();
+		imagem.setIcon(Images.MENU);
+		
+		imagem.setSize(144, 59);
+		imagem.setLocation(138, 20);
+		label.add(imagem);
 
 		int x = 5;
 		int y = 105;
