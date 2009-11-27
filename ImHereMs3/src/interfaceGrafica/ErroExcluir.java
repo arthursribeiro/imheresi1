@@ -10,27 +10,26 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
-public class Erro extends JFrame {
+public class ErroExcluir extends JFrame {
 
     private JButton botaoOK;
     private JLabel erroLabel;
-	private static Erro instanciaUnica;
+	private static ErroExcluir instanciaUnica;
     
 	private ActionListener okAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			Cadastro.getInstancia().setEnabled(true);
-			Login.getInstancia().setEnabled(true);
+			Excluir.getInstancia().setEnabled(true);
 			setVisible(false);
 		}
 	};
 	
-    private Erro() {
+    private ErroExcluir() {
     	super("Erro");
         initComponents();
     }
 
-    public static Erro getInstancia(){
-    	if(instanciaUnica == null) instanciaUnica = new Erro();
+    public static ErroExcluir getInstancia(){
+    	if(instanciaUnica == null) instanciaUnica = new ErroExcluir();
     	return instanciaUnica;
     }
 
