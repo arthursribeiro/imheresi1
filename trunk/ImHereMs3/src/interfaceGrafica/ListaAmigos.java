@@ -53,7 +53,7 @@ public class ListaAmigos extends JFrame{
 	private void initComponents() {
 
         botao = new JButton("Voltar");
-        texto = new JScrollPane(new JLabel(this.getStringAmigos()));
+        texto = new JScrollPane(new JLabel(txt));
         figura = new JLabel(new ImageIcon("8.jpg"));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -8,6 +8,7 @@ public class Images {
 
 	public static final ImageIcon TELA_INICIAL = criaImagem("inicial.jpg");
 	public static final ImageIcon BACKGROUND = criaImagem("background.jpg");
+	public static final ImageIcon MENU = criaImagem("menu.png");
 
 	private static ImageIcon criaImagem(String imagem) {
 		try {
