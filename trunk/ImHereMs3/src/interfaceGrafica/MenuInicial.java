@@ -33,6 +33,7 @@ public class MenuInicial extends JFrame implements ActionListener {
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
+		
 		JButton[] botoes = { botaoCadastro = new JButton("Cadastro"),
 				botaoLogin = new JButton("Login"),
 				botaoInfo = new JButton("Informações"),

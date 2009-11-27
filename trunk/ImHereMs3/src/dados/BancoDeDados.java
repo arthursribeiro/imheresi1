@@ -102,7 +102,7 @@ public class BancoDeDados {
 			reader.close();
 			return usuarioProcurado;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null;
 	}

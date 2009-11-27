@@ -68,8 +68,8 @@ public class Login extends JFrame {
         	MenuUsuario.getInstancia().setVisible(true);
         	setVisible(false);  
     	} catch (Exception e) {
-			Erro.getInstancia().setErro(e.getMessage());
-			Erro.getInstancia().setVisible(true);
+			ErroLogin.getInstancia().setErro(e.getMessage());
+			ErroLogin.getInstancia().setVisible(true);
 			setEnabled(false);
 		}
 	}
@@ -98,6 +98,7 @@ public class Login extends JFrame {
         
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+        
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()

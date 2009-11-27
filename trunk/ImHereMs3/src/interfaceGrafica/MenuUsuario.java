@@ -100,15 +100,21 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		String command = e.getActionCommand();
 
 		if (command.equals("convite")) {
-			System.out.println("convite :P");
+			Convidar.getInstancia().setUser(usuario);
+			Convidar.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 
 		if (command.equals("amigos")) {
-			System.out.println("esses sao meus amiguinhos");
+			ListaAmigos.getInstancia().setUser(usuario);
+			ListaAmigos.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 
 		if (command.equals("compartilhamento")) {
-			System.out.println("compartilhando geras");
+			Consultar.getInstancia().setUser(usuario);
+			Consultar.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 		
 		if (command.equals("editar")) {
@@ -116,19 +122,27 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		}
 
 		if (command.equals("excluir")) {
-			System.out.println("excluindododo");
+			Excluir.getInstancia().setUser(usuario);
+			Excluir.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 		
 		if (command.equals("localizar")) {
-			System.out.println("localizando");
+			Localizar.getInstancia().setUser(usuario);
+			Localizar.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 		
 		if (command.equals("email")) {
-			System.out.println("emailizando");
+			Email.getInstancia().setUser(usuario);
+			Email.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 		
 		if (command.equals("sms")) {
-			System.out.println("smszando");
+			Sms.getInstancia().setUser(usuario);
+			Sms.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 		
 		if (command.equals("chat")) {

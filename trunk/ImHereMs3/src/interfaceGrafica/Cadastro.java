@@ -63,8 +63,8 @@ public class Cadastro extends JFrame {
 			setVisible(false);
 
 		} catch (Exception e) {
-			Erro.getInstancia().setErro(e.getMessage());
-			Erro.getInstancia().setVisible(true);
+			ErroCadastro.getInstancia().setErro(e.getMessage());
+			ErroCadastro.getInstancia().setVisible(true);
 			setEnabled(false);
 		}
 
