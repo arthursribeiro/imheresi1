@@ -1,11 +1,14 @@
 package util;
+
+import java.io.Serializable;
+
 /**
  * Classe Amigo.
  * @author Delano Helio, Izabela Vanessa, Joao Paulo e Savyo Igor
  * @version 1.0 11 de setembro de 2009
  */
 
-public class Amigo {
+public class Amigo implements Serializable{
 
 	private String usuario;
 	private int modo;

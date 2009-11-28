@@ -1,4 +1,5 @@
 package util;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
  * @version 1.0 07 de setembro de 2009
  */
 
-public class Usuario {
+public class Usuario implements Serializable{
 
 	private String username;
 	private String nome;

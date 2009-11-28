@@ -1,5 +1,5 @@
 package util;
-import dados.BancoDeDados;
+import dados.BancoDeDadosTxt;
 
 
 /**
@@ -10,13 +10,13 @@ import dados.BancoDeDados;
 
 public class Mensageiro {
 
-	private BancoDeDados banco;
+	private BancoDeDadosTxt banco;
 	
 	/**
 	 * Construtor.
 	 * @param banco
 	 */
-	public Mensageiro(BancoDeDados banco){
+	public Mensageiro(BancoDeDadosTxt banco){
 		this.banco = banco;
 	}
 	

@@ -1,4 +1,5 @@
 package util;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import java.util.Iterator;
  *
  */
 
-public class VetorAmigo {
+public class VetorAmigo implements Serializable{
 
 	private ArrayList<Amigo> numbers = new ArrayList<Amigo>();
 	
