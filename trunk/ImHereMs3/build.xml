@@ -5,7 +5,7 @@
 		<delete dir="doc" />
 		<delete includeemptydirs="true">
 			<fileset includes="**.log" dir="."/>
-			<fileset includes="**.xml" dir="usuarios"/>
+			<fileset includes="**.txt" dir="usuarios"/>
 		</delete>
 	</target>
 
