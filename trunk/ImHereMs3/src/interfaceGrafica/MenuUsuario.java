@@ -22,7 +22,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 	private JButton botaoVerLocal;
 	private JButton botaoEnviarEmail;
 	private JButton botaoEnviarSMS;
-	private JButton botaoChat;
+	private JButton botaoAceitarComp;
 	private Usuario usuario;
 	private static MenuUsuario instanciaUnica;
 
@@ -51,7 +51,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 				botaoVerLocal = new JButton("Localização de Amigos"),
 				botaoEnviarEmail = new JButton("Enviar Email"),
 				botaoEnviarSMS = new JButton("Enviar SMS"),
-				botaoChat = new JButton("Chat"),
+				botaoAceitarComp = new JButton("Aceitar Compartilhamento"),
 				botaoLogOut = new JButton("LogOut") };
 
 		botaoEnviarConvite.setActionCommand("convite");
@@ -62,7 +62,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		botaoVerLocal.setActionCommand("localizar");
 		botaoEnviarEmail.setActionCommand("email");
 		botaoEnviarSMS.setActionCommand("sms");
-		botaoChat.setActionCommand("chat");
+		botaoAceitarComp.setActionCommand("aceitarComp");
 		botaoLogOut.setActionCommand("logout");
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,8 +158,11 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			setVisible(false);
 		}
 
-		if (command.equals("chat")) {
-			System.out.println("chat");
+		if (command.equals("aceitarComp")) {
+			AceitarConvites.getInstancia().setUsuario(this.usuario.getUsername());
+			AceitarConvites.getInstancia().setListaConvites(usuario);
+			AceitarConvites.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 
 		if (command.equals("logout")) {
@@ -167,13 +170,5 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			setVisible(false);
 		}
 	}
-
-	/**
-	public static void main(String[] args) {
-		Sistema sistema = Sistema.getInstancia();
-		Usuario atualUsuario = sistema.fazerLogin("raq", "123456", "198.23.21.2");
-		MenuUsuario.getInstancia().setUsuario(atualUsuario);
-		MenuUsuario.getInstancia().setVisible(true);
-	}*/
 
 }
