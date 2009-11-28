@@ -21,6 +21,7 @@ public class ListaAmigos extends JFrame{
 	private JButton botao;
     private JScrollPane texto;
     private JLabel figura;
+    private JLabel conteudo;
     
     private String txt = "<html> Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br> </p></html>";
     
@@ -52,10 +53,11 @@ public class ListaAmigos extends JFrame{
 	
 	private void initComponents() {
 
+		conteudo = new JLabel(txt);
         botao = new JButton("Voltar");
-        texto = new JScrollPane(new JLabel(txt));
+        texto = new JScrollPane(conteudo);
         figura = new JLabel(new ImageIcon("8.jpg"));
-
+        
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         botao.addActionListener(voltar); 
@@ -95,8 +97,7 @@ public class ListaAmigos extends JFrame{
         pack();
     }
 
-	//ver esse metodo
-	private String getStringAmigos() {
+	public void setConteudo() {
 		String saida = "<html>";
 
 		if(this.usuario.getListaAmigos().size() != 0){
@@ -109,12 +110,9 @@ public class ListaAmigos extends JFrame{
 			
 		} else
 			saida += "Nenhum amigo adicionado.";
-		
-		
-		
+				
 		saida += "</p></html>";
-		
-		return saida;
+		conteudo.setText(saida);
 	}
 	
 	

@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import util.Usuario;
 
 public class MenuUsuario extends JFrame implements ActionListener {
@@ -38,7 +40,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			instanciaUnica = new MenuUsuario();
 		return instanciaUnica;
 	}
-	
+
 	private void initComponents() {
 		JButton[] botoes = {
 				botaoEnviarConvite = new JButton("Enviar Convite"),
@@ -51,7 +53,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 				botaoEnviarSMS = new JButton("Enviar SMS"),
 				botaoChat = new JButton("Chat"),
 				botaoLogOut = new JButton("LogOut") };
-		
+
 		botaoEnviarConvite.setActionCommand("convite");
 		botaoVerAmigos.setActionCommand("amigos");
 		botaoVerificarModo.setActionCommand("compartilhamento");
@@ -62,16 +64,16 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		botaoEnviarSMS.setActionCommand("sms");
 		botaoChat.setActionCommand("chat");
 		botaoLogOut.setActionCommand("logout");
-		
+
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
-		
+
 		JLabel label = new JLabel();
 		label.setIcon(Images.BACKGROUND);
-		
+
 		JLabel imagem = new JLabel();
 		imagem.setIcon(Images.MENU);
-		
+
 		imagem.setSize(144, 59);
 		imagem.setLocation(138, 20);
 		label.add(imagem);
@@ -95,14 +97,15 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			botao.addActionListener(this);
 			label.add(botao);
 		}
-		
-		
+
+
 		getContentPane().add(label, BorderLayout.CENTER);
 		setBounds(new java.awt.Rectangle(0, 0, 400, 400));
 		pack();
 		setVisible(true);
 	}
-	
+
+
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 
@@ -114,6 +117,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 
 		if (command.equals("amigos")) {
 			ListaAmigos.getInstancia().setUser(usuario);
+			ListaAmigos.getInstancia().setConteudo();
 			ListaAmigos.getInstancia().setVisible(true);
 			setVisible(false);
 		}
@@ -123,7 +127,7 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			Consultar.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
+
 		if (command.equals("editar")) {
 			System.out.println("editando :P");
 		}
@@ -133,29 +137,29 @@ public class MenuUsuario extends JFrame implements ActionListener {
 			Excluir.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
+
 		if (command.equals("localizar")) {
 			Localizar.getInstancia().setUser(usuario);
 			Localizar.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
+
 		if (command.equals("email")) {
 			Email.getInstancia().setUser(usuario);
 			Email.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
+
 		if (command.equals("sms")) {
 			Sms.getInstancia().setUser(usuario);
 			Sms.getInstancia().setVisible(true);
 			setVisible(false);
 		}
-		
+
 		if (command.equals("chat")) {
 			System.out.println("chat");
 		}
-		
+
 		if (command.equals("logout")) {
 			MenuInicial.getInstancia().setVisible(true);
 			setVisible(false);

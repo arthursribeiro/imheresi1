@@ -13,7 +13,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
 import principal.Sistema;
-
 import util.Usuario;
 
 
@@ -65,7 +64,7 @@ public class Login extends JFrame {
     	try{   		
         	Usuario atualUsuario = sistema.fazerLogin(login, senha, ip);
         	MenuUsuario.getInstancia().setUsuario(atualUsuario);
-        	MenuUsuario.getInstancia().setVisible(true);
+			MenuUsuario.getInstancia().setVisible(true);
         	setVisible(false);  
     	} catch (Exception e) {
 			ErroLogin.getInstancia().setErro(e.getMessage());
