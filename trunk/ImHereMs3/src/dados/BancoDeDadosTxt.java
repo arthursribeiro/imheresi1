@@ -13,6 +13,17 @@ import java.util.ArrayList;
 import util.Usuario;
 import util.VetorAmigo;
 
+/**
+ * Classe responsavel por armazenar arquivos na forma de txt.
+ * Armazena e resgata os dados do sistema.
+ * 
+ * @author Arthur de Souza Ribeiro
+ * @author José Laerte Pires Xavier Junior
+ * @author Raquel Rolim Almeida Guimarães
+ * @author Raíssa de Araújo Jorge e Menezes Sarmento
+ *
+ */
+
 public class BancoDeDadosTxt {
 	
 	private static BancoDeDadosTxt instanciaUnica = null;
@@ -24,6 +35,10 @@ public class BancoDeDadosTxt {
 	
 	private BancoDeDadosTxt() {}
 	
+	/**
+	 * Método para garantir instacia única(singleton)
+	 * @return BancoDeDadosTxt única instancia
+	 */
 	public static BancoDeDadosTxt getInstance() {
 		if (instanciaUnica == null)
 			instanciaUnica = new BancoDeDadosTxt();
@@ -31,6 +46,12 @@ public class BancoDeDadosTxt {
 		return instanciaUnica;
 	}
 	
+	/**
+	 * metodo para atualizar o usuario no banco de dados
+	 * 
+	 * @param usuario objeto usuario
+	 * @return true se conseguir atualizar, false caso contrário
+	 */
 	public boolean atualizarUsuario(Usuario usuario) {
 		if(existeUsuario(usuario.getUsername())) {
 			try {
@@ -44,6 +65,17 @@ public class BancoDeDadosTxt {
 		return false;
 	}
 	
+	/**
+	 * Metodo para cadastrar o usuario no banco de dados (XML)
+	 * 
+	 * @param username nome de usuario
+	 * @param nome nome completo do usuario
+	 * @param senha senha de acesso
+	 * @param email email do usuario
+	 * @param telefone telefone do usuario
+	 * @param ip ip do usuario
+	 * @return objeto usuario
+	 */
 	public Usuario cadastraUsuario(String username, String nome, String senha, String email, String telefone, String ip) {
 		Usuario usuario = new Usuario(username, nome, senha, email, telefone, ip);
 		try {
@@ -57,6 +89,11 @@ public class BancoDeDadosTxt {
 		return usuario;
 	}
 	
+	/**
+	 * metodo para verificar se existe um usuario com o username passado
+	 * @param username nome de usuario a procurar
+	 * @return true se existe, false se nao
+	 */
 	public boolean existeUsuario(String username) {
 		File arquivo = new File("usuarios" + sep + username + ".txt");
 		if (arquivo.exists()) {
@@ -65,6 +102,11 @@ public class BancoDeDadosTxt {
 		return false;
 	}
 	
+	/**
+	 * metodo para procurar usuario no banco de dados, pelo login
+	 * @param login login do usuario a ser procurado
+	 * @return o usuario procurado, ou null se nao encontrar
+	 */
 	public Usuario procureUsuarioLogin(String login) {
 		try {
 			FileInputStream fis = new FileInputStream("usuarios" + sep + login + ".txt");
@@ -77,6 +119,11 @@ public class BancoDeDadosTxt {
 		return null;
 	}
 	
+	/**
+	 * metodo para procurar usuarios pelo nome
+	 * @param nome nome a procurar
+	 * @return lista com os usuarios que tem o nome
+	 */
 	public ArrayList<Usuario> procureUsuariosNome(String nome) {
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		
@@ -102,6 +149,10 @@ public class BancoDeDadosTxt {
 		return listaUsuarios;
 	}
 	
+	/**
+	 * metodo para apagar um usuario do banco de dados, pelo login
+	 * @param login login para procurar o usuario a remover
+	 */
 	public void removerUsuario(String login) {
 		File arquivoARemover = new File("usuarios" + sep + login + ".txt");
 		
@@ -134,6 +185,9 @@ public class BancoDeDadosTxt {
 		}
 	}
 	
+	/**
+	 * metodo para apagar os dados persistentes do banco de dados
+	 */
 	public void zereOBancoDeDados() {
 
 		//isso eh pra apagar os logs de chats
@@ -152,6 +206,11 @@ public class BancoDeDadosTxt {
 		}
 	}
 	
+	/**
+	 * metodo para verificar se existe um usuario com o username passado
+	 * @param username nome de usuario a procurar
+	 * @return true se existe, false se nao
+	 */
 	public Usuario procureUsuarioEmail(String email) {
 		File pasta = new File("usuarios" + sep);  
 		File arrayArquivos[] = pasta.listFiles();  
@@ -178,10 +237,18 @@ public class BancoDeDadosTxt {
 		return null;
 	}
 	
+	/**
+	 * seta o diretorio onde esta guardado o arquivo gabarito para os convites
+	 * @param novoDiretorio diretorio a ser setado
+	 */
 	public void mudaDiretorioGabaritos(String novoDiretorio){
 		this.diretorioGabaritos = novoDiretorio;
 	}
 	
+	/**
+	 * metodo para pegar a lista de todos os usuarios cadastrados no sistema
+	 * @return lista com os usuarios
+	 */
 	public ArrayList<Usuario> getUsuarios() {
 		File pasta = new File("usuarios" + sep);  
 		File arrayArquivos[] = pasta.listFiles();  
@@ -202,6 +269,11 @@ public class BancoDeDadosTxt {
 		return usuarios;
 	}
 
+	/**
+	 * metodo usado para guardar as mensagens em arquivos persistentes
+	 * @param conteudo string com o conteudo a ser guardado
+	 * @param nomeDoArquivo nome do arquivo onde guardar o conteudo
+	 */
 	public void guardarMensagem(String conteudo, String nomeDoArquivo) {
 		try {
 			FileWriter writer = new FileWriter(nomeDoArquivo, true);
