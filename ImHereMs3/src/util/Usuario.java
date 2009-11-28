@@ -260,7 +260,7 @@ public class Usuario implements Serializable{
 		return this.amigos;
 	}
 	
-	public void modificarCompartilhamento(String login, int modo) {
+	public boolean modificarCompartilhamento(String login, int modo) {
 		
 		Iterator<Amigo> iterAmigos = amigos.iterator();
 		Amigo a;
@@ -268,8 +268,9 @@ public class Usuario implements Serializable{
 			a = iterAmigos.next();
 			if (a.getUsuario().equalsIgnoreCase(login)) {
 				a.setModo(modo);
-				return;
+				return true;
 			}
 		}
+		return false;
 	}
 }

@@ -10,26 +10,32 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
-public class ErroConsultar extends JFrame {
+public class ErroCompartilhando extends JFrame {
 
     private JButton botaoOK;
     private JLabel erroLabel;
-	private static ErroConsultar instanciaUnica;
+	private static ErroCompartilhando instanciaUnica;
+	private int MODO;
     
 	private ActionListener okAction = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			Consultar.getInstancia().setEnabled(true);
+			if(MODO == 0)
+			    Consultar.getInstancia().setEnabled(true);
+			else
+				Editar.getInstancia().setEnabled(true);
 			setVisible(false);
 		}
 	};
 	
-    private ErroConsultar() {
+    private ErroCompartilhando(int MODO) {
     	super("Erro");
+    	this.MODO = MODO; 
         initComponents();
     }
 
-    public static ErroConsultar getInstancia(){
-    	if(instanciaUnica == null) instanciaUnica = new ErroConsultar();
+    public static ErroCompartilhando getInstancia(int MODO){
+    	if(instanciaUnica == null) instanciaUnica = new ErroCompartilhando(MODO);
+    	instanciaUnica.MODO = MODO;
     	return instanciaUnica;
     }
 

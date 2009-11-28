@@ -788,11 +788,15 @@ public class Sistema {
 	 * @param login1
 	 * @param login2
 	 * @param modo
+	 * @throws Exception 
 	 */
-	public void setCompartilhamento(String login1, String login2, int modo) {
+	public boolean setCompartilhamento(String login1, String login2, int modo) throws Exception {
 		Usuario usuario = bancoDeDados.procureUsuarioLogin(login2);
-		usuario.modificarCompartilhamento(login1, modo);
+		boolean modificou = usuario.modificarCompartilhamento(login1, modo);
+		if(!modificou)
+			throw new Exception("Compartilhamento não foi modificado.");
 		bancoDeDados.atualizarUsuario(usuario);
+		return true;
 	}
 
 	/**
