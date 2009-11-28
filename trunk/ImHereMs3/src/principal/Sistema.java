@@ -25,7 +25,7 @@ import util.VetorAmigo;
 
 import com.maxmind.geoip.Location;
 
-import dados.BancoDeDados;
+import dados.BancoDeDadosTxt;
 
 
 /**
@@ -40,7 +40,7 @@ import dados.BancoDeDados;
 public class Sistema {
 
 	private static Sistema instanciaUnica = null;
-	private BancoDeDados bancoDeDados;
+	private BancoDeDadosTxt bancoDeDados;
 	Localizacao localizacao;
 	Mensagem mensagem;
 	Mensageiro mensageiro;
@@ -55,7 +55,7 @@ public class Sistema {
 	 * armazena-os numa lista de Usuarios
 	 */
 	protected Sistema() {
-		bancoDeDados = BancoDeDados.getInstancia();
+		bancoDeDados = BancoDeDadosTxt.getInstance();
 		localizacao = new Localizacao();
 		chatOn = false;
 		mensageiro = new Mensageiro(bancoDeDados);
@@ -898,7 +898,7 @@ public class Sistema {
 	 * }
 	 */
 
-	public BancoDeDados getBanco() {
+	public BancoDeDadosTxt getBanco() {
 		return this.bancoDeDados;
 	}
 }

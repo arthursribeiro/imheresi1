@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-import dados.BancoDeDados;
+import dados.BancoDeDadosTxt;
 
 
 /**
@@ -67,7 +67,7 @@ public class Chat extends Mensagem {
 	/**
 	 * Envia mensagem de chat.
 	 */
-	public void enviarMensagem(String remetente, String destinatario, String mensagem, BancoDeDados banco) {
+	public void enviarMensagem(String remetente, String destinatario, String mensagem, BancoDeDadosTxt banco) {
 		this.banco = banco;
 		this.gerarMensagem(remetente, destinatario);
 		this.guardarNoBanco();

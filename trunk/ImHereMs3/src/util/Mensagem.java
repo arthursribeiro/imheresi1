@@ -1,5 +1,5 @@
 package util;
-import dados.BancoDeDados;
+import dados.BancoDeDadosTxt;
 
 
 /**
@@ -13,7 +13,7 @@ public abstract class Mensagem {
 	protected String remetente;
 	protected String destinatario;
 	protected StringBuilder builder = new StringBuilder();
-	protected BancoDeDados banco;
+	protected BancoDeDadosTxt banco;
 	protected String nomeDoArquivo;
 		
 	protected final String line = System.getProperty("line.separator");
@@ -34,7 +34,7 @@ public abstract class Mensagem {
 	 * Comportamento padrao para todas as mensagens (Template), e ao final a mensagem é
 	 * guardada no banco de dados
 	 */
-	public void enviarMensagem(String loginRemetente, String destinatario, String mensagem, BancoDeDados banco) {
+	public void enviarMensagem(String loginRemetente, String destinatario, String mensagem, BancoDeDadosTxt banco) {
 		this.zerarAtributos();
 		
 		this.banco = banco;
