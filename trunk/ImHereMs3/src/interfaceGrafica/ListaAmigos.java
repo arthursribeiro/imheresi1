@@ -22,9 +22,7 @@ public class ListaAmigos extends JFrame{
     private JScrollPane texto;
     private JLabel figura;
     private JLabel conteudo;
-    
-    private String txt = "<html> Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br>Hi.<br> </p></html>";
-    
+        
     private ActionListener voltar = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			MenuUsuario.getInstancia().setVisible(true);
@@ -52,8 +50,8 @@ public class ListaAmigos extends JFrame{
 	}
 	
 	private void initComponents() {
-
-		conteudo = new JLabel(txt);
+		
+		conteudo = new JLabel("");
         botao = new JButton("Voltar");
         texto = new JScrollPane(conteudo);
         figura = new JLabel(new ImageIcon("8.jpg"));
