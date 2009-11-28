@@ -14,7 +14,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
- * Classe Banco de Dados. Armazena e resgata os dados do sistema.
+ * Classe Banco de Dados Xml. Armazena e resgata os dados do sistema.
  * @author Delano Helio, Izabela Vanessa, Joao Paulo e Savyo Igor
  * @version 2.0 10 de setembro de 2009
  */
