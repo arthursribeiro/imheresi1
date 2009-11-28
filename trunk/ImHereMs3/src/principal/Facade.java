@@ -315,7 +315,9 @@ public class Facade {
 	 */
 	
 	public void setCompartilhamento(String usuario, String amigo, int modo){
-		sistema.setCompartilhamento(usuario, amigo, modo);
+		try {
+			sistema.setCompartilhamento(usuario, amigo, modo);
+		} catch (Exception e) {}
 	}
 	
 	/**

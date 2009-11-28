@@ -129,7 +129,9 @@ public class MenuUsuario extends JFrame implements ActionListener {
 		}
 
 		if (command.equals("editar")) {
-			System.out.println("editando :P");
+			Editar.getInstancia().setUser(usuario);
+			Editar.getInstancia().setVisible(true);
+			setVisible(false);
 		}
 
 		if (command.equals("excluir")) {

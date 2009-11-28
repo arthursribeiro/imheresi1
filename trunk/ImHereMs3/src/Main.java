@@ -255,8 +255,12 @@ public class Main {
 					e.printStackTrace();
 				}
 
-				sistema.setCompartilhamento(user.getUsername(), amigoEditar,
-						novoCompartilhamento);
+				try {
+						sistema.setCompartilhamento(user.getUsername(), amigoEditar,
+								novoCompartilhamento);
+					} catch (Exception e1) {
+						System.out.println("Nao alterou");
+					}
 				break;
 
 			case 5:
