@@ -41,13 +41,15 @@
 
 	<target name="jar">
 		<echo>Gerando Jar...</echo>
-		<jar destfile="IamHere.jar" basedir="." duplicate="fail" index="true">
+		<jar destfile="IamHere.jar" basedir="bin" duplicate="fail" index="true">
 			<zipfileset src="src\lib\geoIp.jar" includes="**/*.class" />
 			<zipfileset src="xstream-1.3.1.jar" includes="**/*.class" />
 			<manifest>
-				<attribute name="Main-Class" value="Main" />
+				<attribute name="Main-Class" value="interfaceGrafica.MenuInicial" />
 			</manifest>
 		</jar>
 	</target>
-
+	<target name="executa" depends="jar">
+		<java jar="IamHere.jar" fork="true" />
+	</target>
 </project>
